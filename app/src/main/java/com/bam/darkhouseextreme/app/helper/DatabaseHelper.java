@@ -7,6 +7,8 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.model.Item;
 import com.bam.darkhouseextreme.app.model.Player;
@@ -144,20 +146,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean createAllItems(Resources res) {
+    public long createAllItems(Resources res) {
         db = this.getWritableDatabase();
         TypedArray items = res.obtainTypedArray(R.array.items);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + ITEM_TABLE_NAME, null);
+
         long rowId = 0;
+        if (cursor.getCount() == 0) {
+
         for (int i = 0; i < items.length(); i += 2) {
             String itemName = items.getString(i);
-            String itemDescription = items.getString(i+1);
+            String itemDescription = items.getString(i + 1);
             ContentValues contentValues = new ContentValues();
             contentValues.put(ITEM_NAME, itemName);
             contentValues.put(ITEM_DESCRIPTION, itemDescription);
             rowId = db.insert(ITEM_TABLE_NAME, null, contentValues);
         }
 
-        return rowId != -1;
+        }
+        return rowId;
     }
 
     public Item getOneItem(String id) {
