@@ -61,8 +61,9 @@ public class TestOfDatabase extends AndroidTestCase {
 
     public void testCreateAllItems() {
         Resources resources = getContext().getResources();
-        boolean allItemsCreated = helper.createAllItems(resources);
-        assertTrue(allItemsCreated);
+        long allItemsCreated = helper.createAllItems(resources);
+
+        assertTrue(allItemsCreated > -1);
     }
 
     public void testAddItemToPlayerInventory() {
