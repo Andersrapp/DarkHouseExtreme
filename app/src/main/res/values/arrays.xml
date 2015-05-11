@@ -1,11 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="items">
-        <item>"Key"</item>
-        <item>"Can open doors"</item>
+        <item>@string/corpse</item>
+        <item>@string/corpse_description</item>
 
-        <item>"Shit on a stick"</item>
-        <item>"A crude stick that has been dipped in what appears to be shit"</item>
+        <item>@string/duct_tape</item>
+        <item>@string/duct_tape_description</item>
+
+        <item>@string/note</item>
+        <item>@string/note_description</item>
+
+        <item>@string/bloody_table</item>
+        <item>@string/bloody_table_description</item>
+
+        <item>@string/key</item>
+        <item>@string/key_description</item>
+
+        <item>@string/gas_pipe</item>
+        <item>@string/gas_pipe_description</item>
+
+        <item>@string/clock_without_hands</item>
+        <item>@string/clock_without_hands_description</item>
+
+        <item>@string/clock_with_hour_hand</item>
+        <item>@string/clock_with_hour_hand_description</item>
+
+        <item>@string/clock_with_minute_hand</item>
+        <item>@string/clock_with_minute_hand_description</item>
+
+        <item>@string/clock_with_both_hands</item>
+        <item>@string/clock_with_both_hands_description</item>
+
+        <item>@string/hour_hand</item>
+        <item>@string/hour_hand_description</item>
+
+        <item>@string/minute_hand</item>
+        <item>@string/minute_hand_description</item>
+
+        <item>@string/dark_room_table</item>
+        <item>@string/dark_room_table_description</item>
+
+        <item>@string/toilet</item>
+        <item>@string/toilet_description</item>
+
+        <item>@string/shower</item>
+        <item>@string/shower_description</item>
+
+        <item>@string/lever </item>
+        <item>@string/lever_description </item>
+
+        <item>@string/lever_holder </item>
+        <item>@string/lever_holder_description </item>
+
+        <item>@string/painting </item>
+        <item>@string/painting_description </item>
+
+        <item>@string/bucket </item>
+        <item>@string/bucket_description </item>
+
+        <item>@string/key_lock </item>
+        <item>@string/key_lock_description </item>
+
+        <item>@string/master_key </item>
+        <item>@string/master_key_description </item>
 
     </array>
 </resources>
