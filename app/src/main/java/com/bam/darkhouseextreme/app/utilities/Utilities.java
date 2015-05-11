@@ -4,12 +4,18 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Chobii on 28/04/15.
  */
 public class Utilities {
+
+    public static Map<String, List<Button>> buttonsForRooms;
 
     /**
      * For each View in a ViewGroup, send the View to @code{setFontForView}.
@@ -146,5 +152,9 @@ public class Utilities {
             default:
                 return true;
         }
+    }
+
+    public static void setButtonsForRooms(String key, List<Button> buttons) {
+        buttonsForRooms.put(key, buttons);
     }
 }

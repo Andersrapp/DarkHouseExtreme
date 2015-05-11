@@ -96,8 +96,8 @@ public class RoomFragment extends Fragment {
         super.onViewStateRestored(savedInstanceState);
 
         nullifyAndRemoveButtonsFromParent();
-        createButtons();
-        setItemButtons();
+//        createButtons();
+//        setItemButtons();
     }
 
     private void setButtonUp() {
@@ -156,32 +156,32 @@ public class RoomFragment extends Fragment {
         );
     }
 
-    private void setItemButtons() {
-        for (int i = 1; i < 4; i++) {
-            int itemID;
-            try {
-                itemID = context.getResources().getIdentifier(
-                        "item" + i + "" + String.valueOf(x_cord) + "" + String.valueOf(y_cord), "id", context.getPackageName());
-            } catch (Exception e) {
-                itemID = 0;
-            }
-            if (itemID != 0) {
-                switch (i) {
-                    case 1:
-                        itemButton1 = (Button) root.findViewById(itemID);
-                        break;
-                    case 2:
-                        itemButton2 = (Button) root.findViewById(itemID);
-                        break;
-                    case 3:
-                        itemButton3 = (Button) root.findViewById(itemID);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
+//    private void setItemButtons() {
+//        for (int i = 1; i < 4; i++) {
+//            int itemID;
+//            try {
+//                itemID = context.getResources().getIdentifier(
+//                        "item" + i + "" + String.valueOf(x_cord) + "" + String.valueOf(y_cord), "id", context.getPackageName());
+//            } catch (Exception e) {
+//                itemID = 0;
+//            }
+//            if (itemID != 0) {
+//                switch (i) {
+//                    case 1:
+//                        itemButton1 = (Button) root.findViewById(itemID);
+//                        break;
+//                    case 2:
+//                        itemButton2 = (Button) root.findViewById(itemID);
+//                        break;
+//                    case 3:
+//                        itemButton3 = (Button) root.findViewById(itemID);
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        }
+//    }
 
     private void setItemClickListener(Button itemButton) {
 
@@ -246,8 +246,8 @@ public class RoomFragment extends Fragment {
     private void changeRoom(final int roomId) {
 
         nullifyAndRemoveButtonsFromParent();
-        createButtons();
-        setItemButtons();
+//        createButtons();
+//        setItemButtons();
 
         Animation fadeout = AnimationUtils.loadAnimation(context, R.anim.fade_out);
         roomImage.startAnimation(fadeout);
@@ -296,7 +296,12 @@ public class RoomFragment extends Fragment {
     private void continueIfApplicable(int x, int y) {
         String room = String.valueOf(x) + String.valueOf(y);
         final int roomId;
+        eventsInRoom = Utilities.buttonsForRooms.get(room);
         roomId = Utilities.isViableRoom(room, context);
+        for (Button b : eventsInRoom) {
+            b.setBackgroundResource(R.drawable.placeholder);
+            setItemClickListener(b);
+        }
         roomImage.setImageResource(roomId);
     }
 
@@ -318,45 +323,48 @@ public class RoomFragment extends Fragment {
         }
     }
 
-    public void createButtons() {
-        String coordinates = String.valueOf(x_cord) + String.valueOf(y_cord);
+//    public void createButtons() {
+//        String coordinates = String.valueOf(x_cord) + String.valueOf(y_cord);
+//
+//        switch (coordinates) {
+//            case "00":
+//                initiateButtons();
+//                placeItems(root);
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
-        switch (coordinates) {
-            case "00":
-                initiateButtons();
-                placeItems(root);
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void initiateButtons() {
-        eventsInRoom.clear();
-        itemButton1 = new Button(context);
-        itemButton2 = new Button(context);
-        itemButton3 = new Button(context);
-        itemButton1.setTag(1);
-        itemButton2.setTag(2);
-        itemButton3.setTag(3);
-        itemButton1.setBackgroundResource(R.drawable.placeholder);
-        itemButton2.setBackgroundResource(R.drawable.placeholder);
-        itemButton3.setBackgroundResource(R.drawable.placeholder);
-        itemButton1.setId((R.id.item100));
-        itemButton2.setId((R.id.item200));
-        itemButton3.setId((R.id.item300));
-
-        eventsInRoom.add(itemButton1);
-        eventsInRoom.add(itemButton2);
-        eventsInRoom.add(itemButton3);
-
-        for (Button b : eventsInRoom) {
-            setItemClickListener(b);
-        }
-    }
+//    public void initiateButtons() {
+//        eventsInRoom.clear();
+//        itemButton1 = new Button(context);
+//        itemButton2 = new Button(context);
+//        itemButton3 = new Button(context);
+//        itemButton1.setTag(1);
+//        itemButton2.setTag(2);
+//        itemButton3.setTag(3);
+//        itemButton1.setBackgroundResource(R.drawable.placeholder);
+//        itemButton2.setBackgroundResource(R.drawable.placeholder);
+//        itemButton3.setBackgroundResource(R.drawable.placeholder);
+//        itemButton1.setId((R.id.item100));
+//        itemButton2.setId((R.id.item200));
+//        itemButton3.setId((R.id.item300));
+//
+//        eventsInRoom.add(itemButton1);
+//        eventsInRoom.add(itemButton2);
+//        eventsInRoom.add(itemButton3);
+//
+//        for (Button b : eventsInRoom) {
+//            setItemClickListener(b);
+//        }
+//    }
 
 
     public RelativeLayout placeItems(View root) {
+
+        String room = String.valueOf(x_cord) + String.valueOf(y_cord);
+
         Point size = new Point();
         getActivity().getWindowManager().getDefaultDisplay().getSize(size);
         int screenWidth = size.x;
@@ -364,31 +372,50 @@ public class RoomFragment extends Fragment {
         int screenHeight = size.y - 100;
         RelativeLayout mainRelativeLayout = (RelativeLayout) root.findViewById(R.id.mainRel);
 
-        RelativeLayout.LayoutParams params1 = getParams();
-//        RelativeLayout.LayoutParams params2 = getParams();
-//        RelativeLayout.LayoutParams params3 = getParams();
+        RelativeLayout.LayoutParams doorUp = getParams();
+        RelativeLayout.LayoutParams doorDown = getParams();
+        RelativeLayout.LayoutParams doorRight = getParams();
+        RelativeLayout.LayoutParams doorLeft = getParams();
 
-        params1.setMargins((screenWidth / 2) + 200, (screenHeight / 3), 0, 0);
-        itemButton1.setMinWidth(50);
-        itemButton1.setMinimumWidth(50);
-        itemButton1.setMinHeight(50);
-        itemButton1.setLayoutParams(params1);
-        mainRelativeLayout.addView(itemButton1);
+        switch (room) {
+            case "02":
+                RelativeLayout.LayoutParams paper = getParams();
+                RelativeLayout.LayoutParams skeleton = getParams();
 
-        //---- adds a second button to the layout
-//        params2.setMargins((screenWidth - 100), 0, 0, 0);
-//        itemButton2.setMinWidth(0);
-//        itemButton2.setMinHeight(0);
-//        itemButton2.setLayoutParams(params2);
-//        mainRelativeLayout.addView(itemButton2);
+                doorRight.setMargins((screenWidth - 70), (screenHeight /2), 0, 0);
+                doorDown.setMargins((screenWidth / 2), (screenHeight - 70), 0, 0);
+                paper.setMargins((screenHeight / 2), (screenWidth / 2), 0, 0);
+                skeleton.setMargins((screenHeight / 4), (screenWidth / 2), 0, 0);
 
-        //---- adds a third button to the layout
-//        params3.setMargins(200, (screenHeight / 3) * 2, 0, 0);
-//        itemButton3.setMinWidth(0);
-//        itemButton3.setMinHeight(0);
-//        itemButton3.setLayoutParams(params3);
-//        mainRelativeLayout.addView(itemButton3);
+                break;
+            case "01":
+                RelativeLayout.LayoutParams key = getParams();
 
+                key.setMargins((screenWidth / 2), (screenHeight / 2), 0 ,0);
+                doorUp.setMargins((screenWidth / 2), 10, 0, 0);
+                doorRight.setMargins((screenWidth - 70), (screenHeight /2), 0, 0);
+                break;
+            case "11":
+                break;
+            case "21":
+                break;
+            case "20":
+                break;
+            case "12":
+                break;
+            case "22":
+                break;
+            case "13":
+                break;
+            case "23":
+                break;
+            case "33":
+                break;
+            case "32":
+                break;
+            default:
+                break;
+        }
 
         return mainRelativeLayout;
     }
