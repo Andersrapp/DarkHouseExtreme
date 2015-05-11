@@ -60,11 +60,11 @@
     <string name="toilet">Toilet</string>
     <string name="toilet_description">Whatever is in there doesn\'t seem to be from a human&#8230;</string>
 
-    <string name="shower">Shower</string>
-    <string name="shower_description">This shower is leaking.</string>
+    <string name="bath_tub">Bath tub</string>
+    <string name="bath_tub_description">This bath tub is cracked and leaking.</string>
 
     <string name="lever">Lever.</string>
-    <string name="lever_description">It seems to be a lever of some kind.</string>
+    <string name="lever_description">It seems to be a lever of some kind. Maybe it used to be attached somewhere?</string>
 
     <string name="lever_holder">Lever holder</string>
     <string name="lever_holder_description">Something used to be attached here.</string>
