@@ -3,9 +3,11 @@ package com.bam.darkhouseextreme.app.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.fragments.RoomFragment;
 import com.bam.darkhouseextreme.app.utilities.Utilities;
@@ -18,6 +20,8 @@ import java.util.List;
  */
 public class GameActivity extends FragmentActivity {
 
+    private RoomFragment fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -29,13 +33,25 @@ public class GameActivity extends FragmentActivity {
 
             setButtonsForRoom02();
             setButtonsForRoom01();
+            setButtonsForRoom11();
+            setButtonsForRoom12();
+            setButtonsForRoom13();
+            setButtonsForRoom20();
+            setButtonsForRoom21();
+            setButtonsForRoom22();
+            setButtonsForRoom23();
+            setButtonsForRoom32();
+            setButtonsForRoom33();
+
         }
+
+        fragment = new RoomFragment();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameactivity);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.gamelayout, new RoomFragment(), "room")
+                    .add(R.id.gamelayout, fragment, "room")
                     .commit();
         }
     }
@@ -71,6 +87,8 @@ public class GameActivity extends FragmentActivity {
         Button doorDown = new Button(getApplicationContext());
         Button paper = new Button(getApplicationContext());
         Button skeleton = new Button(getApplicationContext());
+        skeleton.setTag("skeleton");
+        paper.setTag("paper");
         doorRight.setBackgroundResource(R.drawable.item_button);
         doorDown.setBackgroundResource(R.drawable.item_button);
         paper.setBackgroundResource(R.drawable.item_button);
@@ -82,8 +100,38 @@ public class GameActivity extends FragmentActivity {
         for (Button b : room1) {
             b.setMinWidth(50);
             b.setMinHeight(50);
+            b.setMinimumWidth(50);
+            b.setAlpha(1.0f);
         }
-        Utilities.setButtonsForRooms("02", room1);
+
+        doorDown.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(0, 0);
+                    }
+                }
+        );
+
+        doorRight.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(1, 2);
+                    }
+                }
+        );
+        paper.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                        layout.removeView(v);
+                        Utilities.buttonsForRooms.get("01").remove(v);
+                    }
+                }
+        );
+        Utilities.setButtonsForRooms("01", room1);
     }
 
     private void setButtonsForRoom01() {
@@ -98,6 +146,71 @@ public class GameActivity extends FragmentActivity {
         room2.add(doorUp);
         room2.add(doorRight2);
         room2.add(key);
-        Utilities.setButtonsForRooms("01", room2);
+
+        doorUp.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(0, 1);
+                    }
+                }
+        );
+
+        doorRight2.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(1, 1);
+                    }
+                }
+        );
+
+        key.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                        layout.removeView(v);
+                        Utilities.buttonsForRooms.get("00").remove(v);
+                    }
+                }
+        );
+        Utilities.setButtonsForRooms("00", room2);
+    }
+
+    private void setButtonsForRoom11() {
+
+    }
+
+    private void setButtonsForRoom21() {
+
+    }
+
+    private void setButtonsForRoom20() {
+
+    }
+
+    private void setButtonsForRoom22() {
+
+    }
+
+    private void setButtonsForRoom12() {
+
+    }
+
+    private void setButtonsForRoom13() {
+
+    }
+
+    private void setButtonsForRoom23() {
+
+    }
+
+    private void setButtonsForRoom33() {
+
+    }
+
+    private void setButtonsForRoom32() {
+
     }
 }

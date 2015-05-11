@@ -120,13 +120,17 @@ public class Utilities {
      *
      */
 
-    public static boolean haveItemForDoor(int x, int y) {
+    public static boolean haveItemForDoor(int pX, int pY, int x, int y) {
         String roomGoingTo = String.valueOf(x) + String.valueOf(y);
+        String roomGoingFrom = String.valueOf(pX) + String.valueOf(pY);
 
         if (roomGoingTo.equals("10")) {
             return haveItem("key");
         } else if (roomGoingTo.equals("11")) {
-            return haveItem("key");
+            if (roomGoingFrom.equals("01")) {
+                return haveItem("key");
+            } else return true;
+
         } else {
             return true;
         }

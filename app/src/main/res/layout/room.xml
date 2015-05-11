@@ -4,58 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ff000000"
-    android:id="@+id/mainRel"
-    >
-
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:text="^"
-        android:id="@+id/buttonUp"
-        android:textSize="25sp"
-        android:layout_gravity="center"
-        android:alpha="3"
-        android:layout_marginTop="190dp"
-        android:layout_marginLeft="480dp"
-        android:background="@drawable/circularbutton" />
-
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:text="v"
-        android:id="@+id/buttonDown"
-        android:layout_gravity="center"
-        android:alpha="3"
-        android:layout_marginTop="260dp"
-        android:layout_marginLeft="480dp"
-        android:background="@drawable/circularbutton" />
-
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:text=">"
-        android:textSize="25sp"
-        android:id="@+id/buttonRight"
-        android:layout_gravity="center"
-        android:alpha="3"
-        android:layout_marginTop="225dp"
-        android:layout_marginLeft="525dp"
-        android:background="@drawable/circularbutton" />
-
-    <Button
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:text="&lt;"
-        android:id="@+id/buttonLeft"
-        android:textSize="25sp"
-        android:layout_gravity="center"
-        android:alpha="3"
-        android:layout_marginTop="225dp"
-        android:layout_marginLeft="435dp"
-        android:background="@drawable/circularbutton"
-        />
-
-
+    android:id="@+id/mainRel" >
 
     <ImageView
             android:layout_width="fill_parent"
@@ -63,13 +12,6 @@
             android:id="@+id/roomImage"
             android:layout_marginRight="-1dp"
             android:layout_marginLeft="-1dp"/>
-
-    <ImageView
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/playerCharacter"
-        android:background="@drawable/player_character" />
 
 
 </RelativeLayout>
