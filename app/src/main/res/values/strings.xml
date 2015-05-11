@@ -34,31 +34,31 @@
     <string name="bloody_table_description">Looks like somebody had an accident here&#8230;</string>
 
     <string name="chair">Chair</string>
-    <string name="chair_description">It looks old and askew. Probably shouldn't sit on it&#8230;</string>
+    <string name="chair_description">It looks old and askew. Probably shouldn\'t sit on it&#8230;</string>
 
     <string name="gas_pipe">Gas pipe</string>
     <string name="gas_pipe_description">There seems to be a hole in this gas pipe. You should probably try and fix it&#8230;</string>
 
     <string name="clock_without_hands">Clock with no hands</string>
-    <string name="clock_without_hands_description">It's a broken clock without hands. I wonder wich way is up?</string>
+    <string name="clock_without_hands_description">It\'s a broken clock without hands. I wonder wich way is up?</string>
     <string name="clock_with_minute_hand">Clock without hour hand</string>
-    <string name="clock_with_minute_hand_description">It's a clock without an hour hand. I wonder wich way is up?</string>
+    <string name="clock_with_minute_hand_description">It\'s a clock without an hour hand. I wonder wich way is up?</string>
     <string name="clock_with_hour_hand">Clock without minute hand</string>
-    <string name="clock_with_hour_hand_description">It's a clock without a minute hand. I wonder wich way is up?</string>
+    <string name="clock_with_hour_hand_description">It\'s a clock without a minute hand. I wonder wich way is up?</string>
     <string name="clock_with_both_hands">Clock with both hands</string>
-    <string name="clock_with_both_hands_description">It's a clock with an hour hand and a minute hand. What time is it showing?</string>
+    <string name="clock_with_both_hands_description">It\'s a clock with an hour hand and a minute hand. What time is it showing?</string>
 
     <string name="hour_hand">Hour hand</string>
-    <string name="hour_hand_description">It's an hour hand for a clock.</string>
+    <string name="hour_hand_description">It\'s an hour hand for a clock.</string>
 
     <string name="minute_hand">Minute hand</string>
-    <string name="minute_hand_description">It's a minute hand for a clock.</string>
+    <string name="minute_hand_description">It\'s a minute hand for a clock.</string>
 
     <string name="dark_room_table">Dark room table</string>
     <string name="dark_room_table_description">Maybe, it can be moved?</string>
 
     <string name="toilet">Toilet</string>
-    <string name="toilet_description">Whatever is in there doesn't seem to be from a human&#8230;</string>
+    <string name="toilet_description">Whatever is in there doesn\'t seem to be from a human&#8230;</string>
 
     <string name="shower">Shower</string>
     <string name="shower_description">This shower is leaking.</string>
@@ -70,10 +70,10 @@
     <string name="lever_holder_description">Something used to be attached here.</string>
 
     <string name="painting">Painting</string>
-    <string name="painting_description">It's a dry old painting. Wait! It seems to be moving.</string>
+    <string name="painting_description">It\'s a dry old painting. Wait! It seems to be moving.</string>
 
     <string name="bucket">Bucket</string>
-    <string name="bucket_description">It's a banged up bucket. Seems whole though&#8230;</string>
+    <string name="bucket_description">It\'s a banged up bucket. Seems whole though&#8230;</string>
 
     <string name="key_lock">Key lock</string>
     <string name="key_lock_description">You must enter the correct four digit code.</string>
