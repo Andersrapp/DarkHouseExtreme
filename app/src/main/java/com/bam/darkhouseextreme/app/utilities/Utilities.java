@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,7 @@ import java.util.Map;
  */
 public class Utilities {
 
-    public static Map<String, List<Button>> buttonsForRooms;
+    public static Map<String, List<Button>> buttonsForRooms = new HashMap<>();
 
     /**
      * For each View in a ViewGroup, send the View to @code{setFontForView}.

@@ -245,9 +245,7 @@ public class RoomFragment extends Fragment {
 
     private void changeRoom(final int roomId) {
 
-        nullifyAndRemoveButtonsFromParent();
-//        createButtons();
-//        setItemButtons();
+        placeItems(root);
 
         Animation fadeout = AnimationUtils.loadAnimation(context, R.anim.fade_out);
         roomImage.startAnimation(fadeout);
@@ -286,6 +284,8 @@ public class RoomFragment extends Fragment {
         String room = String.valueOf(x) + String.valueOf(y);
         final int roomId;
         if ((roomId = Utilities.isViableRoom(room, context)) != 0) {
+            nullifyAndRemoveButtonsFromParent();
+            eventsInRoom = Utilities.buttonsForRooms.get(room);
             changeRoom(roomId);
             SaveUtility.saveProgress(x, y, score += 10);
             return true;
@@ -298,10 +298,7 @@ public class RoomFragment extends Fragment {
         final int roomId;
         eventsInRoom = Utilities.buttonsForRooms.get(room);
         roomId = Utilities.isViableRoom(room, context);
-        for (Button b : eventsInRoom) {
-            b.setBackgroundResource(R.drawable.placeholder);
-            setItemClickListener(b);
-        }
+        placeItems(root);
         roomImage.setImageResource(roomId);
     }
 
@@ -377,23 +374,58 @@ public class RoomFragment extends Fragment {
         RelativeLayout.LayoutParams doorRight = getParams();
         RelativeLayout.LayoutParams doorLeft = getParams();
 
+        Button up;
+        Button down;
+        Button right;
+        Button left;
+
+
         switch (room) {
             case "02":
+
                 RelativeLayout.LayoutParams paper = getParams();
                 RelativeLayout.LayoutParams skeleton = getParams();
+
+                right = eventsInRoom.get(0);
+                down = eventsInRoom.get(1);
+                Button papererino = eventsInRoom.get(2);
+                Button skeletini = eventsInRoom.get(3);
 
                 doorRight.setMargins((screenWidth - 70), (screenHeight /2), 0, 0);
                 doorDown.setMargins((screenWidth / 2), (screenHeight - 70), 0, 0);
                 paper.setMargins((screenHeight / 2), (screenWidth / 2), 0, 0);
                 skeleton.setMargins((screenHeight / 4), (screenWidth / 2), 0, 0);
 
+                right.setLayoutParams(doorRight);
+                down.setLayoutParams(doorDown);
+                papererino.setLayoutParams(paper);
+                skeletini.setLayoutParams(skeleton);
+
+                mainRelativeLayout.addView(right);
+                mainRelativeLayout.addView(down);
+                mainRelativeLayout.addView(skeletini);
+                mainRelativeLayout.addView(papererino);
+
                 break;
             case "01":
                 RelativeLayout.LayoutParams key = getParams();
 
+                up = eventsInRoom.get(0);
+                right = eventsInRoom.get(1);
+                Button keyerino = eventsInRoom.get(2);
+
                 key.setMargins((screenWidth / 2), (screenHeight / 2), 0 ,0);
                 doorUp.setMargins((screenWidth / 2), 10, 0, 0);
-                doorRight.setMargins((screenWidth - 70), (screenHeight /2), 0, 0);
+                doorRight.setMargins((screenWidth - 70), (screenHeight / 2), 0, 0);
+
+                up.setLayoutParams(doorUp);
+                right.setLayoutParams(doorRight);
+                keyerino.setLayoutParams(key);
+
+                mainRelativeLayout.addView(up);
+                mainRelativeLayout.addView(right);
+                mainRelativeLayout.addView(keyerino);
+
                 break;
             case "11":
                 break;
@@ -422,12 +454,10 @@ public class RoomFragment extends Fragment {
 
     private void nullifyAndRemoveButtonsFromParent() {
         RelativeLayout mainRelativeLayout = (RelativeLayout) root.findViewById(R.id.mainRel);
-        mainRelativeLayout.removeView(itemButton1);
-        mainRelativeLayout.removeView(itemButton2);
-        mainRelativeLayout.removeView(itemButton3);
-        itemButton1 = null;
-        itemButton2 = null;
-        itemButton3 = null;
+        for (Button b : eventsInRoom) {
+            mainRelativeLayout.removeView(b);
+        }
+        eventsInRoom.clear();
     }
 
     private RelativeLayout.LayoutParams getParams() {

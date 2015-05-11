@@ -25,7 +25,11 @@ public class GameActivity extends FragmentActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        setButtonsForRooms();
+        if (Utilities.buttonsForRooms.isEmpty()) {
+
+            setButtonsForRoom02();
+            setButtonsForRoom01();
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameactivity);
@@ -61,40 +65,39 @@ public class GameActivity extends FragmentActivity {
         finish();
     }
 
-    private void setButtonsForRooms() {
-        List<Button> room1 = new ArrayList<>();
-        Button doorRight = new Button(getApplicationContext());
-        Button doorDown = new Button(getApplicationContext());
-        Button paper = new Button(getApplicationContext());
-        Button skeleton = new Button(getApplicationContext());
-        room1.add(doorRight);
-        room1.add(doorDown);
-        room1.add(paper);
-        room1.add(skeleton);
-        Utilities.setButtonsForRooms("02", room1);
-
-
-        List<Button> room2 = new ArrayList<>();
-        Button doorUp = new Button(getApplicationContext());
-        Button doorRight2 = new Button(getApplicationContext());
-        Button key = new Button(getApplicationContext());
-        room2.add(doorUp);
-        room2.add(doorRight2);
-        room2.add(key);
-        Utilities.setButtonsForRooms("01", room2);
-
-    }
-
     private void setButtonsForRoom02() {
         List<Button> room1 = new ArrayList<>();
         Button doorRight = new Button(getApplicationContext());
         Button doorDown = new Button(getApplicationContext());
         Button paper = new Button(getApplicationContext());
         Button skeleton = new Button(getApplicationContext());
+        doorRight.setBackgroundResource(R.drawable.item_button);
+        doorDown.setBackgroundResource(R.drawable.item_button);
+        paper.setBackgroundResource(R.drawable.item_button);
+        skeleton.setBackgroundResource(R.drawable.item_button);
         room1.add(doorRight);
         room1.add(doorDown);
         room1.add(paper);
         room1.add(skeleton);
+        for (Button b : room1) {
+            b.setMinWidth(50);
+            b.setMinHeight(50);
+        }
         Utilities.setButtonsForRooms("02", room1);
+    }
+
+    private void setButtonsForRoom01() {
+
+        List<Button> room2 = new ArrayList<>();
+        Button doorUp = new Button(getApplicationContext());
+        Button doorRight2 = new Button(getApplicationContext());
+        Button key = new Button(getApplicationContext());
+        doorRight2.setBackgroundResource(R.drawable.item_button);
+        doorUp.setBackgroundResource(R.drawable.item_button);
+        key.setBackgroundResource(R.drawable.item_button);
+        room2.add(doorUp);
+        room2.add(doorRight2);
+        room2.add(key);
+        Utilities.setButtonsForRooms("01", room2);
     }
 }
