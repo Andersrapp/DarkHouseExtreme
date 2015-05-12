@@ -4,12 +4,19 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Chobii on 28/04/15.
  */
 public class Utilities {
+
+    public static Map<String, List<Button>> buttonsForRooms = new HashMap<>();
 
     /**
      * For each View in a ViewGroup, send the View to @code{setFontForView}.
@@ -113,13 +120,17 @@ public class Utilities {
      *
      */
 
-    public static boolean haveItemForDoor(int x, int y) {
+    public static boolean haveItemForDoor(int pX, int pY, int x, int y) {
         String roomGoingTo = String.valueOf(x) + String.valueOf(y);
+        String roomGoingFrom = String.valueOf(pX) + String.valueOf(pY);
 
         if (roomGoingTo.equals("10")) {
             return haveItem("key");
         } else if (roomGoingTo.equals("11")) {
-            return haveItem("key");
+            if (roomGoingFrom.equals("01")) {
+                return haveItem("key");
+            } else return true;
+
         } else {
             return true;
         }
@@ -146,5 +157,9 @@ public class Utilities {
             default:
                 return true;
         }
+    }
+
+    public static void setButtonsForRooms(String key, List<Button> buttons) {
+        buttonsForRooms.put(key, buttons);
     }
 }

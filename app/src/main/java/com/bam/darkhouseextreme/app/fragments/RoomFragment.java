@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,8 @@ import java.util.List;
  * Created by Chobii on 29/04/15.
  */
 public class RoomFragment extends Fragment {
+
+    public final String LOG_DATA = RoomFragment.class.getSimpleName();
 
     private View root;
     private Button buttonUp, buttonDown, buttonLeft, buttonRight, itemButton1, itemButton2, itemButton3;
@@ -65,14 +68,6 @@ public class RoomFragment extends Fragment {
         root = inflater.inflate(R.layout.room, container, false);
 
         roomImage = (ImageView) root.findViewById(R.id.roomImage);
-
-
-        buttonUp = (Button) root.findViewById(R.id.buttonUp);
-        buttonDown = (Button) root.findViewById(R.id.buttonDown);
-        buttonLeft = (Button) root.findViewById(R.id.buttonLeft);
-        buttonRight = (Button) root.findViewById(R.id.buttonRight);
-
-
         animation = AnimationUtils.loadAnimation(context, R.anim.alpha_button);
 
         int[] stats = SaveUtility.loadStats();
@@ -82,10 +77,6 @@ public class RoomFragment extends Fragment {
 
         continueIfApplicable(x_cord, y_cord);
 
-        setButtonUp();
-        setButtonDown();
-        setButtonLeft();
-        setButtonRight();
 
 
         return root;
@@ -95,93 +86,38 @@ public class RoomFragment extends Fragment {
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
-        nullifyAndRemoveButtonsFromParent();
-        createButtons();
-        setItemButtons();
+//        nullifyAndRemoveButtonsFromParent();
+//        createButtons();
+//        setItemButtons();
     }
 
-    private void setButtonUp() {
-        buttonUp.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!isRoom(x_cord, y_cord += 1)) {
-                            y_cord -= 1;
-                            informOfError();
-                        }
-                    }
-                }
-        );
-    }
 
-    private void setButtonDown() {
-        buttonDown.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!isRoom(x_cord, y_cord -= 1)) {
-                            y_cord += 1;
-                            informOfError();
-                        }
-                    }
-                }
-        );
-    }
-
-    private void setButtonLeft() {
-        buttonLeft.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!isRoom(x_cord -= 1, y_cord)) {
-                            x_cord += 1;
-                            informOfError();
-                        }
-                    }
-                }
-        );
-    }
-
-    private void setButtonRight() {
-        buttonRight.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!isRoom(x_cord += 1, y_cord)) {
-                            x_cord -= 1;
-                            informOfError();
-                        }
-                    }
-                }
-        );
-    }
-
-    private void setItemButtons() {
-        for (int i = 1; i < 4; i++) {
-            int itemID;
-            try {
-                itemID = context.getResources().getIdentifier(
-                        "item" + i + "" + String.valueOf(x_cord) + "" + String.valueOf(y_cord), "id", context.getPackageName());
-            } catch (Exception e) {
-                itemID = 0;
-            }
-            if (itemID != 0) {
-                switch (i) {
-                    case 1:
-                        itemButton1 = (Button) root.findViewById(itemID);
-                        break;
-                    case 2:
-                        itemButton2 = (Button) root.findViewById(itemID);
-                        break;
-                    case 3:
-                        itemButton3 = (Button) root.findViewById(itemID);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
+//    private void setItemButtons() {
+//        for (int i = 1; i < 4; i++) {
+//            int itemID;
+//            try {
+//                itemID = context.getResources().getIdentifier(
+//                        "item" + i + "" + String.valueOf(x_cord) + "" + String.valueOf(y_cord), "id", context.getPackageName());
+//            } catch (Exception e) {
+//                itemID = 0;
+//            }
+//            if (itemID != 0) {
+//                switch (i) {
+//                    case 1:
+//                        itemButton1 = (Button) root.findViewById(itemID);
+//                        break;
+//                    case 2:
+//                        itemButton2 = (Button) root.findViewById(itemID);
+//                        break;
+//                    case 3:
+//                        itemButton3 = (Button) root.findViewById(itemID);
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//        }
+//    }
 
     private void setItemClickListener(Button itemButton) {
 
@@ -245,9 +181,8 @@ public class RoomFragment extends Fragment {
 
     private void changeRoom(final int roomId) {
 
-        nullifyAndRemoveButtonsFromParent();
-        createButtons();
-        setItemButtons();
+        Log.d(LOG_DATA, "Changed Room");
+        placeItems(root);
 
         Animation fadeout = AnimationUtils.loadAnimation(context, R.anim.fade_out);
         roomImage.startAnimation(fadeout);
@@ -282,21 +217,38 @@ public class RoomFragment extends Fragment {
                 .show();
     }
 
-    private boolean isRoom(int x, int y) {
+    public boolean isRoom(int x, int y) {
         String room = String.valueOf(x) + String.valueOf(y);
         final int roomId;
         if ((roomId = Utilities.isViableRoom(room, context)) != 0) {
-            changeRoom(roomId);
-            SaveUtility.saveProgress(x, y, score += 10);
-            return true;
-        } else return false;
+            if (Utilities.haveItemForDoor(x_cord, y_cord, x, y)) {
+                Log.d(LOG_DATA, String.valueOf(eventsInRoom.size()));
+                nullifyAndRemoveButtonsFromParent();
+                Log.d(LOG_DATA, room);
+                Log.d(LOG_DATA, "Is a room");
+                eventsInRoom.addAll(Utilities.buttonsForRooms.get(room));
+                Log.d(LOG_DATA, String.valueOf(eventsInRoom.size()));
+                x_cord = x;
+                y_cord = y;
+                changeRoom(roomId);
+                SaveUtility.saveProgress(x, y, score += 10);
+                return true;
+            }
+        } else {
+            Toast.makeText(context, "You need some kind of item to get passed this door", Toast.LENGTH_SHORT).show();
+        }
 
+        return false;
     }
 
     private void continueIfApplicable(int x, int y) {
+        Log.d(LOG_DATA, "Continuing");
         String room = String.valueOf(x) + String.valueOf(y);
         final int roomId;
+        eventsInRoom.addAll(Utilities.buttonsForRooms.get(room));
+        Log.d("List", String.valueOf(eventsInRoom.size()));
         roomId = Utilities.isViableRoom(room, context);
+        placeItems(root);
         roomImage.setImageResource(roomId);
     }
 
@@ -318,45 +270,50 @@ public class RoomFragment extends Fragment {
         }
     }
 
-    public void createButtons() {
-        String coordinates = String.valueOf(x_cord) + String.valueOf(y_cord);
+//    public void createButtons() {
+//        String coordinates = String.valueOf(x_cord) + String.valueOf(y_cord);
+//
+//        switch (coordinates) {
+//            case "00":
+//                initiateButtons();
+//                placeItems(root);
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 
-        switch (coordinates) {
-            case "00":
-                initiateButtons();
-                placeItems(root);
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void initiateButtons() {
-        eventsInRoom.clear();
-        itemButton1 = new Button(context);
-        itemButton2 = new Button(context);
-        itemButton3 = new Button(context);
-        itemButton1.setTag(1);
-        itemButton2.setTag(2);
-        itemButton3.setTag(3);
-        itemButton1.setBackgroundResource(R.drawable.placeholder);
-        itemButton2.setBackgroundResource(R.drawable.placeholder);
-        itemButton3.setBackgroundResource(R.drawable.placeholder);
-        itemButton1.setId((R.id.item100));
-        itemButton2.setId((R.id.item200));
-        itemButton3.setId((R.id.item300));
-
-        eventsInRoom.add(itemButton1);
-        eventsInRoom.add(itemButton2);
-        eventsInRoom.add(itemButton3);
-
-        for (Button b : eventsInRoom) {
-            setItemClickListener(b);
-        }
-    }
+//    public void initiateButtons() {
+//        eventsInRoom.clear();
+//        itemButton1 = new Button(context);
+//        itemButton2 = new Button(context);
+//        itemButton3 = new Button(context);
+//        itemButton1.setTag(1);
+//        itemButton2.setTag(2);
+//        itemButton3.setTag(3);
+//        itemButton1.setBackgroundResource(R.drawable.placeholder);
+//        itemButton2.setBackgroundResource(R.drawable.placeholder);
+//        itemButton3.setBackgroundResource(R.drawable.placeholder);
+//        itemButton1.setId((R.id.item100));
+//        itemButton2.setId((R.id.item200));
+//        itemButton3.setId((R.id.item300));
+//
+//        eventsInRoom.add(itemButton1);
+//        eventsInRoom.add(itemButton2);
+//        eventsInRoom.add(itemButton3);
+//
+//        for (Button b : eventsInRoom) {
+//            setItemClickListener(b);
+//        }
+//    }
 
 
     public RelativeLayout placeItems(View root) {
+
+        Log.d(LOG_DATA, "Placing items");
+
+        String room = String.valueOf(x_cord) + String.valueOf(y_cord);
+
         Point size = new Point();
         getActivity().getWindowManager().getDefaultDisplay().getSize(size);
         int screenWidth = size.x;
@@ -364,43 +321,120 @@ public class RoomFragment extends Fragment {
         int screenHeight = size.y - 100;
         RelativeLayout mainRelativeLayout = (RelativeLayout) root.findViewById(R.id.mainRel);
 
-        RelativeLayout.LayoutParams params1 = getParams();
-//        RelativeLayout.LayoutParams params2 = getParams();
-//        RelativeLayout.LayoutParams params3 = getParams();
+        RelativeLayout.LayoutParams doorUp = getParams();
+        RelativeLayout.LayoutParams doorDown = getParams();
+        RelativeLayout.LayoutParams doorRight = getParams();
+        RelativeLayout.LayoutParams doorLeft = getParams();
 
-        params1.setMargins((screenWidth / 2) + 200, (screenHeight / 3), 0, 0);
-        itemButton1.setMinWidth(50);
-        itemButton1.setMinimumWidth(50);
-        itemButton1.setMinHeight(50);
-        itemButton1.setLayoutParams(params1);
-        mainRelativeLayout.addView(itemButton1);
+        doorRight.setMargins((screenWidth - 70), (screenHeight /2), 0, 0);
+        doorDown.setMargins((screenWidth / 2), (screenHeight - 70), 0, 0);
+        doorUp.setMargins((screenWidth / 2), 10, 0, 0);
 
-        //---- adds a second button to the layout
-//        params2.setMargins((screenWidth - 100), 0, 0, 0);
-//        itemButton2.setMinWidth(0);
-//        itemButton2.setMinHeight(0);
-//        itemButton2.setLayoutParams(params2);
-//        mainRelativeLayout.addView(itemButton2);
+        Button up;
+        Button down;
+        Button right;
+        Button left;
 
-        //---- adds a third button to the layout
-//        params3.setMargins(200, (screenHeight / 3) * 2, 0, 0);
-//        itemButton3.setMinWidth(0);
-//        itemButton3.setMinHeight(0);
-//        itemButton3.setLayoutParams(params3);
-//        mainRelativeLayout.addView(itemButton3);
 
+        switch (room) {
+            case "01":
+
+                RelativeLayout.LayoutParams paper = getParams();
+                RelativeLayout.LayoutParams skeleton = getParams();
+                Log.d(LOG_DATA, String.valueOf(eventsInRoom.size()));
+                Log.d(LOG_DATA, "Room 02");
+                right = eventsInRoom.get(0);
+                down = eventsInRoom.get(1);
+
+
+
+                paper.setMargins((screenHeight / 2), (screenWidth / 2), 0, 0);
+                skeleton.setMargins((screenHeight / 4), (screenWidth / 2), 0, 0);
+
+                right.setLayoutParams(doorRight);
+                down.setLayoutParams(doorDown);
+
+
+                mainRelativeLayout.addView(right);
+                mainRelativeLayout.addView(down);
+
+                if (eventsInRoom.size() > 3) {
+
+                    Button papererino = eventsInRoom.get(2);
+                    Button skeletini = eventsInRoom.get(3);
+
+                    papererino.setLayoutParams(paper);
+                    skeletini.setLayoutParams(skeleton);
+
+                    mainRelativeLayout.addView(skeletini);
+                    mainRelativeLayout.addView(papererino);
+                } else if (eventsInRoom.size() > 2) {
+
+                    if (eventsInRoom.get(2).getTag().equals("paper")) {
+                        Button papererino = eventsInRoom.get(2);
+                        papererino.setLayoutParams(paper);
+                        mainRelativeLayout.addView(papererino);
+                    } else {
+                        Button skeletini = eventsInRoom.get(2);
+                        skeletini.setLayoutParams(skeleton);
+                        mainRelativeLayout.addView(skeletini);
+                    }
+                }
+
+                break;
+            case "00":
+                Log.d(LOG_DATA, "Room 01");
+                RelativeLayout.LayoutParams key = getParams();
+
+                up = eventsInRoom.get(0);
+                right = eventsInRoom.get(1);
+                Button keyerino = eventsInRoom.get(2);
+
+                key.setMargins((screenWidth / 2), (screenHeight / 2), 0 ,0);
+
+
+                up.setLayoutParams(doorUp);
+                right.setLayoutParams(doorRight);
+                keyerino.setLayoutParams(key);
+
+                mainRelativeLayout.addView(up);
+                mainRelativeLayout.addView(right);
+                mainRelativeLayout.addView(keyerino);
+                Log.d(LOG_DATA, String.valueOf(eventsInRoom.size()));
+
+                break;
+            case "11":
+                break;
+            case "21":
+                break;
+            case "20":
+                break;
+            case "12":
+                break;
+            case "22":
+                break;
+            case "13":
+                break;
+            case "23":
+                break;
+            case "33":
+                break;
+            case "32":
+                break;
+            default:
+                break;
+        }
 
         return mainRelativeLayout;
     }
 
     private void nullifyAndRemoveButtonsFromParent() {
         RelativeLayout mainRelativeLayout = (RelativeLayout) root.findViewById(R.id.mainRel);
-        mainRelativeLayout.removeView(itemButton1);
-        mainRelativeLayout.removeView(itemButton2);
-        mainRelativeLayout.removeView(itemButton3);
-        itemButton1 = null;
-        itemButton2 = null;
-        itemButton3 = null;
+        Log.d(LOG_DATA, "empty");
+        for (Button b : eventsInRoom) {
+            mainRelativeLayout.removeView(b);
+        }
+        eventsInRoom.clear();
     }
 
     private RelativeLayout.LayoutParams getParams() {
