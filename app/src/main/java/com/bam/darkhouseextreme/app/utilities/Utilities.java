@@ -17,6 +17,13 @@ import java.util.Map;
 public class Utilities {
 
     public static Map<String, List<Button>> buttonsForRooms = new HashMap<>();
+    static boolean room11 = false;
+    static boolean room01 = false;
+    static boolean room22 = false;
+    static boolean room32 = false;
+    static boolean room02 = false;
+    static boolean room33 = false;
+    static boolean room21 = false;
 
     /**
      * For each View in a ViewGroup, send the View to @code{setFontForView}.
@@ -161,5 +168,31 @@ public class Utilities {
 
     public static void setButtonsForRooms(String key, List<Button> buttons) {
         buttonsForRooms.put(key, buttons);
+    }
+
+    public static int doorOpened(Context context, String room) {
+
+        int roomVersion = context.getResources().getIdentifier(
+                "room" + room, "drawable", context.getPackageName()
+        );
+
+        switch (room) {
+            case "02":
+                return room02 ? roomVersion : 0;
+            case "01":
+                return room01 ? roomVersion : 0;
+            case "22":
+                return room22 ? roomVersion : 0;
+            case "33":
+                return room33 ? roomVersion : 0;
+            case "32":
+                return room32 ? roomVersion : 0;
+            default:
+                return 0;
+        }
+
+
+
+
     }
 }
