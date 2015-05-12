@@ -203,9 +203,30 @@ public class GameActivity extends FragmentActivity {
 
         Button doorRight = new Button(getApplicationContext());
         Button doorLeft = new Button(getApplicationContext());
+        Button clock = new Button(getApplicationContext());
 
         buttons.add(doorLeft);
         buttons.add(doorRight);
+        buttons.add(clock);
+
+
+        if (!SaveUtility.alreadyHasItem("4")) {
+
+            Button hour = new Button(getApplicationContext());
+
+            buttons.add(hour);
+
+            hour.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                            layout.removeView(v);
+                            Utilities.buttonsForRooms.get("11").remove(v);
+                        }
+                    }
+            );
+        }
 
         doorLeft.setOnClickListener(
                 new View.OnClickListener() {
@@ -221,6 +242,15 @@ public class GameActivity extends FragmentActivity {
                     @Override
                     public void onClick(View v) {
                         fragment.isRoom(2, 1);
+                    }
+                }
+        );
+
+        clock.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
                     }
                 }
         );
@@ -301,10 +331,29 @@ public class GameActivity extends FragmentActivity {
         Button doorRight = new Button(getApplicationContext());
         Button doorUp = new Button(getApplicationContext());
 
+
         buttons.add(doorDown);
         buttons.add(doorLeft);
         buttons.add(doorRight);
-        buttons.add(doorUp)
+        buttons.add(doorUp);
+
+        if (!SaveUtility.alreadyHasItem("5")) {
+            Button handle = new Button(getApplicationContext());
+
+            buttons.add(handle);
+
+            handle.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                            layout.removeView(v);
+                            Utilities.buttonsForRooms.get("22").remove(v);
+
+                        }
+                    }
+            );
+        }
 
         doorDown.setOnClickListener(
                 new View.OnClickListener() {
@@ -380,7 +429,7 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        fragment.isRoom(2, 3),
+                        fragment.isRoom(2, 3);
                     }
                 }
         );
