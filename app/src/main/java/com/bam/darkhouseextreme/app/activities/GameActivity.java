@@ -204,10 +204,12 @@ public class GameActivity extends FragmentActivity {
         Button doorRight = new Button(getApplicationContext());
         Button doorLeft = new Button(getApplicationContext());
         Button clock = new Button(getApplicationContext());
+        Button gasline = new Button(getApplicationContext());
 
         buttons.add(doorLeft);
         buttons.add(doorRight);
         buttons.add(clock);
+        buttons.add(gasline);
 
 
         if (!SaveUtility.alreadyHasItem("4")) {
@@ -247,6 +249,15 @@ public class GameActivity extends FragmentActivity {
         );
 
         clock.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }
+        );
+
+        gasline.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -400,9 +411,20 @@ public class GameActivity extends FragmentActivity {
 
         Button doorRight = new Button(getApplicationContext());
         Button doorLeft = new Button(getApplicationContext());
+        Button stairs = new Button(getApplicationContext());
 
         buttons.add(doorRight);
         buttons.add(doorLeft);
+        buttons.add(stairs);
+
+        stairs.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }
+        );
 
         doorLeft.setOnClickListener(
                 new View.OnClickListener() {
@@ -422,8 +444,19 @@ public class GameActivity extends FragmentActivity {
         List<Button> buttons = new ArrayList<>();
 
         Button doorRight = new Button(getApplicationContext());
+        Button lever = new Button(getApplicationContext());
 
         buttons.add(doorRight);
+        buttons.add(lever);
+
+        lever.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }
+        );
 
         doorRight.setOnClickListener(
                 new View.OnClickListener() {
@@ -445,10 +478,21 @@ public class GameActivity extends FragmentActivity {
         Button doorLeft = new Button(getApplicationContext());
         Button doorRight = new Button(getApplicationContext());
         Button doorDown = new Button(getApplicationContext());
+        Button painting = new Button(getApplicationContext());
 
         buttons.add(doorDown);
         buttons.add(doorLeft);
         buttons.add(doorRight);
+        buttons.add(painting);
+
+        painting.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                }
+        );
 
         doorDown.setOnClickListener(
                 new View.OnClickListener() {
@@ -490,6 +534,24 @@ public class GameActivity extends FragmentActivity {
         buttons.add(doorDown);
         buttons.add(doorLeft);
 
+        if (!SaveUtility.alreadyHasItem("9")) {
+
+            Button bucket = new Button(getApplicationContext());
+
+            buttons.add(bucket);
+
+            bucket.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                            layout.removeView(v);
+                            Utilities.buttonsForRooms.get("33").remove(v);
+                        }
+                    }
+            );
+        }
+
         doorDown.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -520,6 +582,24 @@ public class GameActivity extends FragmentActivity {
 
         buttons.add(doorLeft);
         buttons.add(doorUp);
+
+        if (!SaveUtility.alreadyHasItem("10")) {
+
+            Button masterKey = new Button(getApplicationContext());
+
+            buttons.add(masterKey);
+
+            masterKey.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                            layout.removeView(v);
+                            Utilities.buttonsForRooms.get("32").remove(v);
+                        }
+                    }
+            );
+        }
 
         doorLeft.setOnClickListener(
                 new View.OnClickListener() {
