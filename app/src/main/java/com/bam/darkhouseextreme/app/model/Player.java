@@ -14,6 +14,7 @@ public class Player implements Serializable {
     private int mapYCoordinate;
     private List<Item> playerItems = new ArrayList<>();
     private int score;
+    private boolean room01, room02, room11, room13a, room13b, room21, room22, room32, room33;
 
     public Player() {
 
@@ -70,6 +71,78 @@ public class Player implements Serializable {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public boolean isRoom01() {
+        return room01;
+    }
+
+    public void setRoom01(boolean room01) {
+        this.room01 = room01;
+    }
+
+    public boolean isRoom02() {
+        return room02;
+    }
+
+    public void setRoom02(boolean room02) {
+        this.room02 = room02;
+    }
+
+    public boolean isRoom11() {
+        return room11;
+    }
+
+    public void setRoom11(boolean room11) {
+        this.room11 = room11;
+    }
+
+    public boolean isRoom13a() {
+        return room13a;
+    }
+
+    public void setRoom13a(boolean room13a) {
+        this.room13a = room13a;
+    }
+
+    public boolean isRoom13b() {
+        return room13b;
+    }
+
+    public void setRoom13b(boolean room13b) {
+        this.room13b = room13b;
+    }
+
+    public boolean isRoom21() {
+        return room21;
+    }
+
+    public void setRoom21(boolean room21) {
+        this.room21 = room21;
+    }
+
+    public boolean isRoom22() {
+        return room22;
+    }
+
+    public void setRoom22(boolean room22) {
+        this.room22 = room22;
+    }
+
+    public boolean isRoom32() {
+        return room32;
+    }
+
+    public void setRoom32(boolean room32) {
+        this.room32 = room32;
+    }
+
+    public boolean isRoom33() {
+        return room33;
+    }
+
+    public void setRoom33(boolean room33) {
+        this.room33 = room33;
     }
 
     @Override

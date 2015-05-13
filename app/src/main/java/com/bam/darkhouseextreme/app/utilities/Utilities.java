@@ -17,13 +17,14 @@ import java.util.Map;
 public class Utilities {
 
     public static Map<String, List<Button>> buttonsForRooms = new HashMap<>();
-    static boolean room11 = false;
-    static boolean room01 = false;
-    static boolean room22 = false;
-    static boolean room32 = false;
-    static boolean room02 = false;
-    static boolean room33 = false;
-    static boolean room21 = false;
+    static boolean room11;
+    static boolean room01;
+    static boolean room22;
+    static boolean room32;
+    static boolean room02;
+    static boolean room33;
+    static boolean room21;
+    static boolean room13;
 
     /**
      * For each View in a ViewGroup, send the View to @code{setFontForView}.
@@ -170,11 +171,26 @@ public class Utilities {
         buttonsForRooms.put(key, buttons);
     }
 
+    /**
+     * Checks if the room has had event triggered.
+     *
+     * @param context - The Context for the application.
+     * @param room - The room going to.
+     *
+     * @return alternative room image if event has been triggered.
+     *
+     */
+
     public static int doorOpened(Context context, String room) {
 
-        int roomVersion = context.getResources().getIdentifier(
-                "room" + room, "drawable", context.getPackageName()
-        );
+        int roomVersion;
+        try {
+            roomVersion = context.getResources().getIdentifier(
+                    "room" + room + "a", "drawable", context.getPackageName()
+            );
+        } catch (Exception e) {
+            return 0;
+        }
 
         switch (room) {
             case "02":
@@ -187,12 +203,26 @@ public class Utilities {
                 return room33 ? roomVersion : 0;
             case "32":
                 return room32 ? roomVersion : 0;
+            case "21":
+                return room21 ? roomVersion : 0;
+            case "11":
+                return room11 ? roomVersion : 0;
+            case "13":
+                return room13 ? roomVersion : 0;
             default:
                 return 0;
         }
-
-
-
-
     }
+
+    public static void setBooleanValues() {
+        room01 = SaveUtility.player.isRoom01();
+        room02 = SaveUtility.player.isRoom02();
+        room11 = SaveUtility.player.isRoom11();
+        room13 = SaveUtility.player.isRoom13a();
+        room21 = SaveUtility.player.isRoom21();
+        room22 = SaveUtility.player.isRoom22();
+        room32 = SaveUtility.player.isRoom32();
+        room33 = SaveUtility.player.isRoom33();
+    }
+
 }

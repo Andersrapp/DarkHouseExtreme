@@ -7,8 +7,6 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.model.Item;
 import com.bam.darkhouseextreme.app.model.Player;
@@ -29,6 +27,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String PLAYER_MAP_X = "MapXCoordinate";
     private static final String PLAYER_MAP_Y = "MapYCoordinate";
     private static final String PLAYER_SCORE = "Score";
+    private static final String PLAYER_ROOM01 = "Room01";
+    private static final String PLAYER_ROOM02 = "Room02";
+    private static final String PLAYER_ROOM11 = "Room11";
+    private static final String PLAYER_ROOM13A = "Room13a";
+    private static final String PLAYER_ROOM13B = "Room13b";
+    private static final String PLAYER_ROOM21 = "Room21";
+    private static final String PLAYER_ROOM22 = "Room22";
+    private static final String PLAYER_ROOM32 = "Room32";
+    private static final String PLAYER_ROOM33 = "Room33";
 
     private static final String ITEM_TABLE_NAME = "Item";
     private static final String ITEM_ID = "Id";
@@ -49,7 +56,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + PLAYER_TABLE_NAME + " (" + PLAYER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                        + PLAYER_NAME + " TEXT, " + PLAYER_MAP_X + " INTEGER, " + PLAYER_MAP_Y + " INTEGER, " + PLAYER_SCORE + " INTEGER)"
+                        + PLAYER_NAME + " TEXT, " + PLAYER_MAP_X + " INTEGER, " + PLAYER_MAP_Y + " INTEGER, " + PLAYER_SCORE + " INTEGER, "
+                        + PLAYER_ROOM01 + " INTEGER," + PLAYER_ROOM02 + " INTEGER, " + PLAYER_ROOM11 + " INTEGER, " + PLAYER_ROOM13A + " INTEGER, "
+                        + PLAYER_ROOM13B + " INTEGER, " + PLAYER_ROOM21 + " INTEGER, " + PLAYER_ROOM22 + " INTEGER, " + PLAYER_ROOM32 + " INTEGER, "
+                        + PLAYER_ROOM33 + " INTEGER)"
         );
         db.execSQL("CREATE TABLE IF NOT EXISTS " + ITEM_TABLE_NAME + " (" + ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                         + ITEM_NAME + " TEXT, " + ITEM_DESCRIPTION + " TEXT)"
@@ -97,12 +107,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return getListOfPlayers(cursor);
     }
 
-    public boolean updateCharacter(String id, String mapXCoordinate, String mapYCoordinate, int score) {
+    public boolean updateCharacter(String id, String mapXCoordinate, String mapYCoordinate,
+                                   int score, boolean room01, boolean room02, boolean room11,
+                                   boolean room13a, boolean room13b, boolean room21,
+                                   boolean room22, boolean room32, boolean room33)
+    {
         db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(PLAYER_MAP_X, mapXCoordinate);
         contentValues.put(PLAYER_MAP_Y, mapYCoordinate);
         contentValues.put(PLAYER_SCORE, score);
+        contentValues.put(PLAYER_ROOM01, room01 ? 1 : 0);
+        contentValues.put(PLAYER_ROOM02, room02 ? 1 : 0);
+        contentValues.put(PLAYER_ROOM11, room11 ? 1 : 0);
+        contentValues.put(PLAYER_ROOM13A, room13a ? 1 : 0);
+        contentValues.put(PLAYER_ROOM13B, room13b ? 1 : 0);
+        contentValues.put(PLAYER_ROOM21, room21 ? 1 : 0);
+        contentValues.put(PLAYER_ROOM22, room22 ? 1 : 0);
+        contentValues.put(PLAYER_ROOM32, room32 ? 1 : 0);
+        contentValues.put(PLAYER_ROOM33, room33 ? 1 : 0);
         String whereClause = PLAYER_ID + " = ?";
         String[] whereArgs = {id};
 
@@ -209,6 +232,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             player.setMapXCoordinate(cursor.getInt(2));
             player.setMapYCoordinate(cursor.getInt(3));
             player.setScore(cursor.getInt(4));
+            player.setRoom01(cursor.getInt(5) == 1);
+            player.setRoom02(cursor.getInt(6) == 1);
+            player.setRoom11(cursor.getInt(7) == 1);
+            player.setRoom13a(cursor.getInt(8) == 1);
+            player.setRoom13b(cursor.getInt(9) == 1);
+            player.setRoom21(cursor.getInt(10) == 1);
+            player.setRoom22(cursor.getInt(11) == 1);
+            player.setRoom32(cursor.getInt(12) == 1);
+            player.setRoom33(cursor.getInt(13) == 1);
             player.setPlayerItems(getListOfPlayerItems(player.getId()));
             players.add(player);
         }
