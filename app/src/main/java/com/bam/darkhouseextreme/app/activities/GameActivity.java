@@ -8,6 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.fragments.RoomFragment;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
@@ -29,6 +30,8 @@ public class GameActivity extends FragmentActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        Utilities.setBooleanValues();
 
         if (Utilities.buttonsForRooms.isEmpty()) {
 
@@ -107,7 +110,7 @@ public class GameActivity extends FragmentActivity {
                         public void onClick(View v) {
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
-                            Utilities.buttonsForRooms.get("01").remove(v);
+                            Utilities.buttonsForRooms.get("02").remove(v);
                         }
                     }
             );
@@ -145,7 +148,7 @@ public class GameActivity extends FragmentActivity {
             b.setAlpha(1.0f);
         }
 
-        Utilities.setButtonsForRooms("01", room1);
+        Utilities.setButtonsForRooms("02", room1);
     }
 
     private void setButtonsForRoom01() {
@@ -158,7 +161,7 @@ public class GameActivity extends FragmentActivity {
         room2.add(doorUp);
         room2.add(doorRight2);
 
-        if (!SaveUtility.alreadyHasItem("1")) {
+        if (!SaveUtility.alreadyHasItem("5")) {
             Button key = new Button(getApplicationContext());
             key.setBackgroundResource(R.drawable.item_button);
             room2.add(key);
@@ -167,13 +170,13 @@ public class GameActivity extends FragmentActivity {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            SaveUtility.saveItemToCharacter("5");
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
-                            Utilities.buttonsForRooms.get("00").remove(v);
+                            Utilities.buttonsForRooms.get("01").remove(v);
                         }
                     }
             );
-
         }
 
         doorUp.setOnClickListener(
@@ -189,12 +192,18 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        int numOfClicks = 0;
+                        if (SaveUtility.alreadyHasItem("5")) {
+                            Toast.makeText(getApplicationContext(), "You unlocked the door!", Toast.LENGTH_SHORT).show();
+                            SaveUtility.player.setRoom01(true);
+                            fragment.eventTriggeredSwap("01");
+                        }
                         fragment.isRoom(1, 1);
                     }
                 }
         );
 
-        Utilities.setButtonsForRooms("00", room2);
+        Utilities.setButtonsForRooms("01", room2);
     }
 
     private void setButtonsForRoom11() {

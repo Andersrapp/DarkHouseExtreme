@@ -34,7 +34,6 @@ public class RoomFragment extends Fragment {
     public final String LOG_DATA = RoomFragment.class.getSimpleName();
 
     private View root;
-    private Button buttonUp, buttonDown, buttonLeft, buttonRight, itemButton1, itemButton2, itemButton3;
     private Context context;
     private ImageView roomImage;
     private int x_cord, y_cord, score;
@@ -86,68 +85,8 @@ public class RoomFragment extends Fragment {
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
-//        nullifyAndRemoveButtonsFromParent();
+        nullifyAndRemoveButtonsFromParent();
 
-    }
-
-    private void setItemClickListener(Button itemButton) {
-
-        itemButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-
-                String idOfPickedUpItem = v.getTag().toString();
-                int drawableID = Utilities.isViableItem(idOfPickedUpItem, context, x_cord, y_cord);
-
-                if (!SaveUtility.alreadyHasItem(idOfPickedUpItem) && drawableID != 0) {
-//                    v.setClickable(false);
-                    v.setBackgroundResource(drawableID);
-                    SaveUtility.saveItemToCharacter(idOfPickedUpItem);
-                    Animation fadein = AnimationUtils.loadAnimation(context, R.anim.fade_in);
-
-                    v.startAnimation(fadein);
-
-                    fadein.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
-
-                        }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            Animation fadeout = AnimationUtils.loadAnimation(context, R.anim.fade_out);
-                            v.startAnimation(fadeout);
-                            fadeout.setAnimationListener(new Animation.AnimationListener() {
-                                @Override
-                                public void onAnimationStart(Animation animation) {
-
-                                }
-
-                                @Override
-                                public void onAnimationEnd(Animation animation) {
-                                    v.setBackgroundResource(R.drawable.placeholder);
-                                    eventsInRoom.remove(v);
-                                }
-
-                                @Override
-                                public void onAnimationRepeat(Animation animation) {
-
-                                }
-                            });
-
-
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-
-                        }
-                    });
-                } else {
-                    noItemMessage();
-                }
-            }
-        });
     }
 
     private void changeRoom(final int roomId) {
@@ -178,20 +117,20 @@ public class RoomFragment extends Fragment {
         });
     }
 
-    private void noItemMessage() {
-        Toast.makeText(context, "There could have been an item here. But now there is none.", Toast.LENGTH_SHORT)
-                .show();
-    }
-
-    private void informOfError() {
-        Toast.makeText(context, "Can't go this way", Toast.LENGTH_SHORT)
-                .show();
-    }
-
     public boolean isRoom(int x, int y) {
         String room = String.valueOf(x) + String.valueOf(y);
         final int roomId;
         if ((roomId = Utilities.isViableRoom(room, context)) != 0) {
+            int alternative;
+            if ((alternative = Utilities.doorOpened(context, room)) != 0) {
+                nullifyAndRemoveButtonsFromParent();
+                eventsInRoom.addAll(Utilities.buttonsForRooms.get(room));
+                x_cord = x;
+                y_cord = y;
+                changeRoom(alternative);
+                SaveUtility.saveProgress(x, y, score += 10);
+                return true;
+            }
             if (Utilities.haveItemForDoor(x_cord, y_cord, x, y)) {
                 Log.d(LOG_DATA, String.valueOf(eventsInRoom.size()));
                 nullifyAndRemoveButtonsFromParent();
@@ -239,6 +178,12 @@ public class RoomFragment extends Fragment {
                         500);
             }
         }
+    }
+
+    public void eventTriggeredSwap(String room) {
+        int roomId = Utilities.doorOpened(context, room);
+        roomImage.setImageResource(roomId);
+
     }
 
     public RelativeLayout placeItems(View root) {

@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class SaveUtility {
 
-    private static Player player;
+    public static Player player;
     public static DatabaseHelper helper;
 
     public static void setHelper(Context context) {
@@ -21,7 +21,9 @@ public class SaveUtility {
     }
 
     public static void saveProgress(int x, int y, int score) {
-        boolean success = helper.updateCharacter(String.valueOf(player.getId()), String.valueOf(x), String.valueOf(y), score);
+        boolean success = helper.updateCharacter(String.valueOf(player.getId()), String.valueOf(x), String.valueOf(y),
+                score, player.isRoom01(), player.isRoom02(), player.isRoom11(), player.isRoom13a(), player.isRoom13b(),
+                player.isRoom21(), player.isRoom22(), player.isRoom32(), player.isRoom33());
         player.setMapXCoordinate(x);
         player.setMapYCoordinate(y);
     }
@@ -49,7 +51,16 @@ public class SaveUtility {
         helper.createAllItems(resources);
         player.setMapXCoordinate(0);
         player.setMapYCoordinate(1);
-        helper.updateCharacter(String.valueOf(player.getId()), String.valueOf(0), String.valueOf(1), 0);
+        player.setRoom01(false);
+        player.setRoom02(false);
+        player.setRoom11(false);
+        player.setRoom13a(false);
+        player.setRoom13b(false);
+        player.setRoom21(false);
+        player.setRoom22(false);
+        player.setRoom32(false);
+        player.setRoom33(false);
+        helper.updateCharacter(String.valueOf(player.getId()), String.valueOf(0), String.valueOf(1), 0, false, false, false, false, false, false, false, false, false);
     }
 
     public static int[] loadStats() {
