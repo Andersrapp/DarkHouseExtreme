@@ -1,8 +1,11 @@
 package com.bam.darkhouseextreme.app.activities;
 
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -23,6 +26,7 @@ import java.util.List;
 public class GameActivity extends FragmentActivity {
 
     private RoomFragment fragment;
+    private MediaPlayer player;
 
 
     @Override
@@ -762,5 +766,20 @@ public class GameActivity extends FragmentActivity {
         );
 
         Utilities.setButtonsForRooms("32", buttons);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        player.stop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        player = MediaPlayer.create(GameActivity.this, R.raw.game_music);
+        player.setLooping(true); // Set looping
+        player.setVolume(100, 100);
+        player.start();
     }
 }
