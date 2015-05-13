@@ -76,16 +76,4 @@ public class StartScreenActivity extends FragmentActivity {
             transaction.commit();
         }
     }
-    private class BackgroundMusic extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... params) {
-            MediaPlayer player = MediaPlayer.create(StartScreenActivity.this, R.raw.menu_music);
-            player.setLooping(true); // Set looping
-            player.setVolume(100,100);
-            player.start();
-
-            return null;
-        }
-    }
 }
