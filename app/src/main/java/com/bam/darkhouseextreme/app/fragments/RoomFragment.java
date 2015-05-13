@@ -85,7 +85,7 @@ public class RoomFragment extends Fragment {
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
-        nullifyAndRemoveButtonsFromParent();
+//        nullifyAndRemoveButtonsFromParent();
 
     }
 
@@ -182,6 +182,7 @@ public class RoomFragment extends Fragment {
 
     public void eventTriggeredSwap(String room) {
         int roomId = Utilities.doorOpened(context, room);
+        Log.d(LOG_DATA, String.valueOf(roomId));
         roomImage.setImageResource(roomId);
 
     }
@@ -191,6 +192,8 @@ public class RoomFragment extends Fragment {
         Log.d(LOG_DATA, "Placing items");
 
         String room = String.valueOf(x_cord) + String.valueOf(y_cord);
+
+        Log.d(LOG_DATA, room);
 
         Point size = new Point();
         getActivity().getWindowManager().getDefaultDisplay().getSize(size);
@@ -216,7 +219,7 @@ public class RoomFragment extends Fragment {
 
 
         switch (room) {
-            case "01":
+            case "02":
 
                 right = eventsInRoom.get(0);
                 down = eventsInRoom.get(1);
@@ -253,14 +256,14 @@ public class RoomFragment extends Fragment {
                         papererino.setLayoutParams(paper);
                         mainRelativeLayout.addView(papererino);
                     } else {
-                        Button skeletini = eventsInRoom.get(2);
+                        Button skeletini = eventsInRoom.get(3);
                         skeletini.setLayoutParams(skeleton);
                         mainRelativeLayout.addView(skeletini);
                     }
                 }
 
                 break;
-            case "00":
+            case "01":
 
                 up = eventsInRoom.get(0);
                 right = eventsInRoom.get(1);

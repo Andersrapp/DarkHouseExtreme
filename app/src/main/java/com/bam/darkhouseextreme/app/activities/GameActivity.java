@@ -127,7 +127,7 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        fragment.isRoom(0, 0);
+                        fragment.isRoom(0, 1);
                     }
                 }
         );
@@ -190,15 +190,20 @@ public class GameActivity extends FragmentActivity {
 
         doorRight2.setOnClickListener(
                 new View.OnClickListener() {
+                    int numOfClicks = 0;
                     @Override
                     public void onClick(View v) {
-                        int numOfClicks = 0;
-                        if (SaveUtility.alreadyHasItem("5")) {
+
+                        if (numOfClicks == 1 && SaveUtility.player.isRoom01()) {
+                            fragment.isRoom(1, 1);
+                        }
+                        if (SaveUtility.alreadyHasItem("5") && numOfClicks == 0) {
                             Toast.makeText(getApplicationContext(), "You unlocked the door!", Toast.LENGTH_SHORT).show();
                             SaveUtility.player.setRoom01(true);
+                            Utilities.room01 = true;
                             fragment.eventTriggeredSwap("01");
+                            numOfClicks++;
                         }
-                        fragment.isRoom(1, 1);
                     }
                 }
         );

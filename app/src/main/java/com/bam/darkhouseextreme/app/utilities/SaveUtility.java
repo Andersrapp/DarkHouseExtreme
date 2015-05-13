@@ -50,7 +50,7 @@ public class SaveUtility {
         player = helper.createCharacter(name);
         helper.createAllItems(resources);
         player.setMapXCoordinate(0);
-        player.setMapYCoordinate(1);
+        player.setMapYCoordinate(2);
         player.setRoom01(false);
         player.setRoom02(false);
         player.setRoom11(false);

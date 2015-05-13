@@ -2,6 +2,7 @@ package com.bam.darkhouseextreme.app.utilities;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,14 +18,14 @@ import java.util.Map;
 public class Utilities {
 
     public static Map<String, List<Button>> buttonsForRooms = new HashMap<>();
-    static boolean room11;
-    static boolean room01;
-    static boolean room22;
-    static boolean room32;
-    static boolean room02;
-    static boolean room33;
-    static boolean room21;
-    static boolean room13;
+    public static boolean room11;
+    public static boolean room01;
+    public static boolean room22;
+    public static boolean room32;
+    public static boolean room02;
+    public static boolean room33;
+    public static boolean room21;
+    public static boolean room13;
 
     /**
      * For each View in a ViewGroup, send the View to @code{setFontForView}.
@@ -196,6 +197,7 @@ public class Utilities {
             case "02":
                 return room02 ? roomVersion : 0;
             case "01":
+                Log.d("bla", String.valueOf(room01));
                 return room01 ? roomVersion : 0;
             case "22":
                 return room22 ? roomVersion : 0;
