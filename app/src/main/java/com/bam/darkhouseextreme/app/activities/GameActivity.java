@@ -163,7 +163,7 @@ public class GameActivity extends FragmentActivity {
 
         if (!SaveUtility.alreadyHasItem("5")) {
             Button key = new Button(getApplicationContext());
-            key.setBackgroundResource(R.drawable.item_button);
+            key.setBackgroundResource(R.drawable.key);
             room2.add(key);
 
             key.setOnClickListener(
@@ -219,6 +219,8 @@ public class GameActivity extends FragmentActivity {
         Button doorLeft = new Button(getApplicationContext());
         Button clock = new Button(getApplicationContext());
         Button gasline = new Button(getApplicationContext());
+
+        clock.setBackgroundResource(R.drawable.clock_no_hands);
 
         buttons.add(doorLeft);
         buttons.add(doorRight);
@@ -284,7 +286,7 @@ public class GameActivity extends FragmentActivity {
 
     }
 
-    private void setButtonsForRoom21() {
+    private void setButtonsForRoom21b() {
 
         List<Button> buttons = new ArrayList<>();
 
@@ -324,6 +326,89 @@ public class GameActivity extends FragmentActivity {
         );
 
         Utilities.setButtonsForRooms("21", buttons);
+
+    }
+
+    private void setButtonsForRoom21a() {
+
+        List<Button> buttons = new ArrayList<>();
+
+        Button doorLeft = new Button(getApplicationContext());
+        Button table = new Button(getApplicationContext());
+        Button doorDown = new Button(getApplicationContext());
+
+        table.setTag("table");
+
+        buttons.add(table);
+        buttons.add(doorDown);
+        buttons.add(doorLeft);
+
+        doorDown.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(2, 0);
+                    }
+                }
+        );
+
+        doorLeft.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(1, 1);
+                    }
+                }
+        );
+
+        table.setOnClickListener(
+                new View.OnClickListener() {
+                    int clickCount = 0;
+                    @Override
+                    public void onClick(View v) {
+                        if (clickCount == 6) {
+                            setButtonsForRoom21b();
+                            fragment.nullifyAndRemoveButtonsFromParent();
+                            fragment.eventsInRoom.addAll(Utilities.buttonsForRooms.get("21"));
+                            fragment.placeItems(fragment.root);
+                        }
+                        if (clickCount < 6) {
+                            clickCount++;
+                        }
+
+                    }
+                }
+        );
+
+        Utilities.setButtonsForRooms("21", buttons);
+
+    }
+
+    private void setButtonsForRoom21() {
+
+        List<Button> buttons = new ArrayList<>();
+
+        if (SaveUtility.player.isRoom21()) {
+            setButtonsForRoom21a();
+        } else {
+            Button light = new Button(getApplicationContext());
+
+            buttons.add(light);
+
+            light.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            SaveUtility.player.setRoom21(true);
+                            Utilities.room21 = true;
+                            setButtonsForRoom21a();
+                            fragment.eventTriggeredSwap("21");
+                        }
+                    }
+            );
+
+            Utilities.setButtonsForRooms("21", buttons);
+        }
     }
 
     private void setButtonsForRoom20() {

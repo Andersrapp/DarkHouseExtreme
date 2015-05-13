@@ -33,12 +33,12 @@ public class RoomFragment extends Fragment {
 
     public final String LOG_DATA = RoomFragment.class.getSimpleName();
 
-    private View root;
+    public View root;
     private Context context;
     private ImageView roomImage;
     private int x_cord, y_cord, score;
 
-    private List<Button> eventsInRoom = new ArrayList<>();
+    public List<Button> eventsInRoom = new ArrayList<>();
 
     private SensorManager sManager;
     private Sensor sensor;
@@ -184,6 +184,11 @@ public class RoomFragment extends Fragment {
         int roomId = Utilities.doorOpened(context, room);
         Log.d(LOG_DATA, String.valueOf(roomId));
         roomImage.setImageResource(roomId);
+        if (room.equals("21")) {
+            nullifyAndRemoveButtonsFromParent();
+            eventsInRoom.addAll(Utilities.buttonsForRooms.get("21"));
+            placeItems(root);
+        }
 
     }
 
@@ -300,17 +305,52 @@ public class RoomFragment extends Fragment {
                 break;
             case "21":
 
-                down = eventsInRoom.get(0);
-                left = eventsInRoom.get(1);
-                up = eventsInRoom.get(2);
+                Log.d(LOG_DATA, String.valueOf(eventsInRoom.size()));
 
-                down.setLayoutParams(doorDown);
-                left.setLayoutParams(doorLeft);
-                up.setLayoutParams(doorUp);
+                if (eventsInRoom.size() < 2) {
 
-                mainRelativeLayout.addView(down);
-                mainRelativeLayout.addView(left);
-                mainRelativeLayout.addView(up);
+                    Button light = eventsInRoom.get(0);
+
+                    RelativeLayout.LayoutParams lightparams = getParams();
+
+                    lightparams.setMargins((screenWidth / 2), (screenHeight / 2), 0, 0);
+
+                    light.setLayoutParams(lightparams);
+
+                    mainRelativeLayout.addView(light);
+
+                } else if (eventsInRoom.get(0).getTag().equals("table")) {
+
+                    Button table = eventsInRoom.get(0);
+                    down = eventsInRoom.get(1);
+                    left = eventsInRoom.get(2);
+
+                    RelativeLayout.LayoutParams tablelayout = getParams();
+                    tablelayout.setMargins(((screenWidth / 2) - (screenWidth / 11)), (screenHeight / 10), 0, 0);
+
+                    down.setLayoutParams(doorDown);
+                    left.setLayoutParams(doorLeft);
+                    table.setLayoutParams(tablelayout);
+
+                    mainRelativeLayout.addView(down);
+                    mainRelativeLayout.addView(left);
+                    mainRelativeLayout.addView(table);
+
+                } else {
+
+                    down = eventsInRoom.get(0);
+                    left = eventsInRoom.get(1);
+                    up = eventsInRoom.get(2);
+
+                    down.setLayoutParams(doorDown);
+                    left.setLayoutParams(doorLeft);
+                    up.setLayoutParams(doorUp);
+
+                    mainRelativeLayout.addView(down);
+                    mainRelativeLayout.addView(left);
+                    mainRelativeLayout.addView(up);
+                }
+
 
                 break;
             case "20":
@@ -415,7 +455,7 @@ public class RoomFragment extends Fragment {
         return mainRelativeLayout;
     }
 
-    private void nullifyAndRemoveButtonsFromParent() {
+    public void nullifyAndRemoveButtonsFromParent() {
         RelativeLayout mainRelativeLayout = (RelativeLayout) root.findViewById(R.id.mainRel);
         Log.d(LOG_DATA, "empty");
         for (Button b : eventsInRoom) {
