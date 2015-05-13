@@ -1,8 +1,11 @@
 package com.bam.darkhouseextreme.app.activities;
 
+import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import com.bam.darkhouseextreme.app.R;
@@ -13,6 +16,7 @@ import com.bam.darkhouseextreme.app.utilities.SaveUtility;
 public class StartScreenActivity extends FragmentActivity {
 
     public static FragmentActivity activity;
+    private MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,21 @@ public class StartScreenActivity extends FragmentActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        player = MediaPlayer.create(StartScreenActivity.this, R.raw.menu_music);
+        player.setLooping(true); // Set looping
+        player.setVolume(100,100);
+        player.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        player.stop();
+    }
+
+    @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }
@@ -55,6 +74,18 @@ public class StartScreenActivity extends FragmentActivity {
             transaction.setCustomAnimations(R.anim.back_enter, R.anim.back_exit);
             transaction.replace(R.id.startscreenlayout, fragment);
             transaction.commit();
+        }
+    }
+    private class BackgroundMusic extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            MediaPlayer player = MediaPlayer.create(StartScreenActivity.this, R.raw.menu_music);
+            player.setLooping(true); // Set looping
+            player.setVolume(100,100);
+            player.start();
+
+            return null;
         }
     }
 }
