@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.adapter.Shaker;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
@@ -49,6 +51,12 @@ public class RoomFragment extends Fragment {
 
     private Animation animation;
 
+    private RelativeLayout mainRelativeLayout;
+    private int[] tableLeftMargin = new int[6];
+    private int tablePosition = 0;
+    private RelativeLayout.LayoutParams tableLayout;
+    private Button table;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,7 +86,6 @@ public class RoomFragment extends Fragment {
         score = stats[2];
 
         continueIfApplicable(x_cord, y_cord);
-
 
 
         return root;
@@ -172,12 +179,12 @@ public class RoomFragment extends Fragment {
                 event.startAnimation(animation);
                 new Handler().postDelayed(
                         new Runnable() {
-                              @Override
-                              public void run() {
-                                  animation.cancel();
-                                  event.setBackgroundResource(R.drawable.placeholder);
-                              }
-                          },
+                            @Override
+                            public void run() {
+                                animation.cancel();
+                                event.setBackgroundResource(R.drawable.placeholder);
+                            }
+                        },
                         500);
             }
         }
@@ -208,14 +215,14 @@ public class RoomFragment extends Fragment {
         screenWidth = size.x;
 
         screenHeight = size.y - 100;
-        RelativeLayout mainRelativeLayout = (RelativeLayout) root.findViewById(R.id.mainRel);
+        mainRelativeLayout = (RelativeLayout) root.findViewById(R.id.mainRel);
 
         RelativeLayout.LayoutParams doorUp = getParams();
         RelativeLayout.LayoutParams doorDown = getParams();
         RelativeLayout.LayoutParams doorRight = getParams();
         RelativeLayout.LayoutParams doorLeft = getParams();
 
-        doorRight.setMargins((screenWidth - 70), (screenHeight /2), 0, 0);
+        doorRight.setMargins((screenWidth - 70), (screenHeight / 2), 0, 0);
         doorDown.setMargins(((screenWidth / 2) - (screenWidth / 11)), (screenHeight - 70), 0, 0);
         doorUp.setMargins(((screenWidth / 2) - (screenWidth / 11)), 10, 0, 0);
         doorLeft.setMargins(0, (screenHeight / 2), 0, 0);
@@ -236,8 +243,8 @@ public class RoomFragment extends Fragment {
                 RelativeLayout.LayoutParams paper = getParams();
                 RelativeLayout.LayoutParams skeleton = getParams();
 
-                paper.setMargins((screenWidth / 2),(screenHeight / 2) , 0, 0);
-                skeleton.setMargins((screenWidth / 2),(screenHeight / 4) , 0, 0);
+                paper.setMargins((screenWidth / 2), (screenHeight / 2), 0, 0);
+                skeleton.setMargins((screenWidth / 2), (screenHeight / 4), 0, 0);
 
 
                 right.setLayoutParams(doorRight);
@@ -286,7 +293,7 @@ public class RoomFragment extends Fragment {
                 if (eventsInRoom.size() > 2) {
                     Button keyerino = eventsInRoom.get(2);
                     RelativeLayout.LayoutParams key = getParams();
-                    key.setMargins((screenWidth / 2), (screenHeight / 2), 0 ,0);
+                    key.setMargins((screenWidth / 2), (screenHeight / 2), 0, 0);
                     keyerino.setLayoutParams(key);
                     mainRelativeLayout.addView(keyerino);
 
@@ -324,16 +331,25 @@ public class RoomFragment extends Fragment {
 
                 } else if (eventsInRoom.get(0).getTag().equals("table")) {
 
-                    Button table = eventsInRoom.get(0);
+                    table = eventsInRoom.get(0);
                     down = eventsInRoom.get(1);
                     left = eventsInRoom.get(2);
 
-                    RelativeLayout.LayoutParams tablelayout = getParams();
-                    tablelayout.setMargins(((screenWidth / 2) - (screenWidth / 6)), (screenHeight / 15), 0, 0);
+                    int portion = screenWidth / 20;
+                    int startMargin = (portion * 10) - (portion * 3);
+                    tableLeftMargin[0] = startMargin;
+                    tableLeftMargin[1] = startMargin + portion;
+                    tableLeftMargin[2] = startMargin + (portion * 2);
+                    tableLeftMargin[3] = startMargin + (portion * 3);
+                    tableLeftMargin[4] = startMargin + (portion * 4);
+                    tableLeftMargin[5] = startMargin + (portion * 5);
+
+                    tableLayout = getParams();
+                    tableLayout.setMargins(startMargin, (screenHeight / 15), 0, 0);
+                    table.setLayoutParams(tableLayout);
 
                     down.setLayoutParams(doorDown);
                     left.setLayoutParams(doorLeft);
-                    table.setLayoutParams(tablelayout);
 
                     mainRelativeLayout.addView(down);
                     mainRelativeLayout.addView(left);
@@ -376,7 +392,7 @@ public class RoomFragment extends Fragment {
 
                 RelativeLayout.LayoutParams stairsparam = getParams();
 
-                stairsparam.setMargins((screenWidth / 4), (screenHeight /2), 0, 0);
+                stairsparam.setMargins((screenWidth / 4), (screenHeight / 2), 0, 0);
 
                 stairs.setLayoutParams(stairsparam);
 
@@ -472,6 +488,59 @@ public class RoomFragment extends Fragment {
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         );
+    }
+
+    public void moveTable() {
+        int left;
+        switch (tablePosition) {
+            case 0:
+                tablePosition++;
+                Log.d("Message", "case 0");
+                left = tableLeftMargin[tablePosition];
+                tableLayout.setMargins(left, 0, 0, 0);
+                table.setLayoutParams(tableLayout);
+                break;
+
+            case 1:
+                tablePosition++;
+                Log.d("Message", "case 1");
+                left = tableLeftMargin[tablePosition];
+                tableLayout.setMargins(left, 0, 0, 0);
+                table.setLayoutParams(tableLayout);
+                break;
+            case 2:
+                tablePosition++;
+                Log.d("Message", "case 2");
+                left = tableLeftMargin[tablePosition];
+                tableLayout.setMargins(left, 0, 0, 0);
+                table.setLayoutParams(tableLayout);
+                break;
+            case 3:
+                tablePosition++;
+                Log.d("Message", "case 3");
+                left = tableLeftMargin[tablePosition];
+                tableLayout.setMargins(left, 0, 0, 0);
+                table.setLayoutParams(tableLayout);
+                break;
+            case 4:
+                tablePosition++;
+                Log.d("Message", "case 4");
+                left = tableLeftMargin[tablePosition];
+                tableLayout.setMargins(left, 0, 0, 0);
+                table.setLayoutParams(tableLayout);
+                break;
+            case 5:
+                Log.d("Message", "case 5");
+                left = tableLeftMargin[tablePosition];
+                tableLayout.setMargins(left, 0, 0, 0);
+                table.setLayoutParams(tableLayout);
+                break;
+            default:
+                break;
+        }
+
+        TransitionManager.beginDelayedTransition(mainRelativeLayout);
+
     }
 
     @Override
