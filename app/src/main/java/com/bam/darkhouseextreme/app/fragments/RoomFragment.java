@@ -44,6 +44,9 @@ public class RoomFragment extends Fragment {
     private Sensor sensor;
     private Shaker shaker;
 
+    public int screenWidth;
+    public int screenHeight;
+
     private Animation animation;
 
     @Nullable
@@ -202,9 +205,9 @@ public class RoomFragment extends Fragment {
 
         Point size = new Point();
         getActivity().getWindowManager().getDefaultDisplay().getSize(size);
-        int screenWidth = size.x;
+        screenWidth = size.x;
 
-        int screenHeight = size.y - 100;
+        screenHeight = size.y - 100;
         RelativeLayout mainRelativeLayout = (RelativeLayout) root.findViewById(R.id.mainRel);
 
         RelativeLayout.LayoutParams doorUp = getParams();
@@ -326,7 +329,7 @@ public class RoomFragment extends Fragment {
                     left = eventsInRoom.get(2);
 
                     RelativeLayout.LayoutParams tablelayout = getParams();
-                    tablelayout.setMargins(((screenWidth / 2) - (screenWidth / 11)), (screenHeight / 10), 0, 0);
+                    tablelayout.setMargins(((screenWidth / 2) - (screenWidth / 6)), (screenHeight / 15), 0, 0);
 
                     down.setLayoutParams(doorDown);
                     left.setLayoutParams(doorLeft);
