@@ -359,7 +359,10 @@ public class GameActivity extends FragmentActivity {
             Button minuteHand = new Button(getApplicationContext());
 
             minuteHand.setBackgroundResource(R.drawable.minute_hand);
-
+            minuteHand.setMinWidth(0);
+            minuteHand.setMinimumWidth(0);
+            minuteHand.setMinHeight(0);
+            minuteHand.setMinimumHeight(0);
             buttons.add(minuteHand);
 
             minuteHand.setOnClickListener(
@@ -452,6 +455,10 @@ public class GameActivity extends FragmentActivity {
 
             Button hourHand = new Button(getApplicationContext());
             hourHand.setBackgroundResource(R.drawable.hour_hand);
+            hourHand.setMinWidth(0);
+            hourHand.setMinimumWidth(0);
+            hourHand.setMinHeight(0);
+            hourHand.setMinimumHeight(0);
             buttons.add(hourHand);
 
             hourHand.setOnClickListener(
