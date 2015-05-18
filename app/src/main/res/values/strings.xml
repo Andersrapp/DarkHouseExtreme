@@ -37,7 +37,10 @@
     <string name="chair_description">It looks old and askew. Probably shouldn\'t sit on it&#8230;</string>
 
     <string name="gas_pipe">Gas pipe</string>
-    <string name="gas_pipe_description">There seems to be a hole in this gas pipe. You should probably try and fix it&#8230;</string>
+    <string name="gas_pipe_description">It's a gas pipe&#8230;</string>
+
+    <string name="gas">Gas</string>
+    <string name="gas_description">There seems to be gas in here&#8230;</string>
 
     <string name="clock_without_hands">Clock with no hands</string>
     <string name="clock_without_hands_description">It\'s a broken clock without hands. I wonder wich way is up?</string>
@@ -72,13 +75,35 @@
     <string name="painting">Painting</string>
     <string name="painting_description">It\'s a dry old painting. Wait! It seems to be moving.</string>
 
-    <string name="bucket">Bucket</string>
-    <string name="bucket_description">It\'s a banged up bucket. Seems whole though&#8230;</string>
+    <string name="bucket_empty">Bucket</string>
+    <string name="bucket_empty_description">It\'s a banged up bucket. Seems whole though&#8230;</string>
 
-    <string name="key_lock">Key lock</string>
-    <string name="key_lock_description">You must enter the correct four digit code.</string>
+    <string name="bucket_filled">Bucket</string>
+    <string name="bucket_filled_description">You filled the bucket with water. Now where to use it?</string>
+
+
+    <string name="combination_lock">Key lock</string>
+    <string name="combination_lock_description">You must enter the correct four digit code.</string>
 
     <string name="master_key">Master key</string>
     <string name="master_key_description">Is this the master key?</string>
+
+    <string name="death_trap">Death trap</string>
+    <string name="death_trap_description">That trap is deadly...</string>
+
+    <string name="stairs">Stairs</string>
+    <string name="stairs_description">I wonder where these stairs go&#8230;</string>
+
+    <string name="blocked_door">Blocked door</string>
+    <string name="blocked_door_description">Is this really a door&#8230;</string>
+
+    <string name="book">Book</string>
+    <string name="book_description">nknown origin. Maybe it's from another dimension? Nobody knows how it really works but it seems to produce an energy that can be be very destructive. Still if it's used properl</string>
+
+    <string name="book_shelf">Book shelf</string>
+    <string name="book_shelf_description">It's just a book shelf.</string>
+
+    <string name="lamp">Lamp</string>
+    <string name="lamp_description">You found a lamp.</string>
 
 </resources>

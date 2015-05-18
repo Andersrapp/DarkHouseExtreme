@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="items">
-        <item>@string/corpse</item>
-        <item>@string/corpse_description</item>
-
         <item>@string/duct_tape</item>
         <item>@string/duct_tape_description</item>
 
-        <item>@string/note</item>
-        <item>@string/note_description</item>
-
-        <item>@string/bloody_table</item>
-        <item>@string/bloody_table_description</item>
-
         <item>@string/key</item>
         <item>@string/key_description</item>
-
-        <item>@string/gas_pipe</item>
-        <item>@string/gas_pipe_description</item>
 
         <item>@string/clock_without_hands</item>
         <item>@string/clock_without_hands_description</item>
@@ -37,6 +25,36 @@
         <item>@string/minute_hand</item>
         <item>@string/minute_hand_description</item>
 
+        <item>@string/lever </item>
+        <item>@string/lever_description </item>
+
+        <item>@string/painting </item>
+        <item>@string/painting_description </item>
+
+        <item>@string/bucket_empty </item>
+        <item>@string/bucket_empty_description</item>
+
+        <item>@string/bucket_filled </item>
+        <item>@string/bucket_filled_description </item>
+
+        <item>@string/master_key </item>
+        <item>@string/master_key_description </item>
+
+    </array>
+
+    <array name="non_collectables">
+        <item>@string/corpse</item>
+        <item>@string/corpse_description</item>
+
+        <item>@string/note</item>
+        <item>@string/note_description</item>
+
+        <item>@string/bloody_table</item>
+        <item>@string/bloody_table_description</item>
+
+        <item>@string/gas_pipe</item>
+        <item>@string/gas_pipe_description</item>
+
         <item>@string/dark_room_table</item>
         <item>@string/dark_room_table_description</item>
 
@@ -46,23 +64,29 @@
         <item>@string/bath_tub</item>
         <item>@string/bath_tub_description</item>
 
-        <item>@string/lever </item>
-        <item>@string/lever_description </item>
+        <item>@string/combination_lock </item>
+        <item>@string/combination_lock_description </item>
 
         <item>@string/lever_holder </item>
         <item>@string/lever_holder_description </item>
 
-        <item>@string/painting </item>
-        <item>@string/painting_description </item>
+        <item>@string/death_trap</item>
+        <item>@string/death_trap_description </item>
 
-        <item>@string/bucket </item>
-        <item>@string/bucket_description </item>
+        <item>@string/blocked_door</item>
+        <item>@string/blocked_door_description </item>
 
-        <item>@string/key_lock </item>
-        <item>@string/key_lock_description </item>
+        <item>@string/book</item>
+        <item>@string/book_description </item>
 
-        <item>@string/master_key </item>
-        <item>@string/master_key_description </item>
+        <item>@string/book_shelf</item>
+        <item>@string/book_shelf_description</item>
 
+        <item>@string/lamp</item>
+        <item>@string/lamp_description</item>
+
+        <item>@string/gas</item>
+        <item>@string/gas_description</item>
     </array>
+
 </resources>
