@@ -37,7 +37,7 @@
     <string name="chair_description">It looks old and askew. Probably shouldn\'t sit on it&#8230;</string>
 
     <string name="gas_pipe">Gas pipe</string>
-    <string name="gas_pipe_description">It's a gas pipe&#8230;</string>
+    <string name="gas_pipe_description">It\'s a gas pipe&#8230;</string>
 
     <string name="gas">Gas</string>
     <string name="gas_description">There seems to be gas in here&#8230;</string>
@@ -98,10 +98,10 @@
     <string name="blocked_door_description">Is this really a door&#8230;</string>
 
     <string name="book">Book</string>
-    <string name="book_description">nknown origin. Maybe it's from another dimension? Nobody knows how it really works but it seems to produce an energy that can be be very destructive. Still if it's used properl</string>
+    <string name="book_description">nknown origin. Maybe it\'s from another dimension? Nobody knows how it really works but it seems to produce an energy that can be be very destructive. Still if it\'s used properl</string>
 
     <string name="book_shelf">Book shelf</string>
-    <string name="book_shelf_description">It's just a book shelf.</string>
+    <string name="book_shelf_description">It\'s just a book shelf.</string>
 
     <string name="lamp">Lamp</string>
     <string name="lamp_description">You found a lamp.</string>
