@@ -4,6 +4,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -35,8 +36,9 @@ public class GameActivity extends FragmentActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Utilities.setBooleanValues();
+        fragment = new RoomFragment();
 
-        if (Utilities.buttonsForRooms.isEmpty()) {
+
 
             setButtonsForRoom02();
             setButtonsForRoom01();
@@ -50,9 +52,9 @@ public class GameActivity extends FragmentActivity {
             setButtonsForRoom32();
             setButtonsForRoom33();
 
-        }
 
-        fragment = new RoomFragment();
+
+        Log.d("BAJSSS", fragment.toString());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameactivity);
@@ -77,6 +79,7 @@ public class GameActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
+        fragment.nullifyAndRemoveButtonsFromParent();
         FragmentTransaction transaction =
                 StartScreenActivity.activity.getSupportFragmentManager().beginTransaction();
 
@@ -161,6 +164,7 @@ public class GameActivity extends FragmentActivity {
         List<Button> room2 = new ArrayList<>();
         Button doorUp = new Button(getApplicationContext());
         Button doorRight2 = new Button(getApplicationContext());
+        final Button key = new Button(getApplicationContext());
         doorRight2.setBackgroundResource(R.drawable.item_button);
         doorUp.setBackgroundResource(R.drawable.item_button);
         room2.add(doorUp);
@@ -169,9 +173,10 @@ public class GameActivity extends FragmentActivity {
 
 
         if (!SaveUtility.alreadyHasItem("5")) {
-            Button key = new Button(getApplicationContext());
             key.setBackgroundResource(R.drawable.key);
-            key.setVisibility(View.GONE);
+            if(Utilities.doorOpened("01") == 0) {
+                key.setVisibility(View.GONE);
+            }
             room2.add(key);
 
             key.setOnClickListener(
@@ -189,16 +194,21 @@ public class GameActivity extends FragmentActivity {
 
         if (Utilities.doorOpened("01") == 0) {
             Button carpet = new Button(getApplicationContext());
+            carpet.setBackgroundResource(R.drawable.item_button);
             room2.add(carpet);
 
             carpet.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            Toast.makeText(getApplicationContext(), "You stumble on the carpet, flipping the side over.", Toast.LENGTH_SHORT).show();
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
                             Utilities.buttonsForRooms.get("01").remove(v);
+                            SaveUtility.player.setRoom01(true);
+                            Utilities.room01 = true;
                             fragment.eventTriggeredSwap("01");
+                            key.setVisibility(View.VISIBLE);
 
                         }
                     }
@@ -226,10 +236,12 @@ public class GameActivity extends FragmentActivity {
                         }
                         if (SaveUtility.alreadyHasItem("5") && numOfClicks == 0) {
                             Toast.makeText(getApplicationContext(), "You unlocked the door!", Toast.LENGTH_SHORT).show();
-                            SaveUtility.player.setRoom01(true);
-                            Utilities.room01 = true;
-                            fragment.eventTriggeredSwap("01");
+                            SaveUtility.player.setRoom01a(true);
+                            Utilities.room01a = true;
+                            fragment.eventTriggeredSwap("01a");
                             numOfClicks++;
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Door is locked", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

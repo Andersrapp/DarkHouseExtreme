@@ -21,6 +21,7 @@ public class Utilities {
     public static Context context;
     public static boolean room11;
     public static boolean room01;
+    public static boolean room01a;
     public static boolean room22;
     public static boolean room32;
     public static boolean room02;
@@ -198,6 +199,8 @@ public class Utilities {
             case "01":
                 Log.d("bla", String.valueOf(room01));
                 return room01 ? roomVersion : 0;
+            case "01a":
+                return room01a ? roomVersion : 0;
             case "22":
                 return room22 ? roomVersion : 0;
             case "33":

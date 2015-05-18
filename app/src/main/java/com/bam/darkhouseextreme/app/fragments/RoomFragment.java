@@ -133,6 +133,9 @@ public class RoomFragment extends Fragment {
         if ((roomId = Utilities.isViableRoom(room)) != 0) {
             int alternative;
             if ((alternative = Utilities.doorOpened(room)) != 0) {
+                if (Utilities.doorOpened(room + "a") != 0) {
+                    alternative = Utilities.doorOpened(room + "a");
+                }
                 nullifyAndRemoveButtonsFromParent();
                 eventsInRoom.addAll(Utilities.buttonsForRooms.get(room));
                 x_cord = x;
@@ -165,9 +168,14 @@ public class RoomFragment extends Fragment {
         Log.d(LOG_DATA, "Continuing");
         String room = String.valueOf(x) + String.valueOf(y);
         final int roomId;
+        Log.d(LOG_DATA, String.valueOf(eventsInRoom.size()));
         eventsInRoom.addAll(Utilities.buttonsForRooms.get(room));
         Log.d("List", String.valueOf(eventsInRoom.size()));
-        roomId = Utilities.isViableRoom(room);
+        if (Utilities.doorOpened(room + "a") != 0) {
+            roomId = Utilities.doorOpened(room + "a");
+        } else if (Utilities.doorOpened(room) != 0) {
+            roomId = Utilities.doorOpened(room);
+        } else roomId = Utilities.isViableRoom(room);
         placeItems(root);
         roomImage.setImageResource(roomId);
     }
@@ -194,6 +202,7 @@ public class RoomFragment extends Fragment {
         int roomId = Utilities.doorOpened(room);
         Log.d(LOG_DATA, String.valueOf(roomId));
         roomImage.setImageResource(roomId);
+        SaveUtility.saveProgress(x_cord, y_cord, score += 10);
         if (room.equals("21")) {
             nullifyAndRemoveButtonsFromParent();
             eventsInRoom.addAll(Utilities.buttonsForRooms.get("21"));
@@ -271,7 +280,7 @@ public class RoomFragment extends Fragment {
                         papererino.setLayoutParams(paper);
                         mainRelativeLayout.addView(papererino);
                     } else {
-                        Button skeletini = eventsInRoom.get(3);
+                        Button skeletini = eventsInRoom.get(2);
                         skeletini.setLayoutParams(skeleton);
                         mainRelativeLayout.addView(skeletini);
                     }
@@ -297,6 +306,13 @@ public class RoomFragment extends Fragment {
                     keyerino.setLayoutParams(key);
                     mainRelativeLayout.addView(keyerino);
 
+                }
+                if (eventsInRoom.size() > 3) {
+                    Button carpet = eventsInRoom.get(3);
+                    RelativeLayout.LayoutParams carpetParam = getParams();
+                    carpetParam.setMargins((screenWidth / 2), (screenHeight / 2), 0, 0);
+                    carpet.setLayoutParams(carpetParam);
+                    mainRelativeLayout.addView(carpet);
                 }
 
                 break;
