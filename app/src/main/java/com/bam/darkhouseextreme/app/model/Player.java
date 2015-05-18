@@ -14,7 +14,7 @@ public class Player implements Serializable {
     private int mapYCoordinate;
     private List<Item> playerItems = new ArrayList<>();
     private int score;
-    private boolean room01, room02, room11, room13a, room13b, room21, room22, room32, room33;
+    private boolean room01, room01a, room02, room11, room13a, room13b, room21, room22, room32, room33;
 
     public Player() {
 
@@ -143,6 +143,14 @@ public class Player implements Serializable {
 
     public void setRoom33(boolean room33) {
         this.room33 = room33;
+    }
+
+    public boolean isRoom01a() {
+        return room01a;
+    }
+
+    public void setRoom01a(boolean room01a) {
+        this.room01a = room01a;
     }
 
     @Override

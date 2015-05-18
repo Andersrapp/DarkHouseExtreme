@@ -28,6 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String PLAYER_MAP_Y = "MapYCoordinate";
     private static final String PLAYER_SCORE = "Score";
     private static final String PLAYER_ROOM01 = "Room01";
+    private static final String PLAYER_ROOM01A = "Room01a";
     private static final String PLAYER_ROOM02 = "Room02";
     private static final String PLAYER_ROOM11 = "Room11";
     private static final String PLAYER_ROOM13A = "Room13a";
@@ -57,7 +58,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + PLAYER_TABLE_NAME + " (" + PLAYER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                         + PLAYER_NAME + " TEXT, " + PLAYER_MAP_X + " INTEGER, " + PLAYER_MAP_Y + " INTEGER, " + PLAYER_SCORE + " INTEGER, "
-                        + PLAYER_ROOM01 + " INTEGER," + PLAYER_ROOM02 + " INTEGER, " + PLAYER_ROOM11 + " INTEGER, " + PLAYER_ROOM13A + " INTEGER, "
+                        + PLAYER_ROOM01 + " INTEGER," + PLAYER_ROOM01A + " INTEGER," + PLAYER_ROOM02 + " INTEGER, " + PLAYER_ROOM11 + " INTEGER, " + PLAYER_ROOM13A + " INTEGER, "
                         + PLAYER_ROOM13B + " INTEGER, " + PLAYER_ROOM21 + " INTEGER, " + PLAYER_ROOM22 + " INTEGER, " + PLAYER_ROOM32 + " INTEGER, "
                         + PLAYER_ROOM33 + " INTEGER)"
         );
@@ -108,7 +109,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean updateCharacter(String id, String mapXCoordinate, String mapYCoordinate,
-                                   int score, boolean room01, boolean room02, boolean room11,
+                                   int score, boolean room01, boolean room01a, boolean room02, boolean room11,
                                    boolean room13a, boolean room13b, boolean room21,
                                    boolean room22, boolean room32, boolean room33)
     {
@@ -118,6 +119,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(PLAYER_MAP_Y, mapYCoordinate);
         contentValues.put(PLAYER_SCORE, score);
         contentValues.put(PLAYER_ROOM01, room01 ? 1 : 0);
+        contentValues.put(PLAYER_ROOM01A, room01a ? 1 : 0);
         contentValues.put(PLAYER_ROOM02, room02 ? 1 : 0);
         contentValues.put(PLAYER_ROOM11, room11 ? 1 : 0);
         contentValues.put(PLAYER_ROOM13A, room13a ? 1 : 0);
