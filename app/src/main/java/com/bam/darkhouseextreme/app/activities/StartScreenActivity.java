@@ -1,16 +1,15 @@
 package com.bam.darkhouseextreme.app.activities;
 
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.fragments.StartScreenFragment;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
+import com.bam.darkhouseextreme.app.utilities.Utilities;
 
 
 public class StartScreenActivity extends FragmentActivity {
@@ -22,6 +21,7 @@ public class StartScreenActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         activity = this;
+        Utilities.setContext(getApplicationContext());
 
         if (SaveUtility.helper == null) {
             SaveUtility.setHelper(getApplicationContext());

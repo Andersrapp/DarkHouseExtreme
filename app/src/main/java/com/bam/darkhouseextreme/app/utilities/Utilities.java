@@ -18,6 +18,7 @@ import java.util.Map;
 public class Utilities {
 
     public static Map<String, List<Button>> buttonsForRooms = new HashMap<>();
+    public static Context context;
     public static boolean room11;
     public static boolean room01;
     public static boolean room22;
@@ -26,6 +27,7 @@ public class Utilities {
     public static boolean room33;
     public static boolean room21;
     public static boolean room13;
+    public static boolean room13a;
 
     /**
      * For each View in a ViewGroup, send the View to @code{setFontForView}.
@@ -73,13 +75,12 @@ public class Utilities {
      * Checks if the room exist in drawable.
      *
      * @param room - The concatenated String of X, and Y-coordinates.
-     * @param context - The Context of the Application.
      *
      * @return item id if exist, else 0.
      *
      */
 
-    public static int isViableRoom(String room, Context context) {
+    public static int isViableRoom(String room) {
 
         try {
             int roomID = context.getResources().getIdentifier(
@@ -97,13 +98,12 @@ public class Utilities {
      * Checks if the item exist in drawable.
      *
      * @param itemID - The concatenated String of X, and Y-coordinates.
-     * @param context - The Context of the Application.
      *
      * @return drawable id if exist, else 0.
      *
      */
 
-    public static int isViableItem(String itemID, Context context, int x, int y) {
+    public static int isViableItem(String itemID, int x, int y) {
 
         try {
             int drawableID = context.getResources().getIdentifier(
@@ -175,14 +175,13 @@ public class Utilities {
     /**
      * Checks if the room has had event triggered.
      *
-     * @param context - The Context for the application.
      * @param room - The room going to.
      *
      * @return alternative room image if event has been triggered.
      *
      */
 
-    public static int doorOpened(Context context, String room) {
+    public static int doorOpened(String room) {
 
         int roomVersion;
         try {
@@ -211,6 +210,8 @@ public class Utilities {
                 return room11 ? roomVersion : 0;
             case "13":
                 return room13 ? roomVersion : 0;
+            case "13a":
+                return room13a ? roomVersion : 0;
             default:
                 return 0;
         }
@@ -225,6 +226,10 @@ public class Utilities {
         room22 = SaveUtility.player.isRoom22();
         room32 = SaveUtility.player.isRoom32();
         room33 = SaveUtility.player.isRoom33();
+    }
+
+    public static void setContext(Context contexts) {
+        context = contexts;
     }
 
 }
