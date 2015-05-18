@@ -166,9 +166,12 @@ public class GameActivity extends FragmentActivity {
         room2.add(doorUp);
         room2.add(doorRight2);
 
-        if (!SaveUtility.alreadyHasItem("5")  && Utilities.doorOpened("01") == 0) {
+
+
+        if (!SaveUtility.alreadyHasItem("5")) {
             Button key = new Button(getApplicationContext());
             key.setBackgroundResource(R.drawable.key);
+            key.setVisibility(View.GONE);
             room2.add(key);
 
             key.setOnClickListener(
@@ -179,6 +182,24 @@ public class GameActivity extends FragmentActivity {
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
                             Utilities.buttonsForRooms.get("01").remove(v);
+                        }
+                    }
+            );
+        }
+
+        if (Utilities.doorOpened("01") == 0) {
+            Button carpet = new Button(getApplicationContext());
+            room2.add(carpet);
+
+            carpet.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                            layout.removeView(v);
+                            Utilities.buttonsForRooms.get("01").remove(v);
+                            fragment.eventTriggeredSwap("01");
+
                         }
                     }
             );
