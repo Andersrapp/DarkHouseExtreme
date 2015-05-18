@@ -130,9 +130,9 @@ public class RoomFragment extends Fragment {
     public boolean isRoom(int x, int y) {
         String room = String.valueOf(x) + String.valueOf(y);
         final int roomId;
-        if ((roomId = Utilities.isViableRoom(room, context)) != 0) {
+        if ((roomId = Utilities.isViableRoom(room)) != 0) {
             int alternative;
-            if ((alternative = Utilities.doorOpened(context, room)) != 0) {
+            if ((alternative = Utilities.doorOpened(room)) != 0) {
                 nullifyAndRemoveButtonsFromParent();
                 eventsInRoom.addAll(Utilities.buttonsForRooms.get(room));
                 x_cord = x;
@@ -167,7 +167,7 @@ public class RoomFragment extends Fragment {
         final int roomId;
         eventsInRoom.addAll(Utilities.buttonsForRooms.get(room));
         Log.d("List", String.valueOf(eventsInRoom.size()));
-        roomId = Utilities.isViableRoom(room, context);
+        roomId = Utilities.isViableRoom(room);
         placeItems(root);
         roomImage.setImageResource(roomId);
     }
@@ -191,7 +191,7 @@ public class RoomFragment extends Fragment {
     }
 
     public void eventTriggeredSwap(String room) {
-        int roomId = Utilities.doorOpened(context, room);
+        int roomId = Utilities.doorOpened(room);
         Log.d(LOG_DATA, String.valueOf(roomId));
         roomImage.setImageResource(roomId);
         if (room.equals("21")) {
@@ -376,7 +376,32 @@ public class RoomFragment extends Fragment {
 
                 up = eventsInRoom.get(0);
 
+                RelativeLayout.LayoutParams toiletParams = getParams();
+
                 up.setLayoutParams(doorUp);
+
+                if (eventsInRoom.size() > 2) {
+
+                    Button toilet = eventsInRoom.get(1);
+                    toiletParams.setMargins((screenWidth - screenWidth / 3), (screenHeight / 5), 0, 0);
+                    toilet.setLayoutParams(toiletParams);
+                    mainRelativeLayout.addView(toilet);
+
+                    Button hourHand = eventsInRoom.get(2);
+                    RelativeLayout.LayoutParams hourParam = getParams();
+                    hourParam.setMargins((screenWidth - ((screenWidth / 3) - (screenWidth / 30))), (screenHeight / 5), 0, 0);
+                    hourHand.setLayoutParams(hourParam);
+                    mainRelativeLayout.addView(hourHand);
+                }
+
+                if (eventsInRoom.size() < 3 && eventsInRoom.size() != 1) {
+
+                        Button hourHand = eventsInRoom.get(1);
+                        RelativeLayout.LayoutParams hourParam = getParams();
+                        hourParam.setMargins((screenWidth - screenWidth / 4), (screenHeight / 4), 0, 0);
+                        hourHand.setLayoutParams(hourParam);
+                        mainRelativeLayout.addView(hourHand);
+                }
 
                 mainRelativeLayout.addView(up);
 
@@ -492,12 +517,13 @@ public class RoomFragment extends Fragment {
 
     public void moveTable() {
         int left;
+        int height = (screenHeight / 15);
         switch (tablePosition) {
             case 0:
                 tablePosition++;
                 Log.d("Message", "case 0");
                 left = tableLeftMargin[tablePosition];
-                tableLayout.setMargins(left, 0, 0, 0);
+                tableLayout.setMargins(left, height, 0, 0);
                 table.setLayoutParams(tableLayout);
                 break;
 
@@ -505,34 +531,34 @@ public class RoomFragment extends Fragment {
                 tablePosition++;
                 Log.d("Message", "case 1");
                 left = tableLeftMargin[tablePosition];
-                tableLayout.setMargins(left, 0, 0, 0);
+                tableLayout.setMargins(left, height, 0, 0);
                 table.setLayoutParams(tableLayout);
                 break;
             case 2:
                 tablePosition++;
                 Log.d("Message", "case 2");
                 left = tableLeftMargin[tablePosition];
-                tableLayout.setMargins(left, 0, 0, 0);
+                tableLayout.setMargins(left, height, 0, 0);
                 table.setLayoutParams(tableLayout);
                 break;
             case 3:
                 tablePosition++;
                 Log.d("Message", "case 3");
                 left = tableLeftMargin[tablePosition];
-                tableLayout.setMargins(left, 0, 0, 0);
+                tableLayout.setMargins(left, height, 0, 0);
                 table.setLayoutParams(tableLayout);
                 break;
             case 4:
                 tablePosition++;
                 Log.d("Message", "case 4");
                 left = tableLeftMargin[tablePosition];
-                tableLayout.setMargins(left, 0, 0, 0);
+                tableLayout.setMargins(left, height, 0, 0);
                 table.setLayoutParams(tableLayout);
                 break;
             case 5:
                 Log.d("Message", "case 5");
                 left = tableLeftMargin[tablePosition];
-                tableLayout.setMargins(left, 0, 0, 0);
+                tableLayout.setMargins(left, height, 0, 0);
                 table.setLayoutParams(tableLayout);
                 break;
             default:

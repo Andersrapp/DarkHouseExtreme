@@ -60,7 +60,7 @@ public class SaveUtility {
         player.setRoom22(false);
         player.setRoom32(false);
         player.setRoom33(false);
-        helper.updateCharacter(String.valueOf(player.getId()), String.valueOf(0), String.valueOf(1), 0, false, false, false, false, false, false, false, false, false);
+        helper.updateCharacter(String.valueOf(player.getId()), String.valueOf(0), String.valueOf(2), 0, false, false, false, false, false, false, false, false, false);
     }
 
     public static int[] loadStats() {

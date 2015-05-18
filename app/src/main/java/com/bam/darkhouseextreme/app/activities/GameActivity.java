@@ -1,11 +1,9 @@
 package com.bam.darkhouseextreme.app.activities;
 
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -168,7 +166,7 @@ public class GameActivity extends FragmentActivity {
         room2.add(doorUp);
         room2.add(doorRight2);
 
-        if (!SaveUtility.alreadyHasItem("5")) {
+        if (!SaveUtility.alreadyHasItem("5")  && Utilities.doorOpened("01") == 0) {
             Button key = new Button(getApplicationContext());
             key.setBackgroundResource(R.drawable.key);
             room2.add(key);
@@ -190,7 +188,7 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        fragment.isRoom(0, 1);
+                        fragment.isRoom(0, 2);
                     }
                 }
         );
@@ -198,6 +196,7 @@ public class GameActivity extends FragmentActivity {
         doorRight2.setOnClickListener(
                 new View.OnClickListener() {
                     int numOfClicks = 0;
+
                     @Override
                     public void onClick(View v) {
 
@@ -401,11 +400,12 @@ public class GameActivity extends FragmentActivity {
                     int clickCount = 0;
                     @Override
                     public void onClick(View v) {
-                        if (clickCount == 6) {
+                        if (clickCount == 5) {
                             setButtonsForRoom21b();
                             fragment.eventTriggeredSwap("21");
                         }
-                        if (clickCount < 6) {
+                        if (clickCount < 5) {
+                            fragment.moveTable();
                             clickCount++;
                         }
                     }
@@ -448,17 +448,68 @@ public class GameActivity extends FragmentActivity {
         List<Button> buttons = new ArrayList<>();
 
         Button doorUp = new Button(getApplicationContext());
-        Button toilet = new Button(getApplicationContext());
+        final Button toilet = new Button(getApplicationContext());
+        final Button hourHand = new Button(getApplicationContext());
 
+        buttons.add(doorUp);
+
+
+
+        doorUp.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(2, 1);
+                    }
+                }
+        );
+
+        if (Utilities.doorOpened("20") == 0) {
+
+            toilet.setTag("toilet");
+
+            toilet.setOnClickListener(
+                    new View.OnClickListener() {
+                        int clickCount = 0;
+                        @Override
+                        public void onClick(View v) {
+                            switch (clickCount) {
+                                case 0 :
+                                    Toast.makeText(getApplicationContext(), "Don't really want to touch that", Toast.LENGTH_SHORT).show();
+                                    clickCount++;
+                                    break;
+                                case 1:
+                                    Toast.makeText(getApplicationContext(), "Someone made a mess in there", Toast.LENGTH_SHORT).show();
+                                    clickCount++;
+                                    break;
+                                case 2:
+                                    Toast.makeText(getApplicationContext(), "Alright, lets see if we can find some clues here", Toast.LENGTH_SHORT).show();
+                                    clickCount++;
+                                    break;
+                                case 3:
+                                    RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                                    layout.removeView(v);
+                                    Utilities.buttonsForRooms.get("20").remove(v);
+                                    hourHand.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
+            );
+
+            buttons.add(toilet);
+        }
 
         if (!SaveUtility.alreadyHasItem("11")) {
 
-            Button hourHand = new Button(getApplicationContext());
             hourHand.setBackgroundResource(R.drawable.hour_hand);
             hourHand.setMinWidth(0);
             hourHand.setMinimumWidth(0);
             hourHand.setMinHeight(0);
             hourHand.setMinimumHeight(0);
+            if (Utilities.doorOpened("20") == 0) {
+                hourHand.setVisibility(View.INVISIBLE);
+            }
+            hourHand.setTag("hourHand");
             buttons.add(hourHand);
 
             hourHand.setOnClickListener(
@@ -473,17 +524,6 @@ public class GameActivity extends FragmentActivity {
                     }
             );
         }
-
-        buttons.add(doorUp);
-
-        doorUp.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fragment.isRoom(2, 1);
-                    }
-                }
-        );
 
         Utilities.setButtonsForRooms("20", buttons);
 
@@ -604,11 +644,27 @@ public class GameActivity extends FragmentActivity {
 
         lever.setOnClickListener(
                 new View.OnClickListener() {
+                    int clickCount = 0;
                     @Override
                     public void onClick(View v) {
 
+                            switch (clickCount) {
+                                case 0:
+                                    Toast.makeText(getApplicationContext(), "Looks like a lever", Toast.LENGTH_SHORT).show();
+                                    clickCount++;
+                                    break;
+                                case 1:
+                                    if (SaveUtility.alreadyHasItem("16")) {
+                                        RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                                        layout.removeView(v);
+                                        fragment.eventTriggeredSwap("13");
+                                        Toast.makeText(getApplicationContext(), "The handle fit perfectly", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "There should be something in this house i can use", Toast.LENGTH_SHORT).show();
+                                    }
+                            }
+                        }
                     }
-                }
         );
 
         doorRight.setOnClickListener(
@@ -700,6 +756,7 @@ public class GameActivity extends FragmentActivity {
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
                             Utilities.buttonsForRooms.get("33").remove(v);
+                            SaveUtility.saveItemToCharacter("9");
                         }
                     }
             );
@@ -738,6 +795,7 @@ public class GameActivity extends FragmentActivity {
 
         if (!SaveUtility.alreadyHasItem("16")) {
             Button handle = new Button(getApplicationContext());
+            handle.setBackgroundResource(R.drawable.lever_handle);
 
             buttons.add(handle);
 
@@ -748,6 +806,7 @@ public class GameActivity extends FragmentActivity {
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
                             Utilities.buttonsForRooms.get("32").remove(v);
+                            SaveUtility.saveItemToCharacter("16");
 
                         }
                     }
