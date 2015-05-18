@@ -19,7 +19,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="bottom|center"
+        android:gravity="top|center"
         android:weightSum="30"
         >
 
@@ -30,6 +30,7 @@
             android:id="@+id/deleteCharacterButton"
             android:background="@drawable/button_bg2"
             android:text="@string/delete_character"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             />
 
@@ -39,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:background="@drawable/button_bg1"
-            android:text="@string/select_character"
+            android:text="@string/load_character"
             android:layout_marginBottom="20dp"
 
             />

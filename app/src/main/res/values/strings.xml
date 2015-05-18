@@ -7,7 +7,7 @@
     <string name="undecided_button">No Content</string>
     <string name="create">Create Character</string>
     <string name="ok">OK</string>
-    <string name="select_character">Select character</string>
+    <string name="load_character">Load</string>
     <string name="delete_character">Delete character</string>
     <string name="list_element">Character Name</string>
     <string name="progress">100%</string>
