@@ -630,7 +630,7 @@ public class GameActivity extends FragmentActivity {
                                         }
                                     }
                                 }
-                                , 1500);
+                                , 1000);
 
                         handler.postDelayed(
                                 new Runnable() {
