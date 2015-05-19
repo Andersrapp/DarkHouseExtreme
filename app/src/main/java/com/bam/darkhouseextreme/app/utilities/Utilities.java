@@ -30,6 +30,7 @@ public class Utilities {
     public static boolean room12;
     public static boolean room13;
     public static boolean room13a;
+    public static boolean dead;
 
     /**
      * For each View in a ViewGroup, send the View to @code{setFontForView}.

@@ -2,6 +2,7 @@ package com.bam.darkhouseextreme.app.activities;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -597,8 +598,18 @@ public class GameActivity extends FragmentActivity {
                     @Override
                     public void onClick(View v) {
                         SaveUtility.player.setRoom12(true);
+                        SaveUtility.player.setDead(true);
                         Utilities.room12 = true;
                         fragment.isRoom(1, 2);
+
+                        new Handler().postDelayed(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                    }
+                                },
+                                3000);
 
                     }
                 }

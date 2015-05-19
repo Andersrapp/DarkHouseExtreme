@@ -15,6 +15,7 @@ public class Player implements Serializable {
     private List<Item> playerItems = new ArrayList<>();
     private int score;
     private boolean room01, room01a, room02, room11, room12, room13a, room13b, room21, room22, room32, room33;
+    private boolean dead;
 
     public Player() {
 
@@ -159,6 +160,14 @@ public class Player implements Serializable {
 
     public void setRoom01a(boolean room01a) {
         this.room01a = room01a;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
     }
 
     @Override
