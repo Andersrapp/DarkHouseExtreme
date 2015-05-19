@@ -1,6 +1,7 @@
 package com.bam.darkhouseextreme.app.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -56,6 +57,11 @@ public class RoomFragment extends Fragment {
     private int tablePosition = 0;
     private RelativeLayout.LayoutParams tableLayout;
     private Button table;
+
+    private ImageView gasView;
+    private ImageView skullView;
+    private Animation fadeInSkull;
+    private Animation fadeInGas;
 
     @Nullable
     @Override
@@ -328,6 +334,10 @@ public class RoomFragment extends Fragment {
                 mainRelativeLayout.addView(left);
                 mainRelativeLayout.addView(right);
 
+                if (!SaveUtility.player.isPuzzleGas()) {
+                    setGasPuzzle();
+                }
+
                 break;
             case "21":
 
@@ -583,6 +593,64 @@ public class RoomFragment extends Fragment {
 
         TransitionManager.beginDelayedTransition(mainRelativeLayout);
 
+    }
+
+
+    public void setGasPuzzle() {
+        skullView = new ImageView(context);
+        fadeInSkull = AnimationUtils.loadAnimation(context, R.anim.fade_in_skull);
+        fadeInGas = AnimationUtils.loadAnimation(context, R.anim.fade_in_gas);
+
+
+        gasView = (ImageView) root.findViewById(R.id.miscView);
+
+        RelativeLayout.LayoutParams skullLP = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+
+        skullLP.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        skullLP.addRule(RelativeLayout.CENTER_VERTICAL);
+        skullView.setLayoutParams(skullLP);
+        mainRelativeLayout.addView(skullView);
+
+        Toast.makeText(context, "The door closed behind you. What's that smell?", Toast.LENGTH_SHORT).show();
+        gasView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (fadeInSkull.hasEnded()) {
+                    Toast.makeText(context, "You died!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "Hurry!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        animateGas();
+        animateSkull();
+    }
+
+    public void animateGas() {
+        gasView.setBackgroundColor(Color.argb(153, 80, 179, 80));
+        gasView.startAnimation(fadeInGas);
+    }
+
+    public void animateSkull() {
+        skullView.startAnimation(fadeInSkull);
+    }
+
+    public void fixGasLeak() {
+
+        if (SaveUtility.alreadyHasItem("ductTapeID") && !fadeInSkull.hasEnded()) {
+            gasView.clearAnimation();
+            skullView.clearAnimation();
+            gasView.setImageAlpha(0);
+            mainRelativeLayout.removeView(skullView);
+        } else if (!fadeInSkull.hasEnded()) {
+            Toast.makeText(context, "It seems you need something to fix this...", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "You died!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
