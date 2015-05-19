@@ -27,8 +27,10 @@ public class Utilities {
     public static boolean room02;
     public static boolean room33;
     public static boolean room21;
+    public static boolean room12;
     public static boolean room13;
     public static boolean room13a;
+    public static boolean dead;
 
     /**
      * For each View in a ViewGroup, send the View to @code{setFontForView}.
@@ -211,6 +213,8 @@ public class Utilities {
                 return room21 ? roomVersion : 0;
             case "11":
                 return room11 ? roomVersion : 0;
+            case "12":
+                return room12 ? roomVersion : 0;
             case "13":
                 return room13 ? roomVersion : 0;
             case "13a":
@@ -224,6 +228,7 @@ public class Utilities {
         room01 = SaveUtility.player.isRoom01();
         room02 = SaveUtility.player.isRoom02();
         room11 = SaveUtility.player.isRoom11();
+        room12 = SaveUtility.player.isRoom12();
         room13 = SaveUtility.player.isRoom13a();
         room21 = SaveUtility.player.isRoom21();
         room22 = SaveUtility.player.isRoom22();

@@ -2,6 +2,7 @@ package com.bam.darkhouseextreme.app.activities;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.bam.darkhouseextreme.app.utilities.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Chobii on 28/04/15.
@@ -25,7 +27,7 @@ import java.util.List;
 public class GameActivity extends FragmentActivity {
 
     private RoomFragment fragment;
-    private MediaPlayer player;
+    private MediaPlayer mediaPlayer;
 
 
     @Override
@@ -570,7 +572,7 @@ public class GameActivity extends FragmentActivity {
         Button doorLeft = new Button(getApplicationContext());
         Button doorRight = new Button(getApplicationContext());
         Button doorUp = new Button(getApplicationContext());
-        Button book = new Button(getApplicationContext());
+        final Button book = new Button(getApplicationContext());
 
 //        book.setBackgroundResource(R.drawable.book);
 
@@ -596,7 +598,50 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        SaveUtility.player.setRoom12(true);
+                        SaveUtility.player.setDead(true);
+                        Utilities.room12 = true;
                         fragment.isRoom(1, 2);
+
+
+                        Handler handler = new Handler();
+
+                        handler.postDelayed(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Random rn = new Random();
+                                        int randomNumber = rn.nextInt(2) + 1;
+                                        MediaPlayer mediaPlayer;
+                                        switch (randomNumber) {
+                                            case 1:
+                                                mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.death1);
+                                                mediaPlayer.setVolume(100, 100);
+                                                mediaPlayer.start();
+                                                break;
+                                            case 2:
+                                                mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.death2);
+                                                mediaPlayer.setVolume(100, 100);
+                                                mediaPlayer.start();
+                                                break;
+                                            default:
+                                                break;
+
+                                        }
+                                    }
+                                }
+                                , 1000);
+
+                        handler.postDelayed(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        onBackPressed();
+
+                                    }
+                                },
+                                4000);
+
                     }
                 }
         );
@@ -870,15 +915,15 @@ public class GameActivity extends FragmentActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        player.stop();
+        mediaPlayer.stop();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        player = MediaPlayer.create(GameActivity.this, R.raw.game_music);
-        player.setLooping(true); // Set looping
-        player.setVolume(100, 100);
-        player.start();
+        mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.game_music);
+        mediaPlayer.setLooping(true); // Set looping
+        mediaPlayer.setVolume(100, 100);
+        mediaPlayer.start();
     }
 }

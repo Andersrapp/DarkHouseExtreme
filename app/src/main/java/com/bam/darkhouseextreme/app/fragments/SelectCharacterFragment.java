@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,18 +67,29 @@ public class SelectCharacterFragment extends Fragment {
         characterListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                clearSelection();
-                lastSelectedView = view;
-                view.setBackgroundResource(R.drawable.selected_list_row_bg);
+                if (player != null) {
+                    clearSelection();
+                }
                 player = players.get(position);
+                lastSelectedView = view;
 
+                if (!player.isDead()) {
+                    view.setBackgroundResource(R.drawable.selected_list_row_bg);
+                } else {
+                    view.setBackgroundResource(R.drawable.selected_dead_list_row_bg);
+
+                }
             }
 
         });
     }
     public void clearSelection()
     {
-        if(lastSelectedView != null) lastSelectedView.setBackgroundResource(R.drawable.list_row_bg);
+        if(lastSelectedView != null && !player.isDead()) {
+            lastSelectedView.setBackgroundResource(R.drawable.list_row_bg);
+        } else if (lastSelectedView != null) {
+            lastSelectedView.setBackgroundResource(R.drawable.dead_list_row_bg);
+        }
     }
 
     public void deleteCharacter() {
@@ -89,6 +101,7 @@ public class SelectCharacterFragment extends Fragment {
                     clearSelection();
                     players.remove(player);
                     player = null;
+                    lastSelectedView = null;
                     characterListAdapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(context, "No character selected", Toast.LENGTH_SHORT).show();
@@ -101,10 +114,12 @@ public class SelectCharacterFragment extends Fragment {
         selectCharacterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (player != null) {
+                if (player != null && !player.isDead()) {
                     SaveUtility.loadCharacter(player);
                     Intent intent = new Intent(context, GameActivity.class);
                     startActivity(intent);
+                } else if (player.isDead()) {
+                    Toast.makeText(context, "Character is dead", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(context, "No character selected", Toast.LENGTH_SHORT).show();
                 }

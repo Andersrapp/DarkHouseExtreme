@@ -56,6 +56,12 @@ public class CharacterListAdapter extends ArrayAdapter<Player> {
 
         Player player = data.get(position);
 
+        if (player.isDead()) {
+            row.setBackgroundResource(R.drawable.dead_list_row_bg);
+        } else {
+            row.setBackgroundResource(R.drawable.list_row_bg);
+        }
+
         long playerId = player.getId();
         playerHolder.playerName.setText(player.getName());
         playerHolder.playerName.setTag(playerId);

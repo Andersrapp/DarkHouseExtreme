@@ -441,22 +441,24 @@ public class RoomFragment extends Fragment {
                 break;
             case "12":
 
-                right = eventsInRoom.get(0);
-                left = eventsInRoom.get(1);
-                Button stairs = eventsInRoom.get(2);
+                if(!Utilities.room12) {
+                    right = eventsInRoom.get(0);
+                    left = eventsInRoom.get(1);
+                    Button stairs = eventsInRoom.get(2);
 
-                right.setLayoutParams(doorRight);
-                left.setLayoutParams(doorLeft);
+                    right.setLayoutParams(doorRight);
+                    left.setLayoutParams(doorLeft);
 
-                RelativeLayout.LayoutParams stairsparam = getParams();
+                    RelativeLayout.LayoutParams stairsparam = getParams();
 
-                stairsparam.setMargins((screenWidth / 4), (screenHeight / 2), 0, 0);
+                    stairsparam.setMargins((screenWidth / 4), (screenHeight / 2), 0, 0);
 
-                stairs.setLayoutParams(stairsparam);
+                    stairs.setLayoutParams(stairsparam);
 
-                mainRelativeLayout.addView(right);
-                mainRelativeLayout.addView(left);
-                mainRelativeLayout.addView(stairs);
+                    mainRelativeLayout.addView(right);
+                    mainRelativeLayout.addView(left);
+                    mainRelativeLayout.addView(stairs);
+                }
 
                 break;
             case "22":

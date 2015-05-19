@@ -7,6 +7,8 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.model.Item;
 import com.bam.darkhouseextreme.app.model.Player;
@@ -37,6 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String PLAYER_ROOM22 = "Room22";
     private static final String PLAYER_ROOM32 = "Room32";
     private static final String PLAYER_ROOM33 = "Room33";
+    private static final String PLAYER_DEAD = "Dead";
 
     private static final String ITEM_TABLE_NAME = "Item";
     private static final String ITEM_ID = "Id";
@@ -60,7 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         + PLAYER_NAME + " TEXT, " + PLAYER_MAP_X + " INTEGER, " + PLAYER_MAP_Y + " INTEGER, " + PLAYER_SCORE + " INTEGER, "
                         + PLAYER_ROOM01 + " INTEGER," + PLAYER_ROOM01A + " INTEGER," + PLAYER_ROOM02 + " INTEGER, " + PLAYER_ROOM11 + " INTEGER, " + PLAYER_ROOM13A + " INTEGER, "
                         + PLAYER_ROOM13B + " INTEGER, " + PLAYER_ROOM21 + " INTEGER, " + PLAYER_ROOM22 + " INTEGER, " + PLAYER_ROOM32 + " INTEGER, "
-                        + PLAYER_ROOM33 + " INTEGER)"
+                        + PLAYER_ROOM33 + " INTEGER," + PLAYER_DEAD + " INTEGER)"
         );
         db.execSQL("CREATE TABLE IF NOT EXISTS " + ITEM_TABLE_NAME + " (" + ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                         + ITEM_NAME + " TEXT, " + ITEM_DESCRIPTION + " TEXT)"
@@ -111,7 +114,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean updateCharacter(String id, String mapXCoordinate, String mapYCoordinate,
                                    int score, boolean room01, boolean room01a, boolean room02, boolean room11,
                                    boolean room13a, boolean room13b, boolean room21,
-                                   boolean room22, boolean room32, boolean room33)
+                                   boolean room22, boolean room32, boolean room33, boolean dead)
     {
         db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -128,6 +131,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(PLAYER_ROOM22, room22 ? 1 : 0);
         contentValues.put(PLAYER_ROOM32, room32 ? 1 : 0);
         contentValues.put(PLAYER_ROOM33, room33 ? 1 : 0);
+        contentValues.put(PLAYER_DEAD, dead ? 1 : 0);
         String whereClause = PLAYER_ID + " = ?";
         String[] whereArgs = {id};
 
@@ -243,6 +247,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             player.setRoom22(cursor.getInt(11) == 1);
             player.setRoom32(cursor.getInt(12) == 1);
             player.setRoom33(cursor.getInt(13) == 1);
+            player.setDead(cursor.getInt(15) == 1);
             player.setPlayerItems(getListOfPlayerItems(player.getId()));
             players.add(player);
         }
