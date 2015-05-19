@@ -316,7 +316,7 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        fragment.fixGasLeak();
                     }
                 }
         );
