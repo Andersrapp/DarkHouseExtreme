@@ -13,5 +13,10 @@
             android:layout_marginRight="-1dp"
             android:layout_marginLeft="-1dp"/>
 
+    <ImageView
+        android:id="@+id/miscView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 </RelativeLayout>
