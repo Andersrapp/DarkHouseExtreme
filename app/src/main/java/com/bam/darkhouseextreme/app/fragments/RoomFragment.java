@@ -51,6 +51,8 @@ public class RoomFragment extends Fragment {
     public int screenHeight;
 
     private Animation animation;
+    private Animation fadeout;
+    private Animation fadein;
 
     private RelativeLayout mainRelativeLayout;
     private int[] tableLeftMargin = new int[6];
@@ -110,7 +112,7 @@ public class RoomFragment extends Fragment {
         Log.d(LOG_DATA, "Changed Room");
         placeItems(root);
 
-        Animation fadeout = AnimationUtils.loadAnimation(context, R.anim.fade_out);
+        fadeout = AnimationUtils.loadAnimation(context, R.anim.fade_out);
         roomImage.startAnimation(fadeout);
 
         fadeout.setAnimationListener(new Animation.AnimationListener() {
@@ -122,7 +124,7 @@ public class RoomFragment extends Fragment {
             @Override
             public void onAnimationEnd(Animation animation) {
                 roomImage.setImageResource(roomId);
-                Animation fadein = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+                fadein = AnimationUtils.loadAnimation(context, R.anim.fade_in);
                 roomImage.startAnimation(fadein);
             }
 
@@ -327,9 +329,14 @@ public class RoomFragment extends Fragment {
                 left = eventsInRoom.get(0);
                 right = eventsInRoom.get(1);
                 Button clock = eventsInRoom.get(2);
+                Button gasLine = eventsInRoom.get(3);
+                RelativeLayout.LayoutParams gasLineParams = getParams();
+                gasLineParams.setMargins((screenWidth / 4) * 3, 0, 0, 0);
+                gasLine.setLayoutParams(gasLineParams);
 
                 left.setLayoutParams(doorLeft);
                 right.setLayoutParams(doorRight);
+                mainRelativeLayout.addView(gasLine);
 
                 mainRelativeLayout.addView(left);
                 mainRelativeLayout.addView(right);
@@ -422,11 +429,11 @@ public class RoomFragment extends Fragment {
 
                 if (eventsInRoom.size() < 3 && eventsInRoom.size() != 1) {
 
-                        Button hourHand = eventsInRoom.get(1);
-                        RelativeLayout.LayoutParams hourParam = getParams();
-                        hourParam.setMargins((screenWidth - screenWidth / 4), (screenHeight / 4), 0, 0);
-                        hourHand.setLayoutParams(hourParam);
-                        mainRelativeLayout.addView(hourHand);
+                    Button hourHand = eventsInRoom.get(1);
+                    RelativeLayout.LayoutParams hourParam = getParams();
+                    hourParam.setMargins((screenWidth - screenWidth / 4), (screenHeight / 4), 0, 0);
+                    hourHand.setLayoutParams(hourParam);
+                    mainRelativeLayout.addView(hourHand);
                 }
 
                 mainRelativeLayout.addView(up);
@@ -640,16 +647,25 @@ public class RoomFragment extends Fragment {
     }
 
     public void fixGasLeak() {
+//            boolean hasDuctTape = SaveUtility.alreadyHasItem("ductTapeID");
+            boolean hasDuctTape = true;  //Temporary solution!
 
-        if (SaveUtility.alreadyHasItem("ductTapeID") && !fadeInSkull.hasEnded()) {
+
+        if (hasDuctTape && !fadeInSkull.hasEnded()) {
+            Toast.makeText(context, "It seems you fixed it.", Toast.LENGTH_SHORT).show();
+            fadeInSkull.cancel();
+            fadeInGas.cancel();
             gasView.clearAnimation();
             skullView.clearAnimation();
-            gasView.setImageAlpha(0);
+            gasView.setBackgroundColor(Color.argb(0, 0, 0, 0));
+
             mainRelativeLayout.removeView(skullView);
+            mainRelativeLayout.removeView(gasView);
         } else if (!fadeInSkull.hasEnded()) {
             Toast.makeText(context, "It seems you need something to fix this...", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "You died!", Toast.LENGTH_SHORT).show();
+//            SaveUtility.player.setDead(true);
         }
     }
 
