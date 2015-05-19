@@ -596,7 +596,10 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        SaveUtility.player.setRoom12(true);
+                        Utilities.room12 = true;
                         fragment.isRoom(1, 2);
+
                     }
                 }
         );
