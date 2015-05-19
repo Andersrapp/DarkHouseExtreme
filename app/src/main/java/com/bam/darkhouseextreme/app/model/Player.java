@@ -15,6 +15,7 @@ public class Player implements Serializable {
     private List<Item> playerItems = new ArrayList<>();
     private int score;
     private boolean room01, room01a, room02, room11, room13a, room13b, room21, room22, room32, room33;
+    private boolean puzzleGas;
 
     public Player() {
 
@@ -151,6 +152,14 @@ public class Player implements Serializable {
 
     public void setRoom01a(boolean room01a) {
         this.room01a = room01a;
+    }
+
+    public boolean isPuzzleGas() {
+        return puzzleGas;
+    }
+
+    public void setPuzzleGas(boolean puzzleGas) {
+        this.puzzleGas = puzzleGas;
     }
 
     @Override
