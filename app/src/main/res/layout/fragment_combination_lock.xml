@@ -6,6 +6,13 @@
     android:layout_margin="60dp"
     android:background="@drawable/combination_bg"
     android:gravity="center_horizontal|center_vertical">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        >
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -145,4 +152,5 @@
         </LinearLayout>
 
     </LinearLayout>
+    </RelativeLayout>
 </RelativeLayout>
