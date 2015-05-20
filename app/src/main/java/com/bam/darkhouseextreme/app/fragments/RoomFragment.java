@@ -691,6 +691,7 @@ public class RoomFragment extends Fragment {
             mainRelativeLayout.removeView(skullView);
 
             Utilities.room11 = true;
+            SaveUtility.player.setRoom11(true);
             gasPuzzleSolved = true;
             eventTriggeredSwap("11");
 
