@@ -880,7 +880,7 @@ public class GameActivity extends FragmentActivity {
         buttons.add(doorLeft);
         buttons.add(doorUp);
 
-        if (!SaveUtility.alreadyHasItem("16")) {
+        if (!SaveUtility.alreadyHasItem("9")) {
             Button handle = new Button(getApplicationContext());
             handle.setBackgroundResource(R.drawable.lever_handle);
 
@@ -893,11 +893,29 @@ public class GameActivity extends FragmentActivity {
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
                             Utilities.buttonsForRooms.get("32").remove(v);
-                            SaveUtility.saveItemToCharacter("16");
+                            SaveUtility.saveItemToCharacter("9");
 
                         }
                     }
             );
+        }
+
+        if (!SaveUtility.alreadyHasItem("13")) {
+            Button masterKey = new Button(getApplicationContext());
+            masterKey.setBackgroundResource(R.drawable.master_key);
+            buttons.add(masterKey);
+
+            masterKey.setBackgroundResource(R.drawable.master_key);
+
+            masterKey.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                    layout.removeView(v);
+                    Utilities.buttonsForRooms.get("32").remove(v);
+                    SaveUtility.saveItemToCharacter("13");
+                }
+            });
         }
 
         doorLeft.setOnClickListener(

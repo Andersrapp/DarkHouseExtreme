@@ -529,6 +529,23 @@ public class RoomFragment extends Fragment {
                 left.setLayoutParams(doorLeft);
                 up.setLayoutParams(doorUp);
 
+                if (!SaveUtility.alreadyHasItem("9")) {
+                    Button leverHandle = eventsInRoom.get(2);
+                    RelativeLayout.LayoutParams leverHandleParams = getParams();
+                    leverHandleParams.setMargins((screenWidth / 7), (screenHeight / 5), 0, 0);
+                    leverHandle.setLayoutParams(leverHandleParams);
+                    mainRelativeLayout.addView(leverHandle);
+                }
+
+                if (!SaveUtility.alreadyHasItem("13")) {
+                    Button masterKey = eventsInRoom.get(3);
+                    RelativeLayout.LayoutParams masterkeyParams = getParams();
+                    masterkeyParams.setMargins((screenWidth / 5) * 4, (screenHeight / 5) * 2, 0, 0);
+                    masterKey.setLayoutParams(masterkeyParams);
+                    mainRelativeLayout.addView(masterKey);
+                }
+
+
                 mainRelativeLayout.addView(left);
                 mainRelativeLayout.addView(up);
 
@@ -643,23 +660,23 @@ public class RoomFragment extends Fragment {
                             mediaPlayer.start();
                             nullifyAndRemoveButtonsFromParent();
                             new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    SaveUtility.saveProgress(x_cord, y_cord, score);
-                                    FragmentTransaction transaction =
-                                            StartScreenActivity.activity.getSupportFragmentManager().beginTransaction();
+                                                          @Override
+                                                          public void run() {
+                                                              SaveUtility.saveProgress(x_cord, y_cord, score);
+                                                              FragmentTransaction transaction =
+                                                                      StartScreenActivity.activity.getSupportFragmentManager().beginTransaction();
 
-                                    transaction.replace(R.id.startscreenlayout,
-                                            StartScreenActivity.activity
-                                                    .getSupportFragmentManager()
-                                                    .findFragmentByTag("startScreen")
-                                    );
+                                                              transaction.replace(R.id.startscreenlayout,
+                                                                      StartScreenActivity.activity
+                                                                              .getSupportFragmentManager()
+                                                                              .findFragmentByTag("startScreen")
+                                                              );
 
-                                    transaction.commitAllowingStateLoss();
-                                    getActivity().finish();
+                                                              transaction.commitAllowingStateLoss();
+                                                              getActivity().finish();
 
-                                }
-                            },
+                                                          }
+                                                      },
                                     2000);
                         }
                     }
@@ -713,7 +730,7 @@ public class RoomFragment extends Fragment {
         mainRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            removeFragment();
+                removeFragment();
             }
         });
     }
