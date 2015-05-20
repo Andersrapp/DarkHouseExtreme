@@ -3,11 +3,13 @@ package com.bam.darkhouseextreme.app.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,10 +22,16 @@ public class CombinationLockFragment extends Fragment {
     Context context;
     View root;
 
+    CombinationLockFragment fragment;
+
     TextView number1;
     TextView number2;
     TextView number3;
     TextView number4;
+
+    ImageView greenLight, redLight;
+
+    Button resetButton, enterButton;
 
     int number1Value = 0;
     int number2Value = 0;
@@ -36,10 +44,15 @@ public class CombinationLockFragment extends Fragment {
         context = getActivity().getApplicationContext();
         root = inflater.inflate(R.layout.fragment_combination_lock, container, false);
 
+        fragment = this;
+
         number1 = (TextView) root.findViewById(R.id.number1);
         number2 = (TextView) root.findViewById(R.id.number2);
         number3 = (TextView) root.findViewById(R.id.number3);
         number4 = (TextView) root.findViewById(R.id.number4);
+
+        greenLight = (ImageView) root.findViewById(R.id.greenLight);
+        redLight = (ImageView) root.findViewById(R.id.redLight);
 
         number1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,8 +86,8 @@ public class CombinationLockFragment extends Fragment {
             }
         });
 
-        Button enterButton = (Button) root.findViewById(R.id.enterButton);
-        Button resetButton = (Button) root.findViewById(R.id.resetButton);
+        enterButton = (Button) root.findViewById(R.id.enterButton);
+        resetButton = (Button) root.findViewById(R.id.resetButton);
 
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,10 +123,28 @@ public class CombinationLockFragment extends Fragment {
             SaveUtility.player.setRoom33(true);
             Utilities.room33 = true;
 
-            Toast.makeText(context, "Correct!", Toast.LENGTH_SHORT).show();
-            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+            greenLight.setBackgroundResource(R.drawable.lit_green_led);
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    greenLight.setBackgroundResource(R.drawable.unlit_green_led);
+                    getActivity().getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                }
+            }, 2000);
         } else {
-            Toast.makeText(context, "Try again!!", Toast.LENGTH_SHORT).show();
+            resetButton.setClickable(false);
+            enterButton.setClickable(false);
+
+            redLight.setBackgroundResource(R.drawable.lit_red_led);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    redLight.setBackgroundResource(R.drawable.unlit_red_led);
+                    resetButton.setClickable(true);
+                    enterButton.setClickable(true);
+                }
+            }, 2000);
 
         }
     }
