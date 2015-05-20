@@ -1,5 +1,6 @@
 package com.bam.darkhouseextreme.app.fragments;
 
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -65,11 +66,11 @@ public class RoomFragment extends Fragment {
     private Animation fadeInSkull;
     private Animation fadeInGas;
     private boolean gasPuzzleSolved;
+    private CombinationLockFragment lockFragment;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         context = getActivity().getApplicationContext();
 
         sManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
@@ -673,6 +674,27 @@ public class RoomFragment extends Fragment {
             SaveUtility.player.setDead(true);
         }
         return gasPuzzleSolved;
+    }
+
+    public void openLockFragment() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        lockFragment = new CombinationLockFragment();
+        ft.add(R.id.mainRel, lockFragment, "combinationLock")
+                .addToBackStack("combinationLock")
+                .commit();
+
+        mainRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            removeFragment();
+            }
+        });
+    }
+
+    public void removeFragment() {
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.hide(lockFragment);
+        ft.commit();
     }
 
     @Override
