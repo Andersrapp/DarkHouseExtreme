@@ -730,14 +730,23 @@ public class GameActivity extends FragmentActivity {
                                 clickCount++;
                                 break;
                             case 1:
-                                if (SaveUtility.alreadyHasItem("16")) {
+                                if (SaveUtility.alreadyHasItem("9")) {
                                     RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                                     layout.removeView(v);
                                     fragment.eventTriggeredSwap("13");
+                                    Utilities.room13 = true;
+                                    SaveUtility.player.setRoom13(true);
                                     Toast.makeText(getApplicationContext(), "The handle fit perfectly", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(getApplicationContext(), "There should be something in this house i can use", Toast.LENGTH_SHORT).show();
                                 }
+                                break;
+                            case 2:
+                                Utilities.buttonsForRooms.get("13").remove(v);
+                                fragment.eventTriggeredSwap("13a");
+                                Utilities.room01 = true;
+                                Utilities.room13a = true;
+                                SaveUtility.player.setRoom13a(true);
                         }
                     }
                 }
@@ -883,18 +892,26 @@ public class GameActivity extends FragmentActivity {
         if (!SaveUtility.alreadyHasItem("9")) {
             Button handle = new Button(getApplicationContext());
             handle.setBackgroundResource(R.drawable.lever_handle);
+            handle.setAlpha(0);
 
             buttons.add(handle);
 
             handle.setOnClickListener(
                     new View.OnClickListener() {
+                        int numberOfClicks = 0;
+
                         @Override
                         public void onClick(View v) {
-                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
-                            layout.removeView(v);
-                            Utilities.buttonsForRooms.get("32").remove(v);
-                            SaveUtility.saveItemToCharacter("9");
-
+                            if (numberOfClicks == 0) {
+                                v.setAlpha(255);
+                                Toast.makeText(getApplicationContext(), "You found something under the bed. Pick it up!", Toast.LENGTH_SHORT).show();
+                                numberOfClicks++;
+                            } else {
+                                RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                                layout.removeView(v);
+                                Utilities.buttonsForRooms.get("32").remove(v);
+                                SaveUtility.saveItemToCharacter("9");
+                            }
                         }
                     }
             );

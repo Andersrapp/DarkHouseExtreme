@@ -1,6 +1,5 @@
 package com.bam.darkhouseextreme.app.fragments;
 
-import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -25,7 +24,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bam.darkhouseextreme.app.R;
-import com.bam.darkhouseextreme.app.activities.GameActivity;
 import com.bam.darkhouseextreme.app.activities.StartScreenActivity;
 import com.bam.darkhouseextreme.app.adapter.Shaker;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
@@ -488,10 +486,16 @@ public class RoomFragment extends Fragment {
             case "13":
 
                 right = eventsInRoom.get(0);
-
                 right.setLayoutParams(doorRight);
-
                 mainRelativeLayout.addView(right);
+
+                if (!Utilities.room13a) {
+                    Button leverHolder = eventsInRoom.get(1);
+                    RelativeLayout.LayoutParams leverHolderParams = getParams();
+                    leverHolderParams.setMargins(0, ((screenHeight / 5) * 2), 0, 0);
+                    leverHolder.setLayoutParams(leverHolderParams);
+                    mainRelativeLayout.addView(leverHolder);
+                }
 
                 break;
             case "23":
@@ -532,7 +536,7 @@ public class RoomFragment extends Fragment {
                 if (!SaveUtility.alreadyHasItem("9")) {
                     Button leverHandle = eventsInRoom.get(2);
                     RelativeLayout.LayoutParams leverHandleParams = getParams();
-                    leverHandleParams.setMargins((screenWidth / 7), (screenHeight / 5), 0, 0);
+                    leverHandleParams.setMargins((screenWidth / 7) * 4, (screenHeight / 7) * 5, 0, 0);
                     leverHandle.setLayoutParams(leverHandleParams);
                     mainRelativeLayout.addView(leverHandle);
                 }
@@ -540,7 +544,7 @@ public class RoomFragment extends Fragment {
                 if (!SaveUtility.alreadyHasItem("13")) {
                     Button masterKey = eventsInRoom.get(3);
                     RelativeLayout.LayoutParams masterkeyParams = getParams();
-                    masterkeyParams.setMargins((screenWidth / 5) * 4, (screenHeight / 5) * 2, 0, 0);
+                    masterkeyParams.setMargins((screenWidth / 7), (screenHeight / 5) * 4, 0, 0);
                     masterKey.setLayoutParams(masterkeyParams);
                     mainRelativeLayout.addView(masterKey);
                 }
