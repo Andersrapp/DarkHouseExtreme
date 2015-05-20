@@ -644,6 +644,7 @@ public class RoomFragment extends Fragment {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
+                                    SaveUtility.saveProgress(x_cord, y_cord, score);
                                     FragmentTransaction transaction =
                                             StartScreenActivity.activity.getSupportFragmentManager().beginTransaction();
 
