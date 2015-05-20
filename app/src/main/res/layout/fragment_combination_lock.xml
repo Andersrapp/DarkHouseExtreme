@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragRel"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="60dp"
+    android:background="@drawable/combination_bg"
+    android:gravity="center_horizontal|center_vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="#00ffffff"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:weightSum="20"
+
+        >
+
+        <TextView
+            android:id="@+id/number1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="4"
+            android:background="@drawable/combination_input_bg1"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="40sp"
+
+            />
+
+        <TextView
+            android:id="@+id/number2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/number1"
+            android:layout_weight="4"
+            android:background="@drawable/combination_input_bg2"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="0"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="40sp"
+
+            />
+
+        <TextView
+            android:id="@+id/number3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/number2"
+            android:layout_weight="4"
+            android:background="@drawable/combination_input_bg3"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="0"
+            android:textColor="#000000"
+            android:textSize="40sp"
+
+            />
+
+        <TextView
+            android:id="@+id/number4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@+id/number3"
+            android:layout_weight="4"
+            android:background="@drawable/combination_input_bg4"
+            android:gravity="center_horizontal|center_vertical"
+            android:text="0"
+            android:textColor="#000000"
+            android:textSize="40sp"
+
+            />
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:layout_margin="10dp"
+
+            >
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:id="@+id/greenLight"
+                android:background="#3DF000"
+                android:layout_alignParentLeft="true"
+                />
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="20dp"
+                android:id="@+id/redLight"
+                android:background="#F30000"
+                android:layout_alignParentRight="true"
+
+                />
+            <Button
+                android:id="@+id/enterButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#555555"
+                android:text="ENTER"
+                android:textColor="#000000"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/greenLight"
+
+                />
+
+            <Button
+                android:id="@+id/resetButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#555555"
+                android:text="RESET"
+                android:textColor="#000000"
+                android:layout_below="@id/enterButton"
+
+                />
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>

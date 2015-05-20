@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.fragments.RoomFragment;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
@@ -43,19 +44,17 @@ public class GameActivity extends FragmentActivity {
         fragment = new RoomFragment();
 
 
-
-            setButtonsForRoom02();
-            setButtonsForRoom01();
-            setButtonsForRoom11();
-            setButtonsForRoom12();
-            setButtonsForRoom13();
-            setButtonsForRoom20();
-            setButtonsForRoom21();
-            setButtonsForRoom22();
-            setButtonsForRoom23();
-            setButtonsForRoom32();
-            setButtonsForRoom33();
-
+        setButtonsForRoom02();
+        setButtonsForRoom01();
+        setButtonsForRoom11();
+        setButtonsForRoom12();
+        setButtonsForRoom13();
+        setButtonsForRoom20();
+        setButtonsForRoom21();
+        setButtonsForRoom22();
+        setButtonsForRoom23();
+        setButtonsForRoom32();
+        setButtonsForRoom33();
 
 
         Log.d("BAJSSS", fragment.toString());
@@ -188,10 +187,9 @@ public class GameActivity extends FragmentActivity {
         room2.add(doorRight2);
 
 
-
         if (!SaveUtility.alreadyHasItem("5")) {
             key.setBackgroundResource(R.drawable.key);
-            if(Utilities.doorOpened("01") == 0) {
+            if (Utilities.doorOpened("01") == 0) {
                 key.setVisibility(View.GONE);
             }
             room2.add(key);
@@ -250,8 +248,7 @@ public class GameActivity extends FragmentActivity {
 
                         if (numOfClicks == 1 && SaveUtility.player.isRoom01()) {
                             fragment.isRoom(1, 1);
-                        }
-                        if (SaveUtility.alreadyHasItem("5") && numOfClicks == 0) {
+                        } else if (SaveUtility.alreadyHasItem("5") && numOfClicks == 0) {
                             Toast.makeText(getApplicationContext(), "You unlocked the door!", Toast.LENGTH_SHORT).show();
                             SaveUtility.player.setRoom01a(true);
                             Utilities.room01a = true;
@@ -446,6 +443,7 @@ public class GameActivity extends FragmentActivity {
         table.setOnClickListener(
                 new View.OnClickListener() {
                     int clickCount = 0;
+
                     @Override
                     public void onClick(View v) {
                         if (clickCount == 5) {
@@ -502,7 +500,6 @@ public class GameActivity extends FragmentActivity {
         buttons.add(doorUp);
 
 
-
         doorUp.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -519,10 +516,11 @@ public class GameActivity extends FragmentActivity {
             toilet.setOnClickListener(
                     new View.OnClickListener() {
                         int clickCount = 0;
+
                         @Override
                         public void onClick(View v) {
                             switch (clickCount) {
-                                case 0 :
+                                case 0:
                                     Toast.makeText(getApplicationContext(), "Don't really want to touch that", Toast.LENGTH_SHORT).show();
                                     clickCount++;
                                     break;
@@ -595,7 +593,6 @@ public class GameActivity extends FragmentActivity {
         buttons.add(doorRight);
         buttons.add(doorUp);
         buttons.add(book);
-
 
 
         doorDown.setOnClickListener(
@@ -738,6 +735,7 @@ public class GameActivity extends FragmentActivity {
         lever.setOnClickListener(
                 new View.OnClickListener() {
                     int clickCount = 0;
+
                     @Override
                     public void onClick(View v) {
 
@@ -857,9 +855,21 @@ public class GameActivity extends FragmentActivity {
 
         doorDown.setOnClickListener(
                 new View.OnClickListener() {
+                    int numOfClicks = 0;
+
                     @Override
                     public void onClick(View v) {
-                        fragment.isRoom(3, 2);
+
+                        if (!SaveUtility.player.isRoom33()) {
+                            fragment.openLockFragment();
+                        } else {
+                            if (SaveUtility.player.isRoom33() && numOfClicks == 0) {
+                                fragment.eventTriggeredSwap("33");
+                                numOfClicks++;
+                            } else {
+                                fragment.isRoom(3, 2);
+                            }
+                        }
                     }
                 }
         );
@@ -872,7 +882,6 @@ public class GameActivity extends FragmentActivity {
                     }
                 }
         );
-
         Utilities.setButtonsForRooms("33", buttons);
     }
 
