@@ -222,8 +222,10 @@ public class RoomFragment extends Fragment {
         Point size = new Point();
         getActivity().getWindowManager().getDefaultDisplay().getSize(size);
         screenWidth = size.x;
+        Utilities.screenWidth = screenWidth;
 
         screenHeight = size.y - 100;
+        Utilities.screenHeight = screenHeight;
         mainRelativeLayout = (RelativeLayout) root.findViewById(R.id.mainRel);
 
         RelativeLayout.LayoutParams doorUp = getParams();
@@ -455,6 +457,14 @@ public class RoomFragment extends Fragment {
                 left.setLayoutParams(doorLeft);
                 right.setLayoutParams(doorRight);
                 up.setLayoutParams(doorUp);
+
+                Button book = eventsInRoom.get(4);
+
+                RelativeLayout.LayoutParams bookParam = getParams();
+                bookParam.setMargins(screenWidth /2, screenHeight /2, 0, 0);
+                book.setLayoutParams(bookParam);
+
+                mainRelativeLayout.addView(book);
 
                 mainRelativeLayout.addView(up);
                 mainRelativeLayout.addView(down);

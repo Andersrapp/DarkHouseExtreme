@@ -1,6 +1,7 @@
 package com.bam.darkhouseextreme.app.activities;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -142,9 +143,6 @@ public class GameActivity extends FragmentActivity {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-//                            dialogImage.setImageResource(R.drawable.book_dialog);
-                            dialog.show();
-                            dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
                         }
                     }
             );
@@ -685,7 +683,9 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
+                        intent.putExtra("image", R.drawable.book_dialog);
+                        startActivity(intent);
                     }
                 }
         );
