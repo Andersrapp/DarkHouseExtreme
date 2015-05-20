@@ -5,10 +5,12 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +24,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bam.darkhouseextreme.app.R;
+import com.bam.darkhouseextreme.app.activities.GameActivity;
+import com.bam.darkhouseextreme.app.activities.StartScreenActivity;
 import com.bam.darkhouseextreme.app.adapter.Shaker;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
 import com.bam.darkhouseextreme.app.utilities.Utilities;
@@ -631,6 +635,30 @@ public class RoomFragment extends Fragment {
                     public void run() {
                         if (!gasPuzzleSolved) {
                             Toast.makeText(context, "You died!", Toast.LENGTH_SHORT).show();
+                            SaveUtility.player.setDead(true);
+                            MediaPlayer mediaPlayer;
+                            mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.death3);
+                            mediaPlayer.setVolume(100, 100);
+                            mediaPlayer.start();
+                            nullifyAndRemoveButtonsFromParent();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    FragmentTransaction transaction =
+                                            StartScreenActivity.activity.getSupportFragmentManager().beginTransaction();
+
+                                    transaction.replace(R.id.startscreenlayout,
+                                            StartScreenActivity.activity
+                                                    .getSupportFragmentManager()
+                                                    .findFragmentByTag("startScreen")
+                                    );
+
+                                    transaction.commitAllowingStateLoss();
+                                    getActivity().finish();
+
+                                }
+                            },
+                                    2000);
                         }
                     }
                 },
@@ -668,9 +696,6 @@ public class RoomFragment extends Fragment {
 
         } else if (!fadeInSkull.hasEnded()) {
             Toast.makeText(context, "It seems you need something to fix this...", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "You died!", Toast.LENGTH_SHORT).show();
-            SaveUtility.player.setDead(true);
         }
         return gasPuzzleSolved;
     }
