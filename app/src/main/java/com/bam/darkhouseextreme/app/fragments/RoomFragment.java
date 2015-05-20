@@ -1,13 +1,16 @@
 package com.bam.darkhouseextreme.app.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +24,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.bam.darkhouseextreme.app.R;
+import com.bam.darkhouseextreme.app.activities.GameActivity;
+import com.bam.darkhouseextreme.app.activities.StartScreenActivity;
 import com.bam.darkhouseextreme.app.adapter.Shaker;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
 import com.bam.darkhouseextreme.app.utilities.Utilities;
@@ -50,12 +55,20 @@ public class RoomFragment extends Fragment {
     public int screenHeight;
 
     private Animation animation;
+    private Animation fadeout;
+    private Animation fadein;
 
     private RelativeLayout mainRelativeLayout;
     private int[] tableLeftMargin = new int[6];
     private int tablePosition = 0;
     private RelativeLayout.LayoutParams tableLayout;
     private Button table;
+
+    private ImageView gasView;
+    private ImageView skullView;
+    private Animation fadeInSkull;
+    private Animation fadeInGas;
+    private boolean gasPuzzleSolved;
 
     @Nullable
     @Override
@@ -104,7 +117,7 @@ public class RoomFragment extends Fragment {
         Log.d(LOG_DATA, "Changed Room");
         placeItems(root);
 
-        Animation fadeout = AnimationUtils.loadAnimation(context, R.anim.fade_out);
+        fadeout = AnimationUtils.loadAnimation(context, R.anim.fade_out);
         roomImage.startAnimation(fadeout);
 
         fadeout.setAnimationListener(new Animation.AnimationListener() {
@@ -116,7 +129,7 @@ public class RoomFragment extends Fragment {
             @Override
             public void onAnimationEnd(Animation animation) {
                 roomImage.setImageResource(roomId);
-                Animation fadein = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+                fadein = AnimationUtils.loadAnimation(context, R.anim.fade_in);
                 roomImage.startAnimation(fadein);
             }
 
@@ -323,12 +336,21 @@ public class RoomFragment extends Fragment {
                 left = eventsInRoom.get(0);
                 right = eventsInRoom.get(1);
                 Button clock = eventsInRoom.get(2);
+                Button gasLine = eventsInRoom.get(3);
+                RelativeLayout.LayoutParams gasLineParams = getParams();
+                gasLineParams.setMargins((screenWidth / 4) * 3, 0, 0, 0);
+                gasLine.setLayoutParams(gasLineParams);
 
                 left.setLayoutParams(doorLeft);
                 right.setLayoutParams(doorRight);
+                mainRelativeLayout.addView(gasLine);
 
                 mainRelativeLayout.addView(left);
                 mainRelativeLayout.addView(right);
+
+                if (!Utilities.room11) {
+                    setGasPuzzle();
+                }
 
                 break;
             case "21":
@@ -414,11 +436,11 @@ public class RoomFragment extends Fragment {
 
                 if (eventsInRoom.size() < 3 && eventsInRoom.size() != 1) {
 
-                        Button hourHand = eventsInRoom.get(1);
-                        RelativeLayout.LayoutParams hourParam = getParams();
-                        hourParam.setMargins((screenWidth - screenWidth / 4), (screenHeight / 4), 0, 0);
-                        hourHand.setLayoutParams(hourParam);
-                        mainRelativeLayout.addView(hourHand);
+                    Button hourHand = eventsInRoom.get(1);
+                    RelativeLayout.LayoutParams hourParam = getParams();
+                    hourParam.setMargins((screenWidth - screenWidth / 4), (screenHeight / 4), 0, 0);
+                    hourHand.setLayoutParams(hourParam);
+                    mainRelativeLayout.addView(hourHand);
                 }
 
                 mainRelativeLayout.addView(up);
@@ -426,7 +448,7 @@ public class RoomFragment extends Fragment {
                 break;
             case "12":
 
-                if(!Utilities.room12) {
+                if (!Utilities.room12) {
                     right = eventsInRoom.get(0);
                     left = eventsInRoom.get(1);
                     Button stairs = eventsInRoom.get(2);
@@ -595,6 +617,99 @@ public class RoomFragment extends Fragment {
 
         TransitionManager.beginDelayedTransition(mainRelativeLayout);
 
+    }
+
+
+    public void setGasPuzzle() {
+        skullView = new ImageView(context);
+        fadeInSkull = AnimationUtils.loadAnimation(context, R.anim.fade_in_skull);
+        fadeInGas = AnimationUtils.loadAnimation(context, R.anim.fade_in_gas);
+
+
+        gasView = (ImageView) root.findViewById(R.id.miscView);
+
+        RelativeLayout.LayoutParams skullLP = new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        );
+
+        skullLP.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        skullLP.addRule(RelativeLayout.CENTER_VERTICAL);
+        skullView.setLayoutParams(skullLP);
+        mainRelativeLayout.addView(skullView);
+        Toast.makeText(context, "The door closed behind you. What's that smell?", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!gasPuzzleSolved) {
+                            Toast.makeText(context, "You died!", Toast.LENGTH_SHORT).show();
+                            SaveUtility.player.setDead(true);
+                            MediaPlayer mediaPlayer;
+                            mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.death3);
+                            mediaPlayer.setVolume(100, 100);
+                            mediaPlayer.start();
+                            nullifyAndRemoveButtonsFromParent();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    SaveUtility.saveProgress(x_cord, y_cord, score);
+                                    FragmentTransaction transaction =
+                                            StartScreenActivity.activity.getSupportFragmentManager().beginTransaction();
+
+                                    transaction.replace(R.id.startscreenlayout,
+                                            StartScreenActivity.activity
+                                                    .getSupportFragmentManager()
+                                                    .findFragmentByTag("startScreen")
+                                    );
+
+                                    transaction.commitAllowingStateLoss();
+                                    getActivity().finish();
+
+                                }
+                            },
+                                    2000);
+                        }
+                    }
+                },
+                9000);
+
+
+        animateGas();
+        animateSkull();
+    }
+
+    public void animateGas() {
+        gasView.setBackgroundColor(Color.argb(153, 80, 179, 80));
+        gasView.startAnimation(fadeInGas);
+    }
+
+    public void animateSkull() {
+        skullView.startAnimation(fadeInSkull);
+    }
+
+    public boolean fixGasLeak() {
+        boolean hasDuctTape = SaveUtility.alreadyHasItem("1");
+        hasDuctTape = true; //Temporary solution. :-)
+
+        if (hasDuctTape && !fadeInSkull.hasEnded()) {
+            Toast.makeText(context, "It seems you fixed it.", Toast.LENGTH_SHORT).show();
+            fadeInSkull.cancel();
+            fadeInGas.cancel();
+
+            gasView.setBackgroundColor(Color.argb(0, 0, 0, 0));
+            mainRelativeLayout.removeView(skullView);
+
+            Utilities.room11 = true;
+            SaveUtility.player.setRoom11(true);
+            gasPuzzleSolved = true;
+            eventTriggeredSwap("11");
+
+        } else if (!fadeInSkull.hasEnded()) {
+            Toast.makeText(context, "It seems you need something to fix this...", Toast.LENGTH_SHORT).show();
+        }
+        return gasPuzzleSolved;
     }
 
     @Override
