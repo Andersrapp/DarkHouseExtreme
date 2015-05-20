@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="#0043f7ff"
+              android:minHeight="180dp"
+        android:minWidth="400dp">
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/dialogimage"
+            android:src="@drawable/book_dialog"
+            android:background="#0043f7ff"
+            android:scaleType="centerCrop"/>
+
+</FrameLayout>

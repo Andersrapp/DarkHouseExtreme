@@ -1,5 +1,6 @@
 package com.bam.darkhouseextreme.app.activities;
 
+import android.app.Dialog;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.bam.darkhouseextreme.app.R;
@@ -28,6 +30,9 @@ public class GameActivity extends FragmentActivity {
 
     private RoomFragment fragment;
     private MediaPlayer mediaPlayer;
+    private Dialog dialog;
+    private ImageView dialogImage;
+
 
 
     @Override
@@ -38,6 +43,7 @@ public class GameActivity extends FragmentActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Utilities.setBooleanValues();
+        initializeDialog();
         fragment = new RoomFragment();
 
 
@@ -131,6 +137,17 @@ public class GameActivity extends FragmentActivity {
             skeleton.setTag("skeleton");
             skeleton.setBackgroundResource(R.drawable.item_button);
             room1.add(skeleton);
+
+            skeleton.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+//                            dialogImage.setImageResource(R.drawable.book_dialog);
+                            dialog.show();
+                            dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                        }
+                    }
+            );
         }
 
         doorDown.setOnClickListener(
@@ -925,5 +942,15 @@ public class GameActivity extends FragmentActivity {
         mediaPlayer.setLooping(true); // Set looping
         mediaPlayer.setVolume(100, 100);
         mediaPlayer.start();
+    }
+
+    private void initializeDialog() {
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_event);
+        dialog.getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        dialogImage = (ImageView) dialog.findViewById(R.id.dialogimage);
+
+
+
     }
 }
