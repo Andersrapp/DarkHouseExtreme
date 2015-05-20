@@ -64,6 +64,7 @@ public class RoomFragment extends Fragment {
     private ImageView skullView;
     private Animation fadeInSkull;
     private Animation fadeInGas;
+    private boolean gasPuzzleSolved;
 
     @Nullable
     @Override
@@ -341,7 +342,7 @@ public class RoomFragment extends Fragment {
                 mainRelativeLayout.addView(left);
                 mainRelativeLayout.addView(right);
 
-                if (!SaveUtility.player.isPuzzleGas()) {
+                if (!Utilities.room11) {
                     setGasPuzzle();
                 }
 
@@ -441,7 +442,7 @@ public class RoomFragment extends Fragment {
                 break;
             case "12":
 
-                if(!Utilities.room12) {
+                if (!Utilities.room12) {
                     right = eventsInRoom.get(0);
                     left = eventsInRoom.get(1);
                     Button stairs = eventsInRoom.get(2);
@@ -622,18 +623,19 @@ public class RoomFragment extends Fragment {
         skullLP.addRule(RelativeLayout.CENTER_VERTICAL);
         skullView.setLayoutParams(skullLP);
         mainRelativeLayout.addView(skullView);
-
         Toast.makeText(context, "The door closed behind you. What's that smell?", Toast.LENGTH_SHORT).show();
-        gasView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (fadeInSkull.hasEnded()) {
-                    Toast.makeText(context, "You died!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(context, "Hurry!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+
+        new Handler().postDelayed(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!gasPuzzleSolved) {
+                            Toast.makeText(context, "You died!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                9000);
+
 
         animateGas();
         animateSkull();
@@ -648,27 +650,29 @@ public class RoomFragment extends Fragment {
         skullView.startAnimation(fadeInSkull);
     }
 
-    public void fixGasLeak() {
-//            boolean hasDuctTape = SaveUtility.alreadyHasItem("ductTapeID");
-            boolean hasDuctTape = true;  //Temporary solution!
-
+    public boolean fixGasLeak() {
+        boolean hasDuctTape = SaveUtility.alreadyHasItem("1");
+        hasDuctTape = true; //Temporary solution. :-)
 
         if (hasDuctTape && !fadeInSkull.hasEnded()) {
             Toast.makeText(context, "It seems you fixed it.", Toast.LENGTH_SHORT).show();
             fadeInSkull.cancel();
             fadeInGas.cancel();
-            gasView.clearAnimation();
-            skullView.clearAnimation();
-            gasView.setBackgroundColor(Color.argb(0, 0, 0, 0));
 
+            gasView.setBackgroundColor(Color.argb(0, 0, 0, 0));
             mainRelativeLayout.removeView(skullView);
-            mainRelativeLayout.removeView(gasView);
+
+            Utilities.room11 = true;
+            gasPuzzleSolved = true;
+            eventTriggeredSwap("11");
+
         } else if (!fadeInSkull.hasEnded()) {
             Toast.makeText(context, "It seems you need something to fix this...", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "You died!", Toast.LENGTH_SHORT).show();
-//            SaveUtility.player.setDead(true);
+            SaveUtility.player.setDead(true);
         }
+        return gasPuzzleSolved;
     }
 
     @Override
