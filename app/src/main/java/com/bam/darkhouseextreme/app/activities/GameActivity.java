@@ -102,80 +102,6 @@ public class GameActivity extends FragmentActivity {
         finish();
     }
 
-    private void setButtonsForRoom02() {
-
-        List<Button> room1 = new ArrayList<>();
-
-        Button doorRight = new Button(getApplicationContext());
-        Button doorDown = new Button(getApplicationContext());
-
-        doorRight.setBackgroundResource(R.drawable.item_button);
-        doorDown.setBackgroundResource(R.drawable.item_button);
-
-        room1.add(doorRight);
-        room1.add(doorDown);
-
-        if (!SaveUtility.alreadyHasItem("2")) {
-            Button paper = new Button(getApplicationContext());
-            paper.setTag("paper");
-            paper.setBackgroundResource(R.drawable.item_button);
-            room1.add(paper);
-
-            paper.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
-                            layout.removeView(v);
-                            Utilities.buttonsForRooms.get("02").remove(v);
-                        }
-                    }
-            );
-        }
-
-        if (!SaveUtility.alreadyHasItem("3")) {
-            Button skeleton = new Button(getApplicationContext());
-            skeleton.setTag("skeleton");
-            skeleton.setBackgroundResource(R.drawable.item_button);
-            room1.add(skeleton);
-
-            skeleton.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                        }
-                    }
-            );
-        }
-
-        doorDown.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fragment.isRoom(0, 1);
-                    }
-                }
-        );
-
-        doorRight.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fragment.isRoom(1, 2);
-                    }
-                }
-        );
-
-        for (Button b : room1) {
-            b.setMinWidth(50);
-            b.setMinHeight(50);
-            b.setMinimumWidth(50);
-            b.setAlpha(1.0f);
-        }
-
-        Utilities.setButtonsForRooms("02", room1);
-    }
-
     private void setButtonsForRoom01() {
 
         List<Button> room2 = new ArrayList<>();
@@ -267,6 +193,85 @@ public class GameActivity extends FragmentActivity {
         Utilities.setButtonsForRooms("01", room2);
     }
 
+    private void setButtonsForRoom02() {
+
+        List<Button> room1 = new ArrayList<>();
+
+        Button doorRight = new Button(getApplicationContext());
+        Button doorDown = new Button(getApplicationContext());
+
+        doorRight.setBackgroundResource(R.drawable.item_button);
+        doorDown.setBackgroundResource(R.drawable.item_button);
+
+        room1.add(doorRight);
+        room1.add(doorDown);
+
+        if (!SaveUtility.alreadyHasItem("2")) {
+            Button note = new Button(getApplicationContext());
+            note.setTag("paper");
+            note.setBackgroundResource(R.drawable.item_button);
+            room1.add(note);
+
+            note.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
+                            intent.putExtra("image", R.drawable.note_dialog);
+                            startActivity(intent);
+                        }
+                    }
+            );
+        }
+
+        if (!SaveUtility.alreadyHasItem("3")) {
+            Button skeleton = new Button(getApplicationContext());
+            skeleton.setTag("skeleton");
+            skeleton.setBackgroundResource(R.drawable.item_button);
+            room1.add(skeleton);
+
+            skeleton.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getApplicationContext(), "Duct tape? This could be useful later", Toast.LENGTH_SHORT).show();
+                            SaveUtility.saveItemToCharacter("3");
+                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                            layout.removeView(v);
+                            Utilities.buttonsForRooms.get("02").remove(v);
+                        }
+                    }
+            );
+        }
+
+        doorDown.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(0, 1);
+                    }
+                }
+        );
+
+        doorRight.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(1, 2);
+                    }
+                }
+        );
+
+        for (Button b : room1) {
+            b.setMinWidth(50);
+            b.setMinHeight(50);
+            b.setMinimumWidth(50);
+            b.setAlpha(1.0f);
+        }
+
+        Utilities.setButtonsForRooms("02", room1);
+    }
+
     private void setButtonsForRoom11() {
 
         List<Button> buttons = new ArrayList<>();
@@ -275,8 +280,6 @@ public class GameActivity extends FragmentActivity {
         Button doorLeft = new Button(getApplicationContext());
         Button clock = new Button(getApplicationContext());
         Button gasline = new Button(getApplicationContext());
-
-        clock.setBackgroundResource(R.drawable.clock_no_hands);
 
         buttons.add(doorLeft);
         buttons.add(doorRight);
@@ -342,25 +345,23 @@ public class GameActivity extends FragmentActivity {
 
     }
 
-    private void setButtonsForRoom21b() {
+    private void setButtonsForRoom12() {
 
         List<Button> buttons = new ArrayList<>();
 
+        Button doorRight = new Button(getApplicationContext());
         Button doorLeft = new Button(getApplicationContext());
-        Button doorUp = new Button(getApplicationContext());
-        Button doorDown = new Button(getApplicationContext());
+        Button stairs = new Button(getApplicationContext());
 
-        doorDown.setTag("door");
-
-        buttons.add(doorDown);
+        buttons.add(doorRight);
         buttons.add(doorLeft);
-        buttons.add(doorUp);
+        buttons.add(stairs);
 
-        doorDown.setOnClickListener(
+        stairs.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        fragment.isRoom(2, 0);
+
                     }
                 }
         );
@@ -369,128 +370,61 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        fragment.isRoom(1, 1);
+                        fragment.isRoom(0, 2);
                     }
                 }
         );
 
-        doorUp.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fragment.isRoom(2, 2);
-                    }
-                }
-        );
-
-        Utilities.setButtonsForRooms("21", buttons);
+        Utilities.setButtonsForRooms("12", buttons);
 
     }
 
-    private void setButtonsForRoom21a() {
+    private void setButtonsForRoom13() {
 
         List<Button> buttons = new ArrayList<>();
 
-        Button doorLeft = new Button(getApplicationContext());
-        Button table = new Button(getApplicationContext());
-        Button doorDown = new Button(getApplicationContext());
+        Button doorRight = new Button(getApplicationContext());
+        Button lever = new Button(getApplicationContext());
 
-        table.setBackgroundResource(R.drawable.doorblockade);
+        buttons.add(doorRight);
+        buttons.add(lever);
 
-        table.setTag("table");
-
-        buttons.add(table);
-        buttons.add(doorDown);
-        buttons.add(doorLeft);
-
-        if (!SaveUtility.alreadyHasItem("12")) {
-
-            Button minuteHand = new Button(getApplicationContext());
-
-            minuteHand.setBackgroundResource(R.drawable.minute_hand);
-            minuteHand.setMinWidth(0);
-            minuteHand.setMinimumWidth(0);
-            minuteHand.setMinHeight(0);
-            minuteHand.setMinimumHeight(0);
-            buttons.add(minuteHand);
-
-            minuteHand.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            SaveUtility.saveItemToCharacter("12");
-                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
-                            layout.removeView(v);
-                            Utilities.buttonsForRooms.get("21").remove(v);
-                        }
-                    }
-            );
-        }
-
-        doorDown.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fragment.isRoom(2, 0);
-                    }
-                }
-        );
-
-        doorLeft.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fragment.isRoom(1, 1);
-                    }
-                }
-        );
-
-        table.setOnClickListener(
+        lever.setOnClickListener(
                 new View.OnClickListener() {
                     int clickCount = 0;
                     @Override
                     public void onClick(View v) {
-                        if (clickCount == 5) {
-                            setButtonsForRoom21b();
-                            fragment.eventTriggeredSwap("21");
-                        }
-                        if (clickCount < 5) {
-                            fragment.moveTable();
-                            clickCount++;
+
+                        switch (clickCount) {
+                            case 0:
+                                Toast.makeText(getApplicationContext(), "Looks like a lever", Toast.LENGTH_SHORT).show();
+                                clickCount++;
+                                break;
+                            case 1:
+                                if (SaveUtility.alreadyHasItem("16")) {
+                                    RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                                    layout.removeView(v);
+                                    fragment.eventTriggeredSwap("13");
+                                    Toast.makeText(getApplicationContext(), "The handle fit perfectly", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "There should be something in this house i can use", Toast.LENGTH_SHORT).show();
+                                }
                         }
                     }
                 }
         );
 
-        Utilities.setButtonsForRooms("21", buttons);
-
-    }
-
-    private void setButtonsForRoom21() {
-
-        List<Button> buttons = new ArrayList<>();
-
-        if (SaveUtility.player.isRoom21()) {
-            setButtonsForRoom21a();
-        } else {
-            Button light = new Button(getApplicationContext());
-
-            buttons.add(light);
-
-            light.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            SaveUtility.player.setRoom21(true);
-                            Utilities.room21 = true;
-                            setButtonsForRoom21a();
-                            fragment.eventTriggeredSwap("21");
-                        }
+        doorRight.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(2, 3);
                     }
-            );
+                }
+        );
 
-            Utilities.setButtonsForRooms("21", buttons);
-        }
+        Utilities.setButtonsForRooms("13", buttons);
+
     }
 
     private void setButtonsForRoom20() {
@@ -576,6 +510,157 @@ public class GameActivity extends FragmentActivity {
         }
 
         Utilities.setButtonsForRooms("20", buttons);
+
+    }
+
+    private void setButtonsForRoom21() {
+
+        List<Button> buttons = new ArrayList<>();
+
+        if (SaveUtility.player.isRoom21()) {
+            setButtonsForRoom21a();
+        } else {
+            Button light = new Button(getApplicationContext());
+
+            buttons.add(light);
+
+            light.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            SaveUtility.player.setRoom21(true);
+                            Utilities.room21 = true;
+                            setButtonsForRoom21a();
+                            fragment.eventTriggeredSwap("21");
+                        }
+                    }
+            );
+
+            Utilities.setButtonsForRooms("21", buttons);
+        }
+    }
+
+    private void setButtonsForRoom21a() {
+
+        List<Button> buttons = new ArrayList<>();
+
+        Button doorLeft = new Button(getApplicationContext());
+        Button table = new Button(getApplicationContext());
+        Button doorDown = new Button(getApplicationContext());
+
+        table.setBackgroundResource(R.drawable.doorblockade);
+
+        table.setTag("table");
+
+        buttons.add(table);
+        buttons.add(doorDown);
+        buttons.add(doorLeft);
+
+        if (!SaveUtility.alreadyHasItem("12")) {
+
+            Button minuteHand = new Button(getApplicationContext());
+
+            minuteHand.setBackgroundResource(R.drawable.minute_hand);
+            minuteHand.setMinWidth(0);
+            minuteHand.setMinimumWidth(0);
+            minuteHand.setMinHeight(0);
+            minuteHand.setMinimumHeight(0);
+            buttons.add(minuteHand);
+
+            minuteHand.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            SaveUtility.saveItemToCharacter("12");
+                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                            layout.removeView(v);
+                            Utilities.buttonsForRooms.get("21").remove(v);
+                        }
+                    }
+            );
+        }
+
+        doorDown.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(2, 0);
+                    }
+                }
+        );
+
+        doorLeft.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(1, 1);
+                    }
+                }
+        );
+
+        table.setOnClickListener(
+                new View.OnClickListener() {
+                    int clickCount = 0;
+                    @Override
+                    public void onClick(View v) {
+                        if (clickCount == 5) {
+                            setButtonsForRoom21b();
+                            fragment.eventTriggeredSwap("21");
+                        }
+                        if (clickCount < 5) {
+                            fragment.moveTable();
+                            clickCount++;
+                        }
+                    }
+                }
+        );
+
+        Utilities.setButtonsForRooms("21", buttons);
+
+    }
+
+    private void setButtonsForRoom21b() {
+
+        List<Button> buttons = new ArrayList<>();
+
+        Button doorLeft = new Button(getApplicationContext());
+        Button doorUp = new Button(getApplicationContext());
+        Button doorDown = new Button(getApplicationContext());
+
+        doorDown.setTag("door");
+
+        buttons.add(doorDown);
+        buttons.add(doorLeft);
+        buttons.add(doorUp);
+
+        doorDown.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(2, 0);
+                    }
+                }
+        );
+
+        doorLeft.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(1, 1);
+                    }
+                }
+        );
+
+        doorUp.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(2, 2);
+                    }
+                }
+        );
+
+        Utilities.setButtonsForRooms("21", buttons);
 
     }
 
@@ -693,88 +778,6 @@ public class GameActivity extends FragmentActivity {
         Utilities.setButtonsForRooms("22", buttons);
     }
 
-    private void setButtonsForRoom12() {
-
-        List<Button> buttons = new ArrayList<>();
-
-        Button doorRight = new Button(getApplicationContext());
-        Button doorLeft = new Button(getApplicationContext());
-        Button stairs = new Button(getApplicationContext());
-
-        buttons.add(doorRight);
-        buttons.add(doorLeft);
-        buttons.add(stairs);
-
-        stairs.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                }
-        );
-
-        doorLeft.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fragment.isRoom(0, 2);
-                    }
-                }
-        );
-
-        Utilities.setButtonsForRooms("12", buttons);
-
-    }
-
-    private void setButtonsForRoom13() {
-
-        List<Button> buttons = new ArrayList<>();
-
-        Button doorRight = new Button(getApplicationContext());
-        Button lever = new Button(getApplicationContext());
-
-        buttons.add(doorRight);
-        buttons.add(lever);
-
-        lever.setOnClickListener(
-                new View.OnClickListener() {
-                    int clickCount = 0;
-                    @Override
-                    public void onClick(View v) {
-
-                            switch (clickCount) {
-                                case 0:
-                                    Toast.makeText(getApplicationContext(), "Looks like a lever", Toast.LENGTH_SHORT).show();
-                                    clickCount++;
-                                    break;
-                                case 1:
-                                    if (SaveUtility.alreadyHasItem("16")) {
-                                        RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
-                                        layout.removeView(v);
-                                        fragment.eventTriggeredSwap("13");
-                                        Toast.makeText(getApplicationContext(), "The handle fit perfectly", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(getApplicationContext(), "There should be something in this house i can use", Toast.LENGTH_SHORT).show();
-                                    }
-                            }
-                        }
-                    }
-        );
-
-        doorRight.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fragment.isRoom(2, 3);
-                    }
-                }
-        );
-
-        Utilities.setButtonsForRooms("13", buttons);
-
-    }
-
     private void setButtonsForRoom23() {
 
         List<Button> buttons = new ArrayList<>();
@@ -828,56 +831,6 @@ public class GameActivity extends FragmentActivity {
         Utilities.setButtonsForRooms("23", buttons);
     }
 
-    private void setButtonsForRoom33() {
-
-        List<Button> buttons = new ArrayList<>();
-
-        Button doorLeft = new Button(getApplicationContext());
-        Button doorDown = new Button(getApplicationContext());
-
-        buttons.add(doorDown);
-        buttons.add(doorLeft);
-
-        if (!SaveUtility.alreadyHasItem("9")) {
-
-            Button bucket = new Button(getApplicationContext());
-
-            buttons.add(bucket);
-
-            bucket.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
-                            layout.removeView(v);
-                            Utilities.buttonsForRooms.get("33").remove(v);
-                            SaveUtility.saveItemToCharacter("9");
-                        }
-                    }
-            );
-        }
-
-        doorDown.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fragment.isRoom(3, 2);
-                    }
-                }
-        );
-
-        doorLeft.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fragment.isRoom(2, 3);
-                    }
-                }
-        );
-
-        Utilities.setButtonsForRooms("33", buttons);
-    }
-
     private void setButtonsForRoom32() {
 
         List<Button> buttons = new ArrayList<>();
@@ -927,6 +880,56 @@ public class GameActivity extends FragmentActivity {
         );
 
         Utilities.setButtonsForRooms("32", buttons);
+    }
+
+    private void setButtonsForRoom33() {
+
+        List<Button> buttons = new ArrayList<>();
+
+        Button doorLeft = new Button(getApplicationContext());
+        Button doorDown = new Button(getApplicationContext());
+
+        buttons.add(doorDown);
+        buttons.add(doorLeft);
+
+        if (!SaveUtility.alreadyHasItem("9")) {
+
+            Button bucket = new Button(getApplicationContext());
+
+            buttons.add(bucket);
+
+            bucket.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                            layout.removeView(v);
+                            Utilities.buttonsForRooms.get("33").remove(v);
+                            SaveUtility.saveItemToCharacter("9");
+                        }
+                    }
+            );
+        }
+
+        doorDown.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(3, 2);
+                    }
+                }
+        );
+
+        doorLeft.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fragment.isRoom(2, 3);
+                    }
+                }
+        );
+
+        Utilities.setButtonsForRooms("33", buttons);
     }
 
     @Override
