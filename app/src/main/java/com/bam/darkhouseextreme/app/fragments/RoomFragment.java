@@ -480,7 +480,7 @@ public class RoomFragment extends Fragment {
 
                     RelativeLayout.LayoutParams stairsparam = getParams();
 
-                    stairsparam.setMargins((screenWidth / 4), (screenHeight / 2), 0, 0);
+                    stairsparam.setMargins((screenWidth / 6), (screenHeight - (screenHeight / 5)), 0, 0);
 
                     stairs.setLayoutParams(stairsparam);
 
