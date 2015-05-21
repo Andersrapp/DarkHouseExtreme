@@ -45,6 +45,8 @@ public class RoomFragment extends Fragment {
     private int x_cord, y_cord, score;
 
     public List<Button> eventsInRoom = new ArrayList<>();
+    public List<Button> fadeOutButtons = new ArrayList<>();
+    public List<Button> fadeInButtons = new ArrayList<>();
 
     private SensorManager sManager;
     private Sensor sensor;
@@ -56,12 +58,17 @@ public class RoomFragment extends Fragment {
     private Animation animation;
     private Animation fadeout;
     private Animation fadein;
+    private Animation fadein_buttons;
+    private Animation fadeout_buttons;
 
     private RelativeLayout mainRelativeLayout;
     private int[] tableLeftMargin = new int[6];
     private int tablePosition = 0;
+    private int portion;
+    private int startMargin;
     private RelativeLayout.LayoutParams tableLayout;
     private Button table;
+    private int tablepos;
 
     private ImageView gasView;
     private ImageView skullView;
@@ -75,6 +82,9 @@ public class RoomFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         context = getActivity().getApplicationContext();
 
+
+
+
         sManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
         sensor = sManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         shaker = new Shaker();
@@ -86,6 +96,30 @@ public class RoomFragment extends Fragment {
             }
         });
 
+        fadein_buttons = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+        fadeout_buttons = AnimationUtils.loadAnimation(context, R.anim.fade_out);
+
+        fadein_buttons.setAnimationListener(
+                new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+                        Log.d("FadeInButtons", String.valueOf(fadeInButtons.size()));
+                        for (Button b : fadeInButtons) {
+                            b.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                }
+        );
 
         root = inflater.inflate(R.layout.room, container, false);
 
@@ -111,10 +145,10 @@ public class RoomFragment extends Fragment {
 
     }
 
-    private void changeRoom(final int roomId) {
+    private void changeRoom(final int roomId, final String room) {
 
-        Log.d(LOG_DATA, "Changed Room");
-        placeItems(root);
+        Log.d(LOG_DATA, room);
+
 
         fadeout = AnimationUtils.loadAnimation(context, R.anim.fade_out);
         roomImage.startAnimation(fadeout);
@@ -122,14 +156,35 @@ public class RoomFragment extends Fragment {
         fadeout.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
+                fadeOutButtons(fadeOutButtons);
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        nullifyAndRemoveButtonsFromParent();
+                        eventsInRoom.addAll(Utilities.buttonsForRooms.get(room));
+                        placeItems(root);
+                    }
+                });
+
 
             }
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                roomImage.setImageResource(roomId);
-                fadein = AnimationUtils.loadAnimation(context, R.anim.fade_in);
-                roomImage.startAnimation(fadein);
+
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        roomImage.setImageResource(roomId);
+                        fadein = AnimationUtils.loadAnimation(context, R.anim.fade_in);
+                        roomImage.startAnimation(fadein);
+                        try {
+                            Log.d("in Animation", fadeInButtons.get(0).getTag().toString());
+                        } catch (Exception e) {}
+                        fadeInButtons(fadeInButtons);
+                    }
+                });
+
             }
 
             @Override
@@ -148,24 +203,21 @@ public class RoomFragment extends Fragment {
                 if (Utilities.doorOpened(room + "a") != 0) {
                     alternative = Utilities.doorOpened(room + "a");
                 }
-                nullifyAndRemoveButtonsFromParent();
-                eventsInRoom.addAll(Utilities.buttonsForRooms.get(room));
+
                 x_cord = x;
                 y_cord = y;
-                changeRoom(alternative);
+                changeRoom(alternative, room);
                 SaveUtility.saveProgress(x, y, score += 10);
                 return true;
             }
             if (Utilities.haveItemForDoor(x_cord, y_cord, x, y)) {
                 Log.d(LOG_DATA, String.valueOf(eventsInRoom.size()));
-                nullifyAndRemoveButtonsFromParent();
                 Log.d(LOG_DATA, room);
                 Log.d(LOG_DATA, "Is a room");
-                eventsInRoom.addAll(Utilities.buttonsForRooms.get(room));
                 Log.d(LOG_DATA, String.valueOf(eventsInRoom.size()));
                 x_cord = x;
                 y_cord = y;
-                changeRoom(roomId);
+                changeRoom(roomId, room);
                 SaveUtility.saveProgress(x, y, score += 10);
                 return true;
             }
@@ -190,6 +242,10 @@ public class RoomFragment extends Fragment {
         } else roomId = Utilities.isViableRoom(room);
         placeItems(root);
         roomImage.setImageResource(roomId);
+        for (Button b : fadeInButtons) {
+            b.setVisibility(View.VISIBLE);
+        }
+        fadeInButtons.clear();
     }
 
     private void handleShake() {
@@ -225,6 +281,13 @@ public class RoomFragment extends Fragment {
 
     public RelativeLayout placeItems(View root) {
 
+        try {
+            Log.d("In PlaceItems", fadeInButtons.get(0).getTag().toString());
+        } catch (Exception e) {}
+
+        fadeOutButtons.clear();
+        fadeOutButtons.clear();
+
         Log.d(LOG_DATA, "Placing items");
 
         String room = String.valueOf(x_cord) + String.valueOf(y_cord);
@@ -238,6 +301,16 @@ public class RoomFragment extends Fragment {
 
         screenHeight = size.y - 100;
         Utilities.screenHeight = screenHeight;
+
+        portion = screenWidth / 20;
+        startMargin = (portion * 10) - (portion * 3);
+        tableLeftMargin[0] = startMargin;
+        tableLeftMargin[1] = startMargin + portion;
+        tableLeftMargin[2] = startMargin + (portion * 2);
+        tableLeftMargin[3] = startMargin + (portion * 3);
+        tableLeftMargin[4] = startMargin + (portion * 4);
+        tableLeftMargin[5] = startMargin + (portion * 5);
+
         mainRelativeLayout = (RelativeLayout) root.findViewById(R.id.mainRel);
 
         RelativeLayout.LayoutParams doorUp = getParams();
@@ -285,6 +358,10 @@ public class RoomFragment extends Fragment {
                     papererino.setLayoutParams(paper);
                     skeletini.setLayoutParams(skeleton);
 
+                    fadeOutButtons.add(skeletini);
+                    fadeInButtons.add(skeletini);
+                    skeletini.setVisibility(View.INVISIBLE);
+
                     mainRelativeLayout.addView(skeletini);
                     mainRelativeLayout.addView(papererino);
                 } else if (eventsInRoom.size() > 2) {
@@ -297,6 +374,9 @@ public class RoomFragment extends Fragment {
                         Button skeletini = eventsInRoom.get(2);
                         skeletini.setLayoutParams(skeleton);
                         mainRelativeLayout.addView(skeletini);
+                        fadeOutButtons.add(skeletini);
+                        fadeInButtons.add(skeletini);
+                        skeletini.setVisibility(View.INVISIBLE);
                     }
                 }
 
@@ -382,15 +462,6 @@ public class RoomFragment extends Fragment {
                     down = eventsInRoom.get(1);
                     left = eventsInRoom.get(2);
 
-                    int portion = screenWidth / 20;
-                    int startMargin = (portion * 10) - (portion * 3);
-                    tableLeftMargin[0] = startMargin;
-                    tableLeftMargin[1] = startMargin + portion;
-                    tableLeftMargin[2] = startMargin + (portion * 2);
-                    tableLeftMargin[3] = startMargin + (portion * 3);
-                    tableLeftMargin[4] = startMargin + (portion * 4);
-                    tableLeftMargin[5] = startMargin + (portion * 5);
-
                     tableLayout = getParams();
                     tableLayout.setMargins(startMargin, (screenHeight / 15), 0, 0);
                     table.setLayoutParams(tableLayout);
@@ -402,7 +473,9 @@ public class RoomFragment extends Fragment {
                     mainRelativeLayout.addView(left);
                     mainRelativeLayout.addView(table);
 
-                } else {
+                } else if (eventsInRoom.get(0).getTag().equals("door")){
+
+                    Log.d("Table", String.valueOf(tablepos));
 
                     if (!SaveUtility.alreadyHasItem("8")) {
                         Button minuteHand = eventsInRoom.get(3);
@@ -423,14 +496,20 @@ public class RoomFragment extends Fragment {
                     down = eventsInRoom.get(0);
                     left = eventsInRoom.get(1);
                     up = eventsInRoom.get(2);
+                    table = eventsInRoom.get(3);
 
                     down.setLayoutParams(doorDown);
                     left.setLayoutParams(doorLeft);
                     up.setLayoutParams(doorUp);
 
+                    tableLayout = getParams();
+                    tableLayout.setMargins(tablepos, screenHeight / 15, 0, 0);
+                    table.setLayoutParams(tableLayout);
+
                     mainRelativeLayout.addView(down);
                     mainRelativeLayout.addView(left);
                     mainRelativeLayout.addView(up);
+                    mainRelativeLayout.addView(table);
                 }
 
 
@@ -640,12 +719,20 @@ public class RoomFragment extends Fragment {
     }
 
     public void nullifyAndRemoveButtonsFromParent() {
-        RelativeLayout mainRelativeLayout = (RelativeLayout) root.findViewById(R.id.mainRel);
+
         Log.d(LOG_DATA, "empty");
         for (Button b : eventsInRoom) {
-            mainRelativeLayout.removeView(b);
+            try {
+                mainRelativeLayout.removeView(b);
+            } catch (Exception e) {}
+        }
+        for (Button b: fadeInButtons) {
+            try {
+                mainRelativeLayout.removeView(b);
+            } catch (Exception e) {}
         }
         eventsInRoom.clear();
+        fadeInButtons.clear();
     }
 
     private RelativeLayout.LayoutParams getParams() {
@@ -656,49 +743,49 @@ public class RoomFragment extends Fragment {
     }
 
     public void moveTable() {
-        int left;
+
         int height = (screenHeight / 15);
         switch (tablePosition) {
             case 0:
                 tablePosition++;
                 Log.d("Message", "case 0");
-                left = tableLeftMargin[tablePosition];
-                tableLayout.setMargins(left, height, 0, 0);
+                tablepos = tableLeftMargin[tablePosition];
+                tableLayout.setMargins(tablepos, height, 0, 0);
                 table.setLayoutParams(tableLayout);
                 break;
 
             case 1:
                 tablePosition++;
                 Log.d("Message", "case 1");
-                left = tableLeftMargin[tablePosition];
-                tableLayout.setMargins(left, height, 0, 0);
+                tablepos = tableLeftMargin[tablePosition];
+                tableLayout.setMargins(tablepos, height, 0, 0);
                 table.setLayoutParams(tableLayout);
                 break;
             case 2:
                 tablePosition++;
                 Log.d("Message", "case 2");
-                left = tableLeftMargin[tablePosition];
-                tableLayout.setMargins(left, height, 0, 0);
+                tablepos = tableLeftMargin[tablePosition];
+                tableLayout.setMargins(tablepos, height, 0, 0);
                 table.setLayoutParams(tableLayout);
                 break;
             case 3:
                 tablePosition++;
                 Log.d("Message", "case 3");
-                left = tableLeftMargin[tablePosition];
-                tableLayout.setMargins(left, height, 0, 0);
+                tablepos = tableLeftMargin[tablePosition];
+                tableLayout.setMargins(tablepos, height, 0, 0);
                 table.setLayoutParams(tableLayout);
                 break;
             case 4:
                 tablePosition++;
                 Log.d("Message", "case 4");
-                left = tableLeftMargin[tablePosition];
-                tableLayout.setMargins(left, height, 0, 0);
+                tablepos = tableLeftMargin[tablePosition];
+                tableLayout.setMargins(tablepos, height, 0, 0);
                 table.setLayoutParams(tableLayout);
                 break;
             case 5:
                 Log.d("Message", "case 5");
-                left = tableLeftMargin[tablePosition];
-                tableLayout.setMargins(left, height, 0, 0);
+                tablepos = tableLeftMargin[tablePosition];
+                tableLayout.setMargins(tablepos, height, 0, 0);
                 table.setLayoutParams(tableLayout);
                 break;
             default:
@@ -833,5 +920,20 @@ public class RoomFragment extends Fragment {
     public void onResume() {
         super.onResume();
         sManager.registerListener(shaker, sensor, SensorManager.SENSOR_DELAY_UI);
+    }
+
+    private void fadeOutButtons(List<Button> buttons) {
+        for (Button b : buttons) {
+            b.startAnimation(fadeout_buttons);
+        }
+
+
+    }
+
+    private void fadeInButtons(List<Button> buttons) {
+        for (Button b : buttons) {
+            b.startAnimation(fadein_buttons);
+        }
+
     }
 }
