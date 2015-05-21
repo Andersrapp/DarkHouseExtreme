@@ -109,6 +109,9 @@ public class CombinationLockFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 number1Value = number2Value = number3Value = number4Value = 0;
+                mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.reset_dials);
+                mediaPlayer.setVolume(100, 100);
+                mediaPlayer.start();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -117,10 +120,7 @@ public class CombinationLockFragment extends Fragment {
                         number3.setText(String.valueOf(number3Value));
                         number4.setText(String.valueOf(number4Value));
                     }
-                }, 500);
-                mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.reset_dials);
-                mediaPlayer.setVolume(100, 100);
-                mediaPlayer.start();
+                }, 100);
             }
         });
         return root;
