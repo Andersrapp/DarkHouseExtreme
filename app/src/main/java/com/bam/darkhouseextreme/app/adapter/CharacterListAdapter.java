@@ -59,7 +59,7 @@ public class CharacterListAdapter extends ArrayAdapter<Player> {
         if (player.isDead()) {
             row.setBackgroundResource(R.drawable.dead_list_row_bg);
         } else {
-            row.setBackgroundResource(R.drawable.list_row_bg);
+            row.setBackgroundResource(R.drawable.alive_list_row_bg);
         }
 
         long playerId = player.getId();
