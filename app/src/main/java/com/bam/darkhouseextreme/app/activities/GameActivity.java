@@ -621,50 +621,50 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SaveUtility.player.setRoom12(true);
-                        SaveUtility.player.setDead(true);
-                        Utilities.room12 = true;
-                        fragment.isRoom(1, 2);
+                        if (!SaveUtility.alreadyHasItem("13")) {
+                            Toast.makeText(getApplicationContext(), "Door is locked!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            SaveUtility.player.setRoom12(true);
+                            SaveUtility.player.setDead(true);
+                            Utilities.room12 = true;
+                            fragment.isRoom(1, 2);
 
+                            Handler handler = new Handler();
 
-                        Handler handler = new Handler();
-
-                        handler.postDelayed(
-                                new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Random rn = new Random();
-                                        int randomNumber = rn.nextInt(2) + 1;
-                                        MediaPlayer mediaPlayer;
-                                        switch (randomNumber) {
-                                            case 1:
-                                                mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.death1);
-                                                mediaPlayer.setVolume(100, 100);
-                                                mediaPlayer.start();
-                                                break;
-                                            case 2:
-                                                mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.death2);
-                                                mediaPlayer.setVolume(100, 100);
-                                                mediaPlayer.start();
-                                                break;
-                                            default:
-                                                break;
-
+                            handler.postDelayed(
+                                    new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Random rn = new Random();
+                                            int randomNumber = rn.nextInt(2) + 1;
+                                            MediaPlayer mediaPlayer;
+                                            switch (randomNumber) {
+                                                case 1:
+                                                    mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.death1);
+                                                    mediaPlayer.setVolume(100, 100);
+                                                    mediaPlayer.start();
+                                                    break;
+                                                case 2:
+                                                    mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.death2);
+                                                    mediaPlayer.setVolume(100, 100);
+                                                    mediaPlayer.start();
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
                                         }
                                     }
-                                }
-                                , 1000);
+                                    , 1000);
 
-                        handler.postDelayed(
-                                new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        onBackPressed();
-
-                                    }
-                                },
-                                4000);
-
+                            handler.postDelayed(
+                                    new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            onBackPressed();
+                                        }
+                                    },
+                                    4000);
+                        }
                     }
                 }
         );
@@ -673,7 +673,13 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        fragment.isRoom(3, 2);
+//                        if(!SaveUtility.alreadyHasItem("13")){
+                            //TODO: Fix so that condition below works.
+                        if (!Utilities.room22) {
+                            Toast.makeText(getApplicationContext(), "Door can only be opened from the other side!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            fragment.isRoom(3, 2);
+                        }
                     }
                 }
         );
@@ -967,6 +973,14 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (!Utilities.room32) {
+                            Utilities.room32 = true;
+                            Utilities.room22 = true;
+                            SaveUtility.player.setRoom32(true);
+                            SaveUtility.player.setRoom22(true);
+                            fragment.eventTriggeredSwap("32");
+                            fragment.eventTriggeredSwap("22");
+                        }
                         fragment.isRoom(2, 2);
                     }
                 }
