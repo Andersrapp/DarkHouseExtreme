@@ -24,6 +24,11 @@
                 android:value=".activities.StartScreenActivity" >
             </meta-data>
         </activity>
+        <activity android:name=".activities.DialogActivity"
+                  android:theme="@style/myDialogTheme"
+                  android:screenOrientation="landscape" >
+
+        </activity>
     </application>
 
 </manifest>

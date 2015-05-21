@@ -1,5 +1,6 @@
 package com.bam.darkhouseextreme.app.activities;
 
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,6 +30,7 @@ public class GameActivity extends FragmentActivity {
 
     private RoomFragment fragment;
     private MediaPlayer mediaPlayer;
+
 
 
     @Override
@@ -108,18 +110,18 @@ public class GameActivity extends FragmentActivity {
         room1.add(doorDown);
 
         if (!SaveUtility.alreadyHasItem("2")) {
-            Button paper = new Button(getApplicationContext());
-            paper.setTag("paper");
-            paper.setBackgroundResource(R.drawable.item_button);
-            room1.add(paper);
+            Button note = new Button(getApplicationContext());
+            note.setTag("paper");
+            note.setBackgroundResource(R.drawable.item_button);
+            room1.add(note);
 
-            paper.setOnClickListener(
+            note.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
-                            layout.removeView(v);
-                            Utilities.buttonsForRooms.get("02").remove(v);
+                            Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
+                            intent.putExtra("image", R.drawable.note_dialog);
+                            startActivity(intent);
                         }
                     }
             );
@@ -130,6 +132,19 @@ public class GameActivity extends FragmentActivity {
             skeleton.setTag("skeleton");
             skeleton.setBackgroundResource(R.drawable.item_button);
             room1.add(skeleton);
+
+            skeleton.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getApplicationContext(), "Duct tape? This could be useful later", Toast.LENGTH_SHORT).show();
+                            SaveUtility.saveItemToCharacter("3");
+                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                            layout.removeView(v);
+                            Utilities.buttonsForRooms.get("02").remove(v);
+                        }
+                    }
+            );
         }
 
         doorDown.setOnClickListener(
@@ -257,8 +272,6 @@ public class GameActivity extends FragmentActivity {
         Button doorLeft = new Button(getApplicationContext());
         Button clock = new Button(getApplicationContext());
         Button gasline = new Button(getApplicationContext());
-
-        clock.setBackgroundResource(R.drawable.clock_no_hands);
 
         buttons.add(doorLeft);
         buttons.add(doorRight);
@@ -665,7 +678,9 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
+                        intent.putExtra("image", R.drawable.book_dialog);
+                        startActivity(intent);
                     }
                 }
         );

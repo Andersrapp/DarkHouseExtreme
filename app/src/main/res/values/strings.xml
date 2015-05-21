@@ -5,6 +5,8 @@
     <string name="load_game_button">Load Game</string>
     <string name="quit_game_button">Quit</string>
     <string name="undecided_button">No Content</string>
+    <string name="enter_combination_button">ENTER</string>
+    <string name="reset_combination_button">RESET</string>
     <string name="create">Create Character</string>
     <string name="ok">OK</string>
     <string name="load_character">Load</string>

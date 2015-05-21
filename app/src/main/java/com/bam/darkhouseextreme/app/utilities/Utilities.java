@@ -43,6 +43,8 @@ public class Utilities {
     public static boolean room33;
     public static boolean room33a;
     public static boolean dead;
+    public static int screenWidth;
+    public static int screenHeight;
 
     /**
      * For each View in a ViewGroup, send the View to @code{setFontForView}.
