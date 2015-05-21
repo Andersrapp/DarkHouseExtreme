@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
     android:weightSum="20"
-    android:background="@drawable/list_row_bg"
+    android:background="@drawable/alive_list_row_bg"
     android:layout_marginBottom="5dp"
     android:layout_marginLeft="10dp"
     android:layout_marginStart="10dp"

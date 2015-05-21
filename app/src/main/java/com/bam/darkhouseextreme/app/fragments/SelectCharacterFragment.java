@@ -74,7 +74,7 @@ public class SelectCharacterFragment extends Fragment {
                 lastSelectedView = view;
 
                 if (!player.isDead()) {
-                    view.setBackgroundResource(R.drawable.selected_list_row_bg);
+                    view.setBackgroundResource(R.drawable.selected_alive_list_row_bg);
                 } else {
                     view.setBackgroundResource(R.drawable.selected_dead_list_row_bg);
 
@@ -86,7 +86,7 @@ public class SelectCharacterFragment extends Fragment {
     public void clearSelection()
     {
         if(lastSelectedView != null && !player.isDead()) {
-            lastSelectedView.setBackgroundResource(R.drawable.list_row_bg);
+            lastSelectedView.setBackgroundResource(R.drawable.alive_list_row_bg);
         } else if (lastSelectedView != null) {
             lastSelectedView.setBackgroundResource(R.drawable.dead_list_row_bg);
         }
