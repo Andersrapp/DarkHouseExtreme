@@ -129,7 +129,7 @@ public class GameActivity extends FragmentActivity {
         if (!SaveUtility.alreadyHasItem("3")) {
             Button skeleton = new Button(getApplicationContext());
             skeleton.setTag("skeleton");
-            skeleton.setBackgroundResource(R.drawable.item_button);
+            skeleton.setBackgroundResource(R.drawable.duct_tape);
             room1.add(skeleton);
 
             skeleton.setOnClickListener(
@@ -273,6 +273,11 @@ public class GameActivity extends FragmentActivity {
         Button gasline = new Button(getApplicationContext());
         clock.setBackgroundResource(R.drawable.clock_no_hands);
 
+        doorRight.setBackgroundResource(R.drawable.item_button);
+        doorLeft.setBackgroundResource(R.drawable.item_button);
+        clock.setBackgroundResource(R.drawable.item_button);
+        gasline.setBackgroundResource(R.drawable.item_button);
+
         buttons.add(doorLeft);
         buttons.add(doorRight);
         buttons.add(clock);
@@ -378,12 +383,19 @@ public class GameActivity extends FragmentActivity {
         Button doorLeft = new Button(getApplicationContext());
         Button doorUp = new Button(getApplicationContext());
         Button doorDown = new Button(getApplicationContext());
+        Button table = new Button(getApplicationContext());
+
+        doorDown.setBackgroundResource(R.drawable.item_button);
+        doorLeft.setBackgroundResource(R.drawable.item_button);
+        doorUp.setBackgroundResource(R.drawable.item_button);
+        table.setBackgroundResource(R.drawable.doorblockade);
 
         doorDown.setTag("door");
 
         buttons.add(doorDown);
         buttons.add(doorLeft);
         buttons.add(doorUp);
+        buttons.add(table);
 
         doorDown.setOnClickListener(
                 new View.OnClickListener() {
@@ -412,6 +424,19 @@ public class GameActivity extends FragmentActivity {
                 }
         );
 
+        table.setOnClickListener(
+                new View.OnClickListener() {
+                    int clickCount = 0;
+                    @Override
+                    public void onClick(View v) {
+                        if (clickCount == 0) {
+                            Toast.makeText(getApplicationContext(), "It sure was heavy", Toast.LENGTH_SHORT).show();
+                        }
+                        clickCount++;
+                    }
+                }
+        );
+
         Utilities.setButtonsForRooms("21", buttons);
 
     }
@@ -423,6 +448,10 @@ public class GameActivity extends FragmentActivity {
         Button doorLeft = new Button(getApplicationContext());
         Button table = new Button(getApplicationContext());
         Button doorDown = new Button(getApplicationContext());
+
+        doorDown.setBackgroundResource(R.drawable.item_button);
+        doorLeft.setBackgroundResource(R.drawable.item_button);
+
 
         table.setBackgroundResource(R.drawable.doorblockade);
 
@@ -505,6 +534,8 @@ public class GameActivity extends FragmentActivity {
         } else {
             Button light = new Button(getApplicationContext());
 
+            light.setBackgroundResource(R.drawable.item_button);
+
             buttons.add(light);
 
             light.setOnClickListener(
@@ -530,6 +561,9 @@ public class GameActivity extends FragmentActivity {
         Button doorUp = new Button(getApplicationContext());
         final Button toilet = new Button(getApplicationContext());
         final Button hourHand = new Button(getApplicationContext());
+
+        toilet.setBackgroundResource(R.drawable.item_button);
+        doorUp.setBackgroundResource(R.drawable.item_button);
 
         buttons.add(doorUp);
 
@@ -619,7 +653,11 @@ public class GameActivity extends FragmentActivity {
         Button doorUp = new Button(getApplicationContext());
         final Button book = new Button(getApplicationContext());
 
-//        book.setBackgroundResource(R.drawable.book);
+        doorUp.setBackgroundResource(R.drawable.item_button);
+        doorDown.setBackgroundResource(R.drawable.item_button);
+        doorLeft.setBackgroundResource(R.drawable.item_button);
+        doorRight.setBackgroundResource(R.drawable.item_button);
+        book.setBackgroundResource(R.drawable.item_button);
 
 
         buttons.add(doorDown);
@@ -736,6 +774,10 @@ public class GameActivity extends FragmentActivity {
         Button doorLeft = new Button(getApplicationContext());
         Button stairs = new Button(getApplicationContext());
 
+        doorLeft.setBackgroundResource(R.drawable.item_button);
+        doorRight.setBackgroundResource(R.drawable.item_button);
+        stairs.setBackgroundResource(R.drawable.item_button);
+
         buttons.add(doorRight);
         buttons.add(doorLeft);
         buttons.add(stairs);
@@ -778,6 +820,9 @@ public class GameActivity extends FragmentActivity {
 
         Button doorRight = new Button(getApplicationContext());
         Button lever = new Button(getApplicationContext());
+
+        lever.setBackgroundResource(R.drawable.item_button);
+        doorRight.setBackgroundResource(R.drawable.item_button);
 
         buttons.add(doorRight);
         buttons.add(lever);
@@ -839,6 +884,11 @@ public class GameActivity extends FragmentActivity {
         Button doorDown = new Button(getApplicationContext());
         Button painting = new Button(getApplicationContext());
 
+        doorLeft.setBackgroundResource(R.drawable.item_button);
+        doorDown.setBackgroundResource(R.drawable.item_button);
+        doorRight.setBackgroundResource(R.drawable.item_button);
+        painting.setBackgroundResource(R.drawable.item_button);
+
         buttons.add(doorDown);
         buttons.add(doorLeft);
         buttons.add(doorRight);
@@ -889,6 +939,9 @@ public class GameActivity extends FragmentActivity {
 
         Button doorLeft = new Button(getApplicationContext());
         Button doorDown = new Button(getApplicationContext());
+
+        doorLeft.setBackgroundResource(R.drawable.item_button);
+        doorDown.setBackgroundResource(R.drawable.item_button);
 
         buttons.add(doorDown);
         buttons.add(doorLeft);
