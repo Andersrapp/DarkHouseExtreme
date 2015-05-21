@@ -413,6 +413,29 @@ public class RoomFragment extends Fragment {
                 break;
             case "20":
 
+                Button water = new Button(context);
+                RelativeLayout.LayoutParams waterParams = getParams();
+                waterParams.setMargins((screenWidth / 3), (screenHeight / 5) * 4, 0, 0);
+                water.setLayoutParams(waterParams);
+                water.setAlpha(0);
+                mainRelativeLayout.addView(water);
+
+                water.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        if (!SaveUtility.alreadyHasItem("12")) {
+                            if (!SaveUtility.alreadyHasItem("11")) {
+                                Toast.makeText(context, "Water has leaked onto the floor.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                mainRelativeLayout.removeView(v);
+                                SaveUtility.saveItemToCharacter("12");
+                                Toast.makeText(context, "You filled the bucket with water", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
+
                 up = eventsInRoom.get(0);
 
                 RelativeLayout.LayoutParams toiletParams = getParams();
@@ -482,7 +505,7 @@ public class RoomFragment extends Fragment {
                 Button book = eventsInRoom.get(4);
 
                 RelativeLayout.LayoutParams bookParam = getParams();
-                bookParam.setMargins(screenWidth /2, screenHeight /2, 0, 0);
+                bookParam.setMargins(screenWidth / 2, screenHeight / 2, 0, 0);
                 book.setLayoutParams(bookParam);
 
                 mainRelativeLayout.addView(book);
@@ -533,6 +556,27 @@ public class RoomFragment extends Fragment {
 
                 mainRelativeLayout.addView(down);
                 mainRelativeLayout.addView(left);
+
+                if (!SaveUtility.alreadyHasItem("11")) {
+                    Button bucket = eventsInRoom.get(2);
+                    bucket.setBackgroundResource(R.drawable.bucket);
+                    bucket.setMinWidth(1);
+                    bucket.setMinimumWidth(1);
+                    RelativeLayout.LayoutParams bucketParams = getParams();
+                    bucketParams.setMargins(screenWidth / 5, screenHeight / 5, 0, 0);
+                    bucket.setLayoutParams(bucketParams);
+                    mainRelativeLayout.addView(bucket);
+
+                    bucket.setOnClickListener(new View.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            mainRelativeLayout.removeView(v);
+                            SaveUtility.saveItemToCharacter("11");
+                            Toast.makeText(context, "You picked up a banged up bucket. Seems whole though.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
 
                 break;
             case "32":
