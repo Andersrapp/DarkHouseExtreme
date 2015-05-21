@@ -271,6 +271,7 @@ public class GameActivity extends FragmentActivity {
         Button doorLeft = new Button(getApplicationContext());
         Button clock = new Button(getApplicationContext());
         Button gasline = new Button(getApplicationContext());
+        clock.setBackgroundResource(R.drawable.clock_no_hands);
 
         buttons.add(doorLeft);
         buttons.add(doorRight);
@@ -278,22 +279,51 @@ public class GameActivity extends FragmentActivity {
         buttons.add(gasline);
 
 
-        if (!SaveUtility.alreadyHasItem("4")) {
+        if (SaveUtility.alreadyHasItem("7") && SaveUtility.alreadyHasItem("8")) {
 
-            Button hour = new Button(getApplicationContext());
-
-            buttons.add(hour);
-
-            hour.setOnClickListener(
+            clock.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
-                            layout.removeView(v);
-                            Utilities.buttonsForRooms.get("11").remove(v);
+                            Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
+                            intent.putExtra("image", R.drawable.complete_clock);
+                            startActivity(intent);
                         }
                     }
             );
+        } else if (!SaveUtility.alreadyHasItem("7") && SaveUtility.alreadyHasItem("8")) {
+            clock.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
+                            intent.putExtra("image", R.drawable.clock_with_minute_hand);
+                            startActivity(intent);
+                            Toast.makeText(getApplicationContext(), "This clock is still incomplete, it needs an hour hand", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+            );
+        } else if (SaveUtility.alreadyHasItem("7") && !SaveUtility.alreadyHasItem("8")) {
+            clock.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
+                            intent.putExtra("image", R.drawable.clock_with_hour_hand);
+                            startActivity(intent);
+                            Toast.makeText(getApplicationContext(), "This clock is still incomplete, it needs an minute hand", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+            );
+        } else {
+            clock.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getApplicationContext(), "This clock is incomplete", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         doorLeft.setOnClickListener(
@@ -324,15 +354,6 @@ public class GameActivity extends FragmentActivity {
                         } else {
                             fragment.isRoom(2, 1);
                         }
-                    }
-                }
-        );
-
-        clock.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
                     }
                 }
         );
