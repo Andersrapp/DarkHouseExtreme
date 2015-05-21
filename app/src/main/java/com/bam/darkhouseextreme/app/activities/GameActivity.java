@@ -32,7 +32,6 @@ public class GameActivity extends FragmentActivity {
     private MediaPlayer mediaPlayer;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -301,7 +300,17 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        fragment.isRoom(0, 1);
+                        if (!SaveUtility.alreadyHasItem("13")) {
+                            Toast.makeText(getApplicationContext(), "Door is locked!", Toast.LENGTH_SHORT).show();
+                        } else if (!Utilities.room11a) {
+                            Toast.makeText(getApplicationContext(), "You opened the door!!", Toast.LENGTH_SHORT).show();
+                            Utilities.room11a = true;
+                            SaveUtility.player.setRoom11a(true);
+                            fragment.eventTriggeredSwap("11a");
+                        } else {
+                            fragment.isRoom(0, 1);
+                            // I like squirrels very much
+                        }
                     }
                 }
         );
@@ -310,7 +319,11 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        fragment.isRoom(2, 1);
+                        if (!Utilities.room11) {
+                            Toast.makeText(getApplicationContext(), "Door is locked!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            fragment.isRoom(2, 1);
+                        }
                     }
                 }
         );
