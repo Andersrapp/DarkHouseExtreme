@@ -7,8 +7,6 @@
 .gradle
 local.properties
 /build
-*.apk
-*.ap_
 
 #Java classes
 *.class
