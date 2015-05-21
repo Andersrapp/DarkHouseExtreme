@@ -26,7 +26,7 @@ Gradle will then handle everything and build the project.
 
 ### Download the .apk
 
-just click this [link](http://s000.tinyupload.com/?file_id=63935124926547665095) to download the apk directly to you phone and install it. You can also drag the apk to a running android emulator to install it
+just click this [link](https://github.com/ChobiJava/DarkHouseExtreme/raw/master/app/app-release.apk) to download the apk directly to you phone and install it. You can also drag the apk to a running android emulator to install it
 
 ### Note
 This code won't run on a device which already has the signed version from Google Play already installed. 
@@ -40,4 +40,3 @@ To build and run from this code, you have to first uninstall the signed copy on 
 - [MrPoppa](https://github.com/MrPoppa)
 - [Andersrapp](https://github.com/Andersrapp)
 - [ChobiJava](https://github.com/ChobiJava)
-- [RonerReked](https://github.com/RonerReked)
