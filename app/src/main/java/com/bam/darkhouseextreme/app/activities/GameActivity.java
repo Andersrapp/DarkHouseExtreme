@@ -716,37 +716,37 @@ public class GameActivity extends FragmentActivity {
 
         buttons.add(doorRight);
         buttons.add(lever);
-
         lever.setOnClickListener(
                 new View.OnClickListener() {
                     int clickCount = 0;
 
                     @Override
                     public void onClick(View v) {
-
-                        switch (clickCount) {
-                            case 0:
-                                Toast.makeText(getApplicationContext(), "Looks like a lever", Toast.LENGTH_SHORT).show();
-                                clickCount++;
-                                break;
-                            case 1:
-                                if (SaveUtility.alreadyHasItem("9")) {
-                                    RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
-                                    layout.removeView(v);
-                                    fragment.eventTriggeredSwap("13");
-                                    Utilities.room13 = true;
-                                    SaveUtility.player.setRoom13(true);
-                                    Toast.makeText(getApplicationContext(), "The handle fit perfectly", Toast.LENGTH_SHORT).show();
-                                } else {
+                        if (!SaveUtility.alreadyHasItem("9")) {
+                            switch (clickCount) {
+                                case 0:
+                                    Toast.makeText(getApplicationContext(), "Looks like a lever", Toast.LENGTH_SHORT).show();
+                                    clickCount++;
+                                    break;
+                                case 1:
                                     Toast.makeText(getApplicationContext(), "There should be something in this house i can use", Toast.LENGTH_SHORT).show();
-                                }
-                                break;
-                            case 2:
-                                Utilities.buttonsForRooms.get("13").remove(v);
-                                fragment.eventTriggeredSwap("13a");
-                                Utilities.room01 = true;
-                                Utilities.room13a = true;
-                                SaveUtility.player.setRoom13a(true);
+                                    break;
+                            }
+
+                        } else if (!Utilities.room13) {
+                            Utilities.room13 = true;
+                            SaveUtility.player.setRoom13(true);
+                            Toast.makeText(getApplicationContext(), "The handle fit perfectly", Toast.LENGTH_SHORT).show();
+                            fragment.eventTriggeredSwap("13");
+                        } else {
+                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                            layout.removeView(v);
+                            Utilities.room02 = true;
+                            Utilities.room13a = true;
+                            SaveUtility.player.setRoom02(true);
+                            SaveUtility.player.setRoom13a(true);
+                            fragment.eventTriggeredSwap("13a");
+                            Utilities.buttonsForRooms.get("13").remove(v);
                         }
                     }
                 }
