@@ -2,7 +2,6 @@ package com.bam.darkhouseextreme.app.utilities;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -222,6 +221,8 @@ public class Utilities {
                 return room22 ? roomVersion : 0;
             case "33":
                 return room33 ? roomVersion : 0;
+            case "32":
+                return room32 ? roomVersion : 0;
             default:
                 return 0;
         }

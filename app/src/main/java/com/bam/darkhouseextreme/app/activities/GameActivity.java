@@ -108,36 +108,36 @@ public class GameActivity extends FragmentActivity {
         room1.add(doorRight);
         room1.add(doorDown);
 
-        if (!SaveUtility.alreadyHasItem("2")) {
-            Button note = new Button(getApplicationContext());
-            note.setTag("paper");
-            note.setBackgroundResource(R.drawable.item_button);
-            room1.add(note);
+        Button note = new Button(getApplicationContext());
+        note.setTag("paper");
+        note.setBackgroundResource(R.drawable.item_button);
+        room1.add(note);
 
-            note.setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
-                            intent.putExtra("image", R.drawable.note_dialog);
-                            startActivity(intent);
-                        }
+        note.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
+                        intent.putExtra("image", R.drawable.note_dialog);
+                        startActivity(intent);
                     }
-            );
-        }
+                }
+        );
 
-        if (!SaveUtility.alreadyHasItem("3")) {
+
+        if (!SaveUtility.alreadyHasItem("1")) {
             Button skeleton = new Button(getApplicationContext());
             skeleton.setTag("skeleton");
             skeleton.setBackgroundResource(R.drawable.duct_tape);
             room1.add(skeleton);
+
 
             skeleton.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Toast.makeText(getApplicationContext(), "Duct tape? This could be useful later", Toast.LENGTH_SHORT).show();
-                            SaveUtility.saveItemToCharacter("3");
+                            SaveUtility.saveItemToCharacter("1");
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
                             Utilities.buttonsForRooms.get("02").remove(v);
@@ -180,10 +180,14 @@ public class GameActivity extends FragmentActivity {
         Button doorUp = new Button(getApplicationContext());
         Button doorRight2 = new Button(getApplicationContext());
         final Button key = new Button(getApplicationContext());
+        Button blood = new Button(getApplicationContext());
         doorRight2.setBackgroundResource(R.drawable.item_button);
         doorUp.setBackgroundResource(R.drawable.item_button);
+        blood.setBackgroundResource(R.drawable.item_button);
+
         room2.add(doorUp);
         room2.add(doorRight2);
+        room2.add(blood);
 
 
         if (!SaveUtility.alreadyHasItem("5")) {
@@ -229,6 +233,17 @@ public class GameActivity extends FragmentActivity {
             );
         }
 
+
+
+        blood.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(), "looks like someone hit their head hard on this table", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+
         doorUp.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -271,13 +286,13 @@ public class GameActivity extends FragmentActivity {
         Button doorLeft = new Button(getApplicationContext());
         Button clock = new Button(getApplicationContext());
         Button gasline = new Button(getApplicationContext());
-        clock.setBackgroundResource(R.drawable.clock_no_hands);
+
+
 
         doorRight.setBackgroundResource(R.drawable.item_button);
         doorLeft.setBackgroundResource(R.drawable.item_button);
-        clock.setBackgroundResource(R.drawable.item_button);
+        clock.setBackgroundResource(R.drawable.clock_no_hands);
         gasline.setBackgroundResource(R.drawable.item_button);
-        clock.setVisibility(View.VISIBLE);
 
         buttons.add(doorLeft);
         buttons.add(doorRight);
@@ -343,7 +358,7 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        boolean fixedGasLeak = fragment.fixGasLeak();
+                        fragment.fixGasLeak();
                     }
                 }
         );
@@ -860,6 +875,7 @@ public class GameActivity extends FragmentActivity {
                             SaveUtility.player.setRoom13a(true);
                             fragment.eventTriggeredSwap("13a");
                             Utilities.buttonsForRooms.get("13").remove(v);
+                            Toast.makeText(getApplicationContext(), "You hear a loud rumbling nearby", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -949,7 +965,7 @@ public class GameActivity extends FragmentActivity {
         buttons.add(doorDown);
         buttons.add(doorLeft);
 
-        if (!SaveUtility.alreadyHasItem("9")) {
+        if (!SaveUtility.alreadyHasItem("11")) {
 
             Button bucket = new Button(getApplicationContext());
 
@@ -962,7 +978,7 @@ public class GameActivity extends FragmentActivity {
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
                             Utilities.buttonsForRooms.get("33").remove(v);
-                            SaveUtility.saveItemToCharacter("9");
+                            SaveUtility.saveItemToCharacter("11");
                         }
                     }
             );
@@ -1006,6 +1022,9 @@ public class GameActivity extends FragmentActivity {
 
         Button doorUp = new Button(getApplicationContext());
         Button doorLeft = new Button(getApplicationContext());
+
+        doorLeft.setBackgroundResource(R.drawable.item_button);
+        doorUp.setBackgroundResource(R.drawable.item_button);
 
         buttons.add(doorLeft);
         buttons.add(doorUp);
@@ -1058,17 +1077,22 @@ public class GameActivity extends FragmentActivity {
 
         doorLeft.setOnClickListener(
                 new View.OnClickListener() {
+                    int numOfClicks = 0;
                     @Override
                     public void onClick(View v) {
-                        if (!Utilities.room32) {
+                        if (Utilities.room32) {
+                            fragment.isRoom(2, 2);
+                        } else if (SaveUtility.alreadyHasItem("13") && numOfClicks == 0 && !Utilities.room32) {
+                            Toast.makeText(getApplicationContext(), "You unlocked the door!", Toast.LENGTH_SHORT).show();
+                            SaveUtility.player.setRoom32(true);
                             Utilities.room32 = true;
                             Utilities.room22 = true;
-                            SaveUtility.player.setRoom32(true);
                             SaveUtility.player.setRoom22(true);
                             fragment.eventTriggeredSwap("32");
-                            fragment.eventTriggeredSwap("22");
+                            numOfClicks++;
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Door is locked", Toast.LENGTH_SHORT).show();
                         }
-                        fragment.isRoom(2, 2);
                     }
                 }
         );

@@ -87,19 +87,16 @@ public class RoomFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         context = getActivity().getApplicationContext();
 
-
-
-
-        sManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-        sensor = sManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        shaker = new Shaker();
-
-        shaker.setShakeListener(new Shaker.OnShakeListener() {
-            @Override
-            public void shake(int count) {
-                handleShake();
-            }
-        });
+//        sManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+//        sensor = sManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+//        shaker = new Shaker();
+//
+//        shaker.setShakeListener(new Shaker.OnShakeListener() {
+//            @Override
+//            public void shake(int count) {
+//                handleShake();
+//            }
+//        });
 
         fadein_buttons = AnimationUtils.loadAnimation(context, R.anim.fade_in);
         fadeout_buttons = AnimationUtils.loadAnimation(context, R.anim.fade_out);
@@ -254,23 +251,23 @@ public class RoomFragment extends Fragment {
         fadeInButtons.clear();
     }
 
-    private void handleShake() {
-        for (final Button event : eventsInRoom) {
-            if (!SaveUtility.alreadyHasItem(String.valueOf(event.getTag()))) {
-                event.setBackgroundResource(R.drawable.item_button);
-                event.startAnimation(animation);
-                new Handler().postDelayed(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                animation.cancel();
-                                event.setBackgroundResource(R.drawable.placeholder);
-                            }
-                        },
-                        500);
-            }
-        }
-    }
+//    private void handleShake() {
+//        for (final Button event : eventsInRoom) {
+//            if (!SaveUtility.alreadyHasItem(String.valueOf(event.getTag()))) {
+//                event.setBackgroundResource(R.drawable.item_button);
+//                event.startAnimation(animation);
+//                new Handler().postDelayed(
+//                        new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                animation.cancel();
+//                                event.setBackgroundResource(R.drawable.placeholder);
+//                            }
+//                        },
+//                        500);
+//            }
+//        }
+//    }
 
     public void eventTriggeredSwap(String room) {
         int roomId = Utilities.doorOpened(room);
@@ -281,6 +278,9 @@ public class RoomFragment extends Fragment {
             nullifyAndRemoveButtonsFromParent();
             eventsInRoom.addAll(Utilities.buttonsForRooms.get("21"));
             placeItems(root);
+            for (Button b : eventsInRoom) {
+                b.setVisibility(View.VISIBLE);
+            }
         }
 
     }
@@ -341,17 +341,15 @@ public class RoomFragment extends Fragment {
                 right = eventsInRoom.get(0);
                 down = eventsInRoom.get(1);
 
-
                 RelativeLayout.LayoutParams paper = getParams();
                 RelativeLayout.LayoutParams skeleton = getParams();
 
-                paper.setMargins((screenWidth / 2), (screenHeight / 2), 0, 0);
-                skeleton.setMargins((screenWidth / 2), (screenHeight / 4), 0, 0);
 
+                paper.setMargins((screenWidth / 2), (screenHeight / 2), 0, 0);
+                skeleton.setMargins((screenWidth / 2 - screenWidth / 13), (screenHeight / 4 - screenHeight / 12), 0, 0);
 
                 right.setLayoutParams(doorRight);
                 down.setLayoutParams(doorDown);
-
 
                 mainRelativeLayout.addView(right);
                 mainRelativeLayout.addView(down);
@@ -398,17 +396,23 @@ public class RoomFragment extends Fragment {
                 mainRelativeLayout.addView(up);
                 mainRelativeLayout.addView(right);
 
+                Button blood = eventsInRoom.get(2);
+                RelativeLayout.LayoutParams bloodParam = getParams();
+                bloodParam.setMargins(screenWidth / 7, (screenHeight - screenHeight / 8), 0, 0);
+                blood.setLayoutParams(bloodParam);
+                mainRelativeLayout.addView(blood);
 
-                if (eventsInRoom.size() > 2) {
-                    Button keyerino = eventsInRoom.get(2);
+
+                if (eventsInRoom.size() > 3) {
+                    Button keyerino = eventsInRoom.get(3);
                     RelativeLayout.LayoutParams key = getParams();
-                    key.setMargins((screenWidth / 2), (screenHeight / 2), 0, 0);
+                    key.setMargins((screenWidth / 2), (screenHeight / 3), 0, 0);
                     keyerino.setLayoutParams(key);
                     mainRelativeLayout.addView(keyerino);
 
                 }
-                if (eventsInRoom.size() > 3) {
-                    Button carpet = eventsInRoom.get(3);
+                if (eventsInRoom.size() > 4) {
+                    Button carpet = eventsInRoom.get(4);
                     RelativeLayout.LayoutParams carpetParam = getParams();
                     carpetParam.setMargins((screenWidth / 2), (screenHeight / 2), 0, 0);
                     carpet.setLayoutParams(carpetParam);
@@ -433,16 +437,16 @@ public class RoomFragment extends Fragment {
                 minuteHandParams.setMargins((screenWidth / 2), (screenHeight / 7), 0, 0);
 
                 clock.setLayoutParams(clockParams);
-                clock.setMinWidth(0);
-                clock.setMinimumWidth(0);
-                clock.setMinHeight(0);
-                clock.setMinimumHeight(0);
                 left.setLayoutParams(doorLeft);
                 right.setLayoutParams(doorRight);
                 mainRelativeLayout.addView(gasLine);
                 mainRelativeLayout.addView(clock);
                 mainRelativeLayout.addView(left);
                 mainRelativeLayout.addView(right);
+
+                fadeOutButtons.add(clock);
+                fadeInButtons.add(clock);
+                clock.setVisibility(View.INVISIBLE);
 
                 if (!Utilities.room11) {
                     setGasPuzzle();
@@ -455,11 +459,13 @@ public class RoomFragment extends Fragment {
 
                 if (eventsInRoom.size() < 2) {
 
+                    Toast.makeText(context, "Holy moly. Sure is dark in here. Better find a lightswitch somewhere", Toast.LENGTH_SHORT).show();
+
                     Button light = eventsInRoom.get(0);
 
                     RelativeLayout.LayoutParams lightparams = getParams();
 
-                    lightparams.setMargins((screenWidth / 2), (screenHeight / 2), 0, 0);
+                    lightparams.setMargins((screenWidth / 3 - screenWidth / 8), (screenHeight - 10), 0, 0);
 
                     light.setLayoutParams(lightparams);
 
@@ -476,6 +482,10 @@ public class RoomFragment extends Fragment {
                         minuteHand.setMinimumHeight(0);
                         minuteHand.setMinHeight(0);
 
+                        fadeInButtons.add(minuteHand);
+                        fadeOutButtons.add(minuteHand);
+                        minuteHand.setVisibility(View.INVISIBLE);
+
                         mainRelativeLayout.addView(minuteHand);
                     }
 
@@ -489,6 +499,10 @@ public class RoomFragment extends Fragment {
 
                     down.setLayoutParams(doorDown);
                     left.setLayoutParams(doorLeft);
+
+                    fadeOutButtons.add(table);
+                    fadeInButtons.add(table);
+                    table.setVisibility(View.INVISIBLE);
 
                     mainRelativeLayout.addView(down);
                     mainRelativeLayout.addView(left);
@@ -509,6 +523,10 @@ public class RoomFragment extends Fragment {
                         minuteHand.setMinimumHeight(0);
                         minuteHand.setMinHeight(0);
 
+                        fadeInButtons.add(minuteHand);
+                        fadeOutButtons.add(minuteHand);
+                        minuteHand.setVisibility(View.INVISIBLE);
+
                         mainRelativeLayout.addView(minuteHand);
                     }
 
@@ -524,6 +542,10 @@ public class RoomFragment extends Fragment {
                     tableLayout = getParams();
                     tableLayout.setMargins(tablepos, screenHeight / 15, 0, 0);
                     table.setLayoutParams(tableLayout);
+
+                    fadeOutButtons.add(table);
+                    fadeInButtons.add(table);
+                    table.setVisibility(View.INVISIBLE);
 
                     mainRelativeLayout.addView(down);
                     mainRelativeLayout.addView(left);
@@ -665,10 +687,17 @@ public class RoomFragment extends Fragment {
 
                 Button painting = eventsInRoom.get(3);
                 painting.setBackgroundResource(R.drawable.painting_animation);
+                if (freedPainting) {
+                    painting.setBackgroundResource(R.drawable.painting_3);
+                }
                 RelativeLayout.LayoutParams paintingParams = getParams();
                 paintingParams.setMargins((screenWidth / 4), (screenHeight / 5), 0, 0);
                 painting.setLayoutParams(paintingParams);
                 paintingAnimation = (AnimationDrawable) painting.getBackground();
+
+                fadeInButtons.add(painting);
+                fadeOutButtons.add(painting);
+                painting.setVisibility(View.INVISIBLE);
 
                 painting.setOnClickListener(
                         new View.OnClickListener() {
@@ -725,6 +754,10 @@ public class RoomFragment extends Fragment {
                     bucket.setLayoutParams(bucketParams);
                     mainRelativeLayout.addView(bucket);
 
+                    fadeInButtons.add(bucket);
+                    fadeOutButtons.add(bucket);
+                    bucket.setVisibility(View.INVISIBLE);
+
                     bucket.setOnClickListener(new View.OnClickListener() {
 
                         @Override
@@ -759,6 +792,10 @@ public class RoomFragment extends Fragment {
                     masterkeyParams.setMargins((screenWidth / 7), (screenHeight / 5) * 4, 0, 0);
                     masterKey.setLayoutParams(masterkeyParams);
                     mainRelativeLayout.addView(masterKey);
+
+                    fadeInButtons.add(masterKey);
+                    fadeOutButtons.add(masterKey);
+                    masterKey.setVisibility(View.INVISIBLE);
                 }
 
 
@@ -883,24 +920,25 @@ public class RoomFragment extends Fragment {
                             mediaPlayer.setVolume(100, 100);
                             mediaPlayer.start();
                             nullifyAndRemoveButtonsFromParent();
-                            new Handler().postDelayed(new Runnable() {
-                                                          @Override
-                                                          public void run() {
-                                                              SaveUtility.saveProgress(x_cord, y_cord, score);
-                                                              FragmentTransaction transaction =
-                                                                      StartScreenActivity.activity.getSupportFragmentManager().beginTransaction();
+                            new Handler().postDelayed(
+                                    new Runnable() {
+                                          @Override
+                                          public void run() {
+                                              SaveUtility.saveProgress(x_cord, y_cord, score);
+                                              FragmentTransaction transaction =
+                                                      StartScreenActivity.activity.getSupportFragmentManager().beginTransaction();
 
-                                                              transaction.replace(R.id.startscreenlayout,
-                                                                      StartScreenActivity.activity
-                                                                              .getSupportFragmentManager()
-                                                                              .findFragmentByTag("startScreen")
-                                                              );
+                                              transaction.replace(R.id.startscreenlayout,
+                                                      StartScreenActivity.activity
+                                                              .getSupportFragmentManager()
+                                                              .findFragmentByTag("startScreen")
+                                              );
 
-                                                              transaction.commitAllowingStateLoss();
-                                                              getActivity().finish();
+                                              transaction.commitAllowingStateLoss();
+                                              getActivity().finish();
 
-                                                          }
-                                                      },
+                                          }
+                                      },
                                     2000);
                         }
                     }
@@ -923,7 +961,6 @@ public class RoomFragment extends Fragment {
 
     public boolean fixGasLeak() {
         boolean hasDuctTape = SaveUtility.alreadyHasItem("1");
-        hasDuctTape = true; //Temporary solution. :-)
 
         if (hasDuctTape && !fadeInSkull.hasEnded()) {
             Toast.makeText(context, "It seems you fixed it.", Toast.LENGTH_SHORT).show();
@@ -968,13 +1005,13 @@ public class RoomFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        sManager.unregisterListener(shaker);
+//        sManager.unregisterListener(shaker);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        sManager.registerListener(shaker, sensor, SensorManager.SENSOR_DELAY_UI);
+//        sManager.registerListener(shaker, sensor, SensorManager.SENSOR_DELAY_UI);
     }
 
     private void fadeOutButtons(List<Button> buttons) {
