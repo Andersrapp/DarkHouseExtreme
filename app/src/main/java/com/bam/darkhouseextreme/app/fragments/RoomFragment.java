@@ -404,6 +404,22 @@ public class RoomFragment extends Fragment {
 
                 } else {
 
+                    if (!SaveUtility.alreadyHasItem("8")) {
+                        Button minuteHand = eventsInRoom.get(3);
+
+                        RelativeLayout.LayoutParams minuteHandParams = getParams();
+
+                        minuteHandParams.setMargins((screenWidth / 2), (screenHeight / 7), 0, 0);
+
+                        minuteHand.setLayoutParams(minuteHandParams);
+                        minuteHand.setMinimumWidth(0);
+                        minuteHand.setMinWidth(0);
+                        minuteHand.setMinimumHeight(0);
+                        minuteHand.setMinHeight(0);
+
+                        mainRelativeLayout.addView(minuteHand);
+                    }
+
                     down = eventsInRoom.get(0);
                     left = eventsInRoom.get(1);
                     up = eventsInRoom.get(2);
