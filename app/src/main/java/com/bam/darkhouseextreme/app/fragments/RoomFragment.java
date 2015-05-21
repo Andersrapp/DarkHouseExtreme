@@ -340,10 +340,18 @@ public class RoomFragment extends Fragment {
                 gasLineParams.setMargins((screenWidth / 4) * 3, 0, 0, 0);
                 gasLine.setLayoutParams(gasLineParams);
 
+                RelativeLayout.LayoutParams clockParams = getParams();
+                clockParams.setMargins((screenWidth / 7), (screenHeight - (screenHeight / 5)), 0 , 0);
+
+                clock.setLayoutParams(clockParams);
+                clock.setMinWidth(0);
+                clock.setMinimumWidth(0);
+                clock.setMinHeight(0);
+                clock.setMinimumHeight(0);
                 left.setLayoutParams(doorLeft);
                 right.setLayoutParams(doorRight);
                 mainRelativeLayout.addView(gasLine);
-
+                mainRelativeLayout.addView(clock);
                 mainRelativeLayout.addView(left);
                 mainRelativeLayout.addView(right);
 
