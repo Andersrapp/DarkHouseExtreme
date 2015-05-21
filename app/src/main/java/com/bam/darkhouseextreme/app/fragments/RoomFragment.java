@@ -68,6 +68,8 @@ public class RoomFragment extends Fragment {
     private int startMargin;
     private RelativeLayout.LayoutParams tableLayout;
     private Button table;
+    private RelativeLayout.LayoutParams minuteHandParams;
+    private Button minuteHand;
     private int tablepos;
 
     private ImageView gasView;
@@ -180,7 +182,8 @@ public class RoomFragment extends Fragment {
                         roomImage.startAnimation(fadein);
                         try {
                             Log.d("in Animation", fadeInButtons.get(0).getTag().toString());
-                        } catch (Exception e) {}
+                        } catch (Exception e) {
+                        }
                         fadeInButtons(fadeInButtons);
                     }
                 });
@@ -421,7 +424,10 @@ public class RoomFragment extends Fragment {
                 gasLine.setLayoutParams(gasLineParams);
 
                 RelativeLayout.LayoutParams clockParams = getParams();
-                clockParams.setMargins((screenWidth / 7), (screenHeight - (screenHeight / 5)), 0 , 0);
+                clockParams.setMargins((screenWidth / 7), (screenHeight - (screenHeight / 5)), 0, 0);
+
+                minuteHandParams = getParams();
+                minuteHandParams.setMargins((screenWidth / 2), (screenHeight / 7), 0, 0);
 
                 clock.setLayoutParams(clockParams);
                 clock.setMinWidth(0);
@@ -458,6 +464,18 @@ public class RoomFragment extends Fragment {
 
                 } else if (eventsInRoom.get(0).getTag().equals("table")) {
 
+                    if (!SaveUtility.alreadyHasItem("8")) {
+                        minuteHand = eventsInRoom.get(3);
+
+                        minuteHand.setLayoutParams(minuteHandParams);
+                        minuteHand.setMinimumWidth(0);
+                        minuteHand.setMinWidth(0);
+                        minuteHand.setMinimumHeight(0);
+                        minuteHand.setMinHeight(0);
+
+                        mainRelativeLayout.addView(minuteHand);
+                    }
+
                     table = eventsInRoom.get(0);
                     down = eventsInRoom.get(1);
                     left = eventsInRoom.get(2);
@@ -478,9 +496,7 @@ public class RoomFragment extends Fragment {
                     Log.d("Table", String.valueOf(tablepos));
 
                     if (!SaveUtility.alreadyHasItem("8")) {
-                        Button minuteHand = eventsInRoom.get(3);
-
-                        RelativeLayout.LayoutParams minuteHandParams = getParams();
+                        minuteHand = eventsInRoom.get(4);
 
                         minuteHandParams.setMargins((screenWidth / 2), (screenHeight / 7), 0, 0);
 

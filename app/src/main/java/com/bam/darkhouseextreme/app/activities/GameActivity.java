@@ -277,6 +277,7 @@ public class GameActivity extends FragmentActivity {
         doorLeft.setBackgroundResource(R.drawable.item_button);
         clock.setBackgroundResource(R.drawable.item_button);
         gasline.setBackgroundResource(R.drawable.item_button);
+        clock.setVisibility(View.VISIBLE);
 
         buttons.add(doorLeft);
         buttons.add(doorRight);
@@ -460,6 +461,30 @@ public class GameActivity extends FragmentActivity {
         buttons.add(doorDown);
         buttons.add(doorLeft);
 
+        if (!SaveUtility.alreadyHasItem("8")) {
+
+            Button minuteHand = new Button(getApplicationContext());
+
+            minuteHand.setBackgroundResource(R.drawable.minute_hand);
+            minuteHand.setMinWidth(0);
+            minuteHand.setMinimumWidth(0);
+            minuteHand.setMinHeight(0);
+            minuteHand.setMinimumHeight(0);
+            buttons.add(minuteHand);
+
+            minuteHand.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            SaveUtility.saveItemToCharacter("8");
+                            RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                            layout.removeView(v);
+                            Utilities.buttonsForRooms.get("21").remove(v);
+                        }
+                    }
+            );
+        }
+
         doorDown.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -580,6 +605,9 @@ public class GameActivity extends FragmentActivity {
                                     layout.removeView(v);
                                     Utilities.buttonsForRooms.get("20").remove(v);
                                     hourHand.setVisibility(View.VISIBLE);
+                                    Utilities.room20 = true;
+                                    SaveUtility.player.setRoom20(true);
+                                    fragment.eventTriggeredSwap("20");
                             }
                         }
                     }
