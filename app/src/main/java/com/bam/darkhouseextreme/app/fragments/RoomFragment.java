@@ -3,6 +3,7 @@ package com.bam.darkhouseextreme.app.fragments;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.AnimationDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
@@ -78,6 +79,8 @@ public class RoomFragment extends Fragment {
     private Animation fadeInGas;
     private boolean gasPuzzleSolved;
     private CombinationLockFragment lockFragment;
+    private AnimationDrawable paintingAnimation;
+    private boolean freedPainting;
 
     @Nullable
     @Override
@@ -660,6 +663,42 @@ public class RoomFragment extends Fragment {
                 left.setLayoutParams(doorLeft);
                 right.setLayoutParams(doorRight);
 
+                Button painting = eventsInRoom.get(3);
+                painting.setBackgroundResource(R.drawable.painting_animation);
+                RelativeLayout.LayoutParams paintingParams = getParams();
+                paintingParams.setMargins((screenWidth / 4), (screenHeight / 5), 0, 0);
+                painting.setLayoutParams(paintingParams);
+                paintingAnimation = (AnimationDrawable) painting.getBackground();
+
+                painting.setOnClickListener(
+                        new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+                                if (!SaveUtility.alreadyHasItem("12")) {
+                                    if (!SaveUtility.alreadyHasItem("11")) {
+                                        Toast.makeText(context, "It's a dry old painting. A creature seems to be trapped in there.", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(context, "You need something more to free the creature.", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    if (!freedPainting) {
+                                        paintingAnimation.stop();
+                                        paintingAnimation.start();
+                                        freedPainting = true;
+                                        new Handler().postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(context, "You set me free! Beware friend...nothing is what it seems!", Toast.LENGTH_LONG).show();
+                                            }
+                                        }, 400);
+                                    }
+                                }
+                            }
+                        }
+                );
+
+                mainRelativeLayout.addView(painting);
                 mainRelativeLayout.addView(down);
                 mainRelativeLayout.addView(right);
                 mainRelativeLayout.addView(left);
