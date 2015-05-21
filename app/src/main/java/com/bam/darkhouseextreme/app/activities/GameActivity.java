@@ -723,6 +723,16 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
+                        intent.putExtra("image", R.drawable.dialog_1);
+                        startActivity(intent);
+
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                onBackPressed();
+                            }
+                        }, 7000);
 
                     }
                 }
