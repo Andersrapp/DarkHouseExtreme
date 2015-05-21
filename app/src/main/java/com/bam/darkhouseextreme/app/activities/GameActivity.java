@@ -6,14 +6,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.fragments.RoomFragment;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
@@ -56,7 +54,6 @@ public class GameActivity extends FragmentActivity {
         setButtonsForRoom33();
 
 
-        Log.d("BAJSSS", fragment.toString());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gameactivity);

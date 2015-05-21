@@ -105,7 +105,6 @@ public class RoomFragment extends Fragment {
                 new Animation.AnimationListener() {
                     @Override
                     public void onAnimationStart(Animation animation) {
-                        Log.d("FadeInButtons", String.valueOf(fadeInButtons.size()));
                         for (Button b : fadeInButtons) {
                             b.setVisibility(View.VISIBLE);
                         }
@@ -149,8 +148,6 @@ public class RoomFragment extends Fragment {
 
     private void changeRoom(final int roomId, final String room) {
 
-        Log.d(LOG_DATA, room);
-
 
         fadeout = AnimationUtils.loadAnimation(context, R.anim.fade_out);
         roomImage.startAnimation(fadeout);
@@ -180,10 +177,6 @@ public class RoomFragment extends Fragment {
                         roomImage.setImageResource(roomId);
                         fadein = AnimationUtils.loadAnimation(context, R.anim.fade_in);
                         roomImage.startAnimation(fadein);
-                        try {
-                            Log.d("in Animation", fadeInButtons.get(0).getTag().toString());
-                        } catch (Exception e) {
-                        }
                         fadeInButtons(fadeInButtons);
                     }
                 });
@@ -214,10 +207,6 @@ public class RoomFragment extends Fragment {
                 return true;
             }
             if (Utilities.haveItemForDoor(x_cord, y_cord, x, y)) {
-                Log.d(LOG_DATA, String.valueOf(eventsInRoom.size()));
-                Log.d(LOG_DATA, room);
-                Log.d(LOG_DATA, "Is a room");
-                Log.d(LOG_DATA, String.valueOf(eventsInRoom.size()));
                 x_cord = x;
                 y_cord = y;
                 changeRoom(roomId, room);
@@ -232,12 +221,9 @@ public class RoomFragment extends Fragment {
     }
 
     private void continueIfApplicable(int x, int y) {
-        Log.d(LOG_DATA, "Continuing");
         String room = String.valueOf(x) + String.valueOf(y);
         final int roomId;
-        Log.d(LOG_DATA, String.valueOf(eventsInRoom.size()));
         eventsInRoom.addAll(Utilities.buttonsForRooms.get(room));
-        Log.d("List", String.valueOf(eventsInRoom.size()));
         if (Utilities.doorOpened(room + "a") != 0) {
             roomId = Utilities.doorOpened(room + "a");
         } else if (Utilities.doorOpened(room) != 0) {
@@ -271,7 +257,6 @@ public class RoomFragment extends Fragment {
 
     public void eventTriggeredSwap(String room) {
         int roomId = Utilities.doorOpened(room);
-        Log.d(LOG_DATA, String.valueOf(roomId));
         roomImage.setImageResource(roomId);
         SaveUtility.saveProgress(x_cord, y_cord, score += 10);
         if (room.equals("21")) {
@@ -287,18 +272,13 @@ public class RoomFragment extends Fragment {
 
     public RelativeLayout placeItems(View root) {
 
-        try {
-            Log.d("In PlaceItems", fadeInButtons.get(0).getTag().toString());
-        } catch (Exception e) {}
 
         fadeOutButtons.clear();
         fadeOutButtons.clear();
 
-        Log.d(LOG_DATA, "Placing items");
 
         String room = String.valueOf(x_cord) + String.valueOf(y_cord);
 
-        Log.d(LOG_DATA, room);
 
         Point size = new Point();
         getActivity().getWindowManager().getDefaultDisplay().getSize(size);
@@ -455,7 +435,6 @@ public class RoomFragment extends Fragment {
                 break;
             case "21":
 
-                Log.d(LOG_DATA, String.valueOf(eventsInRoom.size()));
 
                 if (eventsInRoom.size() < 2) {
 
@@ -510,7 +489,6 @@ public class RoomFragment extends Fragment {
 
                 } else if (eventsInRoom.get(0).getTag().equals("door")){
 
-                    Log.d("Table", String.valueOf(tablepos));
 
                     if (!SaveUtility.alreadyHasItem("8")) {
                         minuteHand = eventsInRoom.get(4);
@@ -812,7 +790,6 @@ public class RoomFragment extends Fragment {
 
     public void nullifyAndRemoveButtonsFromParent() {
 
-        Log.d(LOG_DATA, "empty");
         for (Button b : eventsInRoom) {
             try {
                 mainRelativeLayout.removeView(b);
@@ -840,7 +817,6 @@ public class RoomFragment extends Fragment {
         switch (tablePosition) {
             case 0:
                 tablePosition++;
-                Log.d("Message", "case 0");
                 tablepos = tableLeftMargin[tablePosition];
                 tableLayout.setMargins(tablepos, height, 0, 0);
                 table.setLayoutParams(tableLayout);
@@ -848,34 +824,29 @@ public class RoomFragment extends Fragment {
 
             case 1:
                 tablePosition++;
-                Log.d("Message", "case 1");
                 tablepos = tableLeftMargin[tablePosition];
                 tableLayout.setMargins(tablepos, height, 0, 0);
                 table.setLayoutParams(tableLayout);
                 break;
             case 2:
                 tablePosition++;
-                Log.d("Message", "case 2");
                 tablepos = tableLeftMargin[tablePosition];
                 tableLayout.setMargins(tablepos, height, 0, 0);
                 table.setLayoutParams(tableLayout);
                 break;
             case 3:
                 tablePosition++;
-                Log.d("Message", "case 3");
                 tablepos = tableLeftMargin[tablePosition];
                 tableLayout.setMargins(tablepos, height, 0, 0);
                 table.setLayoutParams(tableLayout);
                 break;
             case 4:
                 tablePosition++;
-                Log.d("Message", "case 4");
                 tablepos = tableLeftMargin[tablePosition];
                 tableLayout.setMargins(tablepos, height, 0, 0);
                 table.setLayoutParams(tableLayout);
                 break;
             case 5:
-                Log.d("Message", "case 5");
                 tablepos = tableLeftMargin[tablePosition];
                 tableLayout.setMargins(tablepos, height, 0, 0);
                 table.setLayoutParams(tableLayout);
