@@ -304,10 +304,10 @@ public class RoomFragment extends Fragment {
         RelativeLayout.LayoutParams doorRight = getParams();
         RelativeLayout.LayoutParams doorLeft = getParams();
 
-        doorRight.setMargins((screenWidth - 70), (screenHeight / 2), 0, 0);
-        doorDown.setMargins(((screenWidth / 2) - (screenWidth / 11)), (screenHeight - 70), 0, 0);
-        doorUp.setMargins(((screenWidth / 2) - (screenWidth / 11)), 10, 0, 0);
-        doorLeft.setMargins(0, (screenHeight / 2), 0, 0);
+        doorRight.setMargins((screenWidth - (screenWidth / 10)), ((screenHeight / 2) - (screenHeight / 25)), 0, 0);
+        doorDown.setMargins(((screenWidth / 2) - (screenWidth / 20)), (screenHeight - (screenHeight / 10)), 0, 0);
+        doorUp.setMargins(((screenWidth / 2) - (screenWidth / 20)), (screenHeight / 20), 0, 0);
+        doorLeft.setMargins(0, ((screenHeight / 2) - (screenHeight / 27)), 0, 0);
 
         Button up;
         Button down;
@@ -757,7 +757,7 @@ public class RoomFragment extends Fragment {
                 up.setLayoutParams(doorUp);
 
                 if (!SaveUtility.alreadyHasItem("9")) {
-                    Button leverHandle = eventsInRoom.get(2);
+                    Button leverHandle = eventsInRoom.get(3);
                     RelativeLayout.LayoutParams leverHandleParams = getParams();
                     leverHandleParams.setMargins((screenWidth / 7) * 4, (screenHeight / 7) * 5, 0, 0);
                     leverHandle.setLayoutParams(leverHandleParams);
@@ -765,7 +765,7 @@ public class RoomFragment extends Fragment {
                 }
 
                 if (!SaveUtility.alreadyHasItem("13")) {
-                    Button masterKey = eventsInRoom.get(3);
+                    Button masterKey = eventsInRoom.get(2);
                     RelativeLayout.LayoutParams masterkeyParams = getParams();
                     masterkeyParams.setMargins((screenWidth / 7), (screenHeight / 5) * 4, 0, 0);
                     masterKey.setLayoutParams(masterkeyParams);

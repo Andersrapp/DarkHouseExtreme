@@ -94,21 +94,21 @@ public class GameActivity extends FragmentActivity {
 
     private void setButtonsForRoom02() {
 
-        List<Button> room1 = new ArrayList<>();
+        List<Button> buttons = new ArrayList<>();
 
         Button doorRight = new Button(getApplicationContext());
         Button doorDown = new Button(getApplicationContext());
 
-        doorRight.setBackgroundResource(R.drawable.item_button);
-        doorDown.setBackgroundResource(R.drawable.item_button);
+        doorRight.setBackgroundResource(R.drawable.placeholder);
+        doorDown.setBackgroundResource(R.drawable.placeholder);
 
-        room1.add(doorRight);
-        room1.add(doorDown);
+        buttons.add(doorRight);
+        buttons.add(doorDown);
 
         Button note = new Button(getApplicationContext());
         note.setTag("paper");
-        note.setBackgroundResource(R.drawable.item_button);
-        room1.add(note);
+        note.setBackgroundResource(R.drawable.placeholder);
+        buttons.add(note);
 
         note.setOnClickListener(
                 new View.OnClickListener() {
@@ -126,7 +126,7 @@ public class GameActivity extends FragmentActivity {
             Button skeleton = new Button(getApplicationContext());
             skeleton.setTag("skeleton");
             skeleton.setBackgroundResource(R.drawable.duct_tape);
-            room1.add(skeleton);
+            buttons.add(skeleton);
 
 
             skeleton.setOnClickListener(
@@ -161,30 +161,31 @@ public class GameActivity extends FragmentActivity {
                 }
         );
 
-        for (Button b : room1) {
-            b.setMinWidth(50);
-            b.setMinHeight(50);
-            b.setMinimumWidth(50);
+        for (Button b : buttons) {
+            b.setMinHeight(0);
+            b.setMinimumHeight(0);
+            b.setMinWidth(0);
+            b.setMinimumWidth(0);
             b.setAlpha(1.0f);
         }
 
-        Utilities.setButtonsForRooms("02", room1);
+        Utilities.setButtonsForRooms("02", buttons);
     }
 
     private void setButtonsForRoom01() {
 
-        List<Button> room2 = new ArrayList<>();
+        List<Button> buttons = new ArrayList<>();
         Button doorUp = new Button(getApplicationContext());
         Button doorRight2 = new Button(getApplicationContext());
         final Button key = new Button(getApplicationContext());
         Button blood = new Button(getApplicationContext());
-        doorRight2.setBackgroundResource(R.drawable.item_button);
-        doorUp.setBackgroundResource(R.drawable.item_button);
-        blood.setBackgroundResource(R.drawable.item_button);
+        doorRight2.setBackgroundResource(R.drawable.placeholder);
+        doorUp.setBackgroundResource(R.drawable.placeholder);
+        blood.setBackgroundResource(R.drawable.placeholder);
 
-        room2.add(doorUp);
-        room2.add(doorRight2);
-        room2.add(blood);
+        buttons.add(doorUp);
+        buttons.add(doorRight2);
+        buttons.add(blood);
 
 
         if (!SaveUtility.alreadyHasItem("5")) {
@@ -192,7 +193,7 @@ public class GameActivity extends FragmentActivity {
             if (Utilities.doorOpened("01") == 0) {
                 key.setVisibility(View.GONE);
             }
-            room2.add(key);
+            buttons.add(key);
 
             key.setOnClickListener(
                     new View.OnClickListener() {
@@ -209,8 +210,8 @@ public class GameActivity extends FragmentActivity {
 
         if (Utilities.doorOpened("01") == 0) {
             Button carpet = new Button(getApplicationContext());
-            carpet.setBackgroundResource(R.drawable.item_button);
-            room2.add(carpet);
+            carpet.setBackgroundResource(R.drawable.placeholder);
+            buttons.add(carpet);
 
             carpet.setOnClickListener(
                     new View.OnClickListener() {
@@ -272,7 +273,16 @@ public class GameActivity extends FragmentActivity {
                 }
         );
 
-        Utilities.setButtonsForRooms("01", room2);
+        for (Button b : buttons) {
+            b.setMinHeight(0);
+            b.setMinimumHeight(0);
+            b.setMinWidth(0);
+            b.setMinimumWidth(0);
+            b.setPadding(0, 0, 0, 0);
+            b.setAlpha(1.0f);
+        }
+
+        Utilities.setButtonsForRooms("01", buttons);
     }
 
     private void setButtonsForRoom11() {
@@ -286,10 +296,10 @@ public class GameActivity extends FragmentActivity {
 
 
 
-        doorRight.setBackgroundResource(R.drawable.item_button);
-        doorLeft.setBackgroundResource(R.drawable.item_button);
+        doorRight.setBackgroundResource(R.drawable.placeholder);
+        doorLeft.setBackgroundResource(R.drawable.placeholder);
         clock.setBackgroundResource(R.drawable.clock_no_hands);
-        gasline.setBackgroundResource(R.drawable.item_button);
+        gasline.setBackgroundResource(R.drawable.placeholder);
 
         buttons.add(doorLeft);
         buttons.add(doorRight);
@@ -360,6 +370,14 @@ public class GameActivity extends FragmentActivity {
                 }
         );
 
+        for (Button b : buttons) {
+            b.setMinHeight(0);
+            b.setMinimumHeight(0);
+            b.setMinWidth(0);
+            b.setMinimumWidth(0);
+            b.setAlpha(1.0f);
+        }
+
         Utilities.setButtonsForRooms("11", buttons);
 
     }
@@ -373,9 +391,9 @@ public class GameActivity extends FragmentActivity {
         Button doorDown = new Button(getApplicationContext());
         Button table = new Button(getApplicationContext());
 
-        doorDown.setBackgroundResource(R.drawable.item_button);
-        doorLeft.setBackgroundResource(R.drawable.item_button);
-        doorUp.setBackgroundResource(R.drawable.item_button);
+        doorDown.setBackgroundResource(R.drawable.placeholder);
+        doorLeft.setBackgroundResource(R.drawable.placeholder);
+        doorUp.setBackgroundResource(R.drawable.placeholder);
         table.setBackgroundResource(R.drawable.doorblockade);
 
         doorDown.setTag("door");
@@ -390,10 +408,6 @@ public class GameActivity extends FragmentActivity {
             Button minuteHand = new Button(getApplicationContext());
 
             minuteHand.setBackgroundResource(R.drawable.minute_hand);
-            minuteHand.setMinWidth(0);
-            minuteHand.setMinimumWidth(0);
-            minuteHand.setMinHeight(0);
-            minuteHand.setMinimumHeight(0);
             buttons.add(minuteHand);
 
             minuteHand.setOnClickListener(
@@ -449,6 +463,14 @@ public class GameActivity extends FragmentActivity {
                 }
         );
 
+        for (Button b : buttons) {
+            b.setMinHeight(0);
+            b.setMinimumHeight(0);
+            b.setMinWidth(0);
+            b.setMinimumWidth(0);
+            b.setAlpha(1.0f);
+        }
+
         Utilities.setButtonsForRooms("21", buttons);
 
     }
@@ -461,8 +483,8 @@ public class GameActivity extends FragmentActivity {
         Button table = new Button(getApplicationContext());
         Button doorDown = new Button(getApplicationContext());
 
-        doorDown.setBackgroundResource(R.drawable.item_button);
-        doorLeft.setBackgroundResource(R.drawable.item_button);
+        doorDown.setBackgroundResource(R.drawable.placeholder);
+        doorLeft.setBackgroundResource(R.drawable.placeholder);
 
 
         table.setBackgroundResource(R.drawable.doorblockade);
@@ -478,10 +500,6 @@ public class GameActivity extends FragmentActivity {
             Button minuteHand = new Button(getApplicationContext());
 
             minuteHand.setBackgroundResource(R.drawable.minute_hand);
-            minuteHand.setMinWidth(0);
-            minuteHand.setMinimumWidth(0);
-            minuteHand.setMinHeight(0);
-            minuteHand.setMinimumHeight(0);
             buttons.add(minuteHand);
 
             minuteHand.setOnClickListener(
@@ -533,6 +551,14 @@ public class GameActivity extends FragmentActivity {
                 }
         );
 
+        for (Button b : buttons) {
+            b.setMinHeight(0);
+            b.setMinimumHeight(0);
+            b.setMinWidth(0);
+            b.setMinimumWidth(0);
+            b.setAlpha(1.0f);
+        }
+
         Utilities.setButtonsForRooms("21", buttons);
 
     }
@@ -546,7 +572,7 @@ public class GameActivity extends FragmentActivity {
         } else {
             Button light = new Button(getApplicationContext());
 
-            light.setBackgroundResource(R.drawable.item_button);
+            light.setBackgroundResource(R.drawable.placeholder);
 
             buttons.add(light);
 
@@ -562,6 +588,14 @@ public class GameActivity extends FragmentActivity {
                     }
             );
 
+            for (Button b : buttons) {
+                b.setMinHeight(0);
+                b.setMinimumHeight(0);
+                b.setMinWidth(0);
+                b.setMinimumWidth(0);
+                b.setAlpha(1.0f);
+            }
+
             Utilities.setButtonsForRooms("21", buttons);
         }
     }
@@ -574,8 +608,8 @@ public class GameActivity extends FragmentActivity {
         final Button toilet = new Button(getApplicationContext());
         final Button hourHand = new Button(getApplicationContext());
 
-        toilet.setBackgroundResource(R.drawable.item_button);
-        doorUp.setBackgroundResource(R.drawable.item_button);
+        toilet.setBackgroundResource(R.drawable.placeholder);
+        doorUp.setBackgroundResource(R.drawable.placeholder);
 
         buttons.add(doorUp);
 
@@ -631,10 +665,6 @@ public class GameActivity extends FragmentActivity {
         if (!SaveUtility.alreadyHasItem("7")) {
 
             hourHand.setBackgroundResource(R.drawable.hour_hand);
-            hourHand.setMinWidth(0);
-            hourHand.setMinimumWidth(0);
-            hourHand.setMinHeight(0);
-            hourHand.setMinimumHeight(0);
             if (Utilities.doorOpened("20") == 0) {
                 hourHand.setVisibility(View.INVISIBLE);
             }
@@ -654,6 +684,14 @@ public class GameActivity extends FragmentActivity {
             );
         }
 
+        for (Button b : buttons) {
+            b.setMinHeight(0);
+            b.setMinimumHeight(0);
+            b.setMinWidth(0);
+            b.setMinimumWidth(0);
+            b.setAlpha(1.0f);
+        }
+
         Utilities.setButtonsForRooms("20", buttons);
 
     }
@@ -668,11 +706,11 @@ public class GameActivity extends FragmentActivity {
         Button doorUp = new Button(getApplicationContext());
         final Button book = new Button(getApplicationContext());
 
-        doorUp.setBackgroundResource(R.drawable.item_button);
-        doorDown.setBackgroundResource(R.drawable.item_button);
-        doorLeft.setBackgroundResource(R.drawable.item_button);
-        doorRight.setBackgroundResource(R.drawable.item_button);
-        book.setBackgroundResource(R.drawable.item_button);
+        doorUp.setBackgroundResource(R.drawable.placeholder);
+        doorDown.setBackgroundResource(R.drawable.placeholder);
+        doorLeft.setBackgroundResource(R.drawable.placeholder);
+        doorRight.setBackgroundResource(R.drawable.placeholder);
+        book.setBackgroundResource(R.drawable.placeholder);
 
 
         buttons.add(doorDown);
@@ -778,6 +816,14 @@ public class GameActivity extends FragmentActivity {
                 }
         );
 
+        for (Button b : buttons) {
+            b.setMinHeight(0);
+            b.setMinimumHeight(0);
+            b.setMinWidth(0);
+            b.setMinimumWidth(0);
+            b.setAlpha(1.0f);
+        }
+
         Utilities.setButtonsForRooms("22", buttons);
     }
 
@@ -789,9 +835,9 @@ public class GameActivity extends FragmentActivity {
         Button doorLeft = new Button(getApplicationContext());
         Button stairs = new Button(getApplicationContext());
 
-        doorLeft.setBackgroundResource(R.drawable.item_button);
-        doorRight.setBackgroundResource(R.drawable.item_button);
-        stairs.setBackgroundResource(R.drawable.item_button);
+        doorLeft.setBackgroundResource(R.drawable.placeholder);
+        doorRight.setBackgroundResource(R.drawable.placeholder);
+        stairs.setBackgroundResource(R.drawable.placeholder);
 
         buttons.add(doorRight);
         buttons.add(doorLeft);
@@ -825,6 +871,15 @@ public class GameActivity extends FragmentActivity {
                 }
         );
 
+        for (Button b : buttons) {
+            b.setMinHeight(0);
+            b.setMinimumHeight(0);
+            b.setPadding(0,0,0,0);
+            b.setMinWidth(0);
+            b.setMinimumWidth(0);
+            b.setAlpha(1.0f);
+        }
+
         Utilities.setButtonsForRooms("12", buttons);
 
     }
@@ -836,8 +891,8 @@ public class GameActivity extends FragmentActivity {
         Button doorRight = new Button(getApplicationContext());
         Button lever = new Button(getApplicationContext());
 
-        lever.setBackgroundResource(R.drawable.item_button);
-        doorRight.setBackgroundResource(R.drawable.item_button);
+        lever.setBackgroundResource(R.drawable.placeholder);
+        doorRight.setBackgroundResource(R.drawable.placeholder);
 
         buttons.add(doorRight);
         buttons.add(lever);
@@ -887,6 +942,14 @@ public class GameActivity extends FragmentActivity {
                 }
         );
 
+        for (Button b : buttons) {
+            b.setMinHeight(0);
+            b.setMinimumHeight(0);
+            b.setMinWidth(0);
+            b.setMinimumWidth(0);
+            b.setAlpha(1.0f);
+        }
+
         Utilities.setButtonsForRooms("13", buttons);
 
     }
@@ -900,10 +963,10 @@ public class GameActivity extends FragmentActivity {
         Button doorDown = new Button(getApplicationContext());
         Button painting = new Button(getApplicationContext());
 
-        doorLeft.setBackgroundResource(R.drawable.item_button);
-        doorDown.setBackgroundResource(R.drawable.item_button);
-        doorRight.setBackgroundResource(R.drawable.item_button);
-        painting.setBackgroundResource(R.drawable.item_button);
+        doorLeft.setBackgroundResource(R.drawable.placeholder);
+        doorDown.setBackgroundResource(R.drawable.placeholder);
+        doorRight.setBackgroundResource(R.drawable.placeholder);
+        painting.setBackgroundResource(R.drawable.placeholder);
 
         buttons.add(doorDown);
         buttons.add(doorLeft);
@@ -946,6 +1009,14 @@ public class GameActivity extends FragmentActivity {
                 }
         );
 
+        for (Button b : buttons) {
+            b.setMinHeight(0);
+            b.setMinimumHeight(0);
+            b.setMinWidth(0);
+            b.setMinimumWidth(0);
+            b.setAlpha(1.0f);
+        }
+
         Utilities.setButtonsForRooms("23", buttons);
     }
 
@@ -956,8 +1027,8 @@ public class GameActivity extends FragmentActivity {
         Button doorLeft = new Button(getApplicationContext());
         Button doorDown = new Button(getApplicationContext());
 
-        doorLeft.setBackgroundResource(R.drawable.item_button);
-        doorDown.setBackgroundResource(R.drawable.item_button);
+        doorLeft.setBackgroundResource(R.drawable.placeholder);
+        doorDown.setBackgroundResource(R.drawable.placeholder);
 
         buttons.add(doorDown);
         buttons.add(doorLeft);
@@ -1010,6 +1081,15 @@ public class GameActivity extends FragmentActivity {
                     }
                 }
         );
+
+        for (Button b : buttons) {
+            b.setMinHeight(0);
+            b.setMinimumHeight(0);
+            b.setMinWidth(0);
+            b.setMinimumWidth(0);
+            b.setAlpha(1.0f);
+        }
+
         Utilities.setButtonsForRooms("33", buttons);
     }
 
@@ -1020,39 +1100,11 @@ public class GameActivity extends FragmentActivity {
         Button doorUp = new Button(getApplicationContext());
         Button doorLeft = new Button(getApplicationContext());
 
-        doorLeft.setBackgroundResource(R.drawable.item_button);
-        doorUp.setBackgroundResource(R.drawable.item_button);
+        doorLeft.setBackgroundResource(R.drawable.placeholder);
+        doorUp.setBackgroundResource(R.drawable.placeholder);
 
         buttons.add(doorLeft);
         buttons.add(doorUp);
-
-        if (!SaveUtility.alreadyHasItem("9")) {
-            Button handle = new Button(getApplicationContext());
-            handle.setBackgroundResource(R.drawable.lever_handle);
-            handle.setAlpha(0);
-
-            buttons.add(handle);
-
-            handle.setOnClickListener(
-                    new View.OnClickListener() {
-                        int numberOfClicks = 0;
-
-                        @Override
-                        public void onClick(View v) {
-                            if (numberOfClicks == 0) {
-                                v.setAlpha(255);
-                                Toast.makeText(getApplicationContext(), "You found something under the bed. Pick it up!", Toast.LENGTH_SHORT).show();
-                                numberOfClicks++;
-                            } else {
-                                RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
-                                layout.removeView(v);
-                                Utilities.buttonsForRooms.get("32").remove(v);
-                                SaveUtility.saveItemToCharacter("9");
-                            }
-                        }
-                    }
-            );
-        }
 
         if (!SaveUtility.alreadyHasItem("13")) {
             Button masterKey = new Button(getApplicationContext());
@@ -1102,6 +1154,43 @@ public class GameActivity extends FragmentActivity {
                     }
                 }
         );
+
+        for (Button b : buttons) {
+            b.setMinHeight(0);
+            b.setMinimumHeight(0);
+            b.setPadding(0,0,0,0);
+            b.setMinWidth(0);
+            b.setMinimumWidth(0);
+            b.setAlpha(1.0f);
+        }
+
+        if (!SaveUtility.alreadyHasItem("9")) {
+            Button handle = new Button(getApplicationContext());
+            handle.setBackgroundResource(R.drawable.lever_handle);
+            handle.setAlpha(0f);
+
+            buttons.add(handle);
+
+            handle.setOnClickListener(
+                    new View.OnClickListener() {
+                        int numberOfClicks = 0;
+
+                        @Override
+                        public void onClick(View v) {
+                            if (numberOfClicks == 0) {
+                                v.setAlpha(1.0f);
+                                Toast.makeText(getApplicationContext(), "You found something under the bed. Pick it up!", Toast.LENGTH_SHORT).show();
+                                numberOfClicks++;
+                            } else {
+                                RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
+                                layout.removeView(v);
+                                Utilities.buttonsForRooms.get("32").remove(v);
+                                SaveUtility.saveItemToCharacter("9");
+                            }
+                        }
+                    }
+            );
+        }
 
         Utilities.setButtonsForRooms("32", buttons);
     }
