@@ -1179,9 +1179,10 @@ public class GameActivity extends FragmentActivity {
                         public void onClick(View v) {
                             if (numberOfClicks == 0) {
                                 v.setAlpha(1.0f);
-                                Toast.makeText(getApplicationContext(), "You found something under the bed. Pick it up!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "You pulled something out from under the bed!", Toast.LENGTH_SHORT).show();
                                 numberOfClicks++;
                             } else {
+                                Toast.makeText(getApplicationContext(), "It's a lever! Where might this be used?", Toast.LENGTH_SHORT).show();
                                 RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                                 layout.removeView(v);
                                 Utilities.buttonsForRooms.get("32").remove(v);

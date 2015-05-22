@@ -69,7 +69,7 @@ public class RoomFragment extends Fragment {
     private int startMargin;
     private RelativeLayout.LayoutParams tableLayout;
     private Button table;
-    private RelativeLayout.LayoutParams minuteHandParams;
+//    private RelativeLayout.LayoutParams minuteHandParams = getParams();
     private Button minuteHand;
     private int tablepos;
 
@@ -276,6 +276,8 @@ public class RoomFragment extends Fragment {
         fadeOutButtons.clear();
         fadeOutButtons.clear();
 
+        RelativeLayout.LayoutParams minuteHandParams = getParams();
+        minuteHandParams.setMargins((screenWidth / 2) - (screenWidth / 7), (screenHeight / 7), 0, 0);
 
         String room = String.valueOf(x_cord) + String.valueOf(y_cord);
 
@@ -321,12 +323,12 @@ public class RoomFragment extends Fragment {
                 right = eventsInRoom.get(0);
                 down = eventsInRoom.get(1);
 
-                RelativeLayout.LayoutParams paper = getParams();
-                RelativeLayout.LayoutParams skeleton = getParams();
+                RelativeLayout.LayoutParams noteParams = getParams();
+                RelativeLayout.LayoutParams ductTapeParams = getParams();
 
 
-                paper.setMargins((screenWidth / 2), (screenHeight / 2), 0, 0);
-                skeleton.setMargins((screenWidth / 2 - screenWidth / 13), (screenHeight / 4 - screenHeight / 12), 0, 0);
+                noteParams.setMargins((screenWidth / 2) - (screenWidth / 27), (screenHeight / 2) - (screenHeight / 18), 0, 0);
+                ductTapeParams.setMargins((screenWidth / 2 - screenWidth / 39), (screenHeight / 3 - screenHeight / 13), 0, 0);
 
                 right.setLayoutParams(doorRight);
                 down.setLayoutParams(doorDown);
@@ -336,27 +338,27 @@ public class RoomFragment extends Fragment {
 
                 if (eventsInRoom.size() > 3) {
 
-                    Button papererino = eventsInRoom.get(2);
-                    Button skeletini = eventsInRoom.get(3);
+                    Button note = eventsInRoom.get(2);
+                    Button ductTape = eventsInRoom.get(3);
 
-                    papererino.setLayoutParams(paper);
-                    skeletini.setLayoutParams(skeleton);
+                    note.setLayoutParams(noteParams);
+                    ductTape.setLayoutParams(ductTapeParams);
 
-                    fadeOutButtons.add(skeletini);
-                    fadeInButtons.add(skeletini);
-                    skeletini.setVisibility(View.INVISIBLE);
+                    fadeOutButtons.add(ductTape);
+                    fadeInButtons.add(ductTape);
+                    ductTape.setVisibility(View.INVISIBLE);
 
-                    mainRelativeLayout.addView(skeletini);
-                    mainRelativeLayout.addView(papererino);
+                    mainRelativeLayout.addView(ductTape);
+                    mainRelativeLayout.addView(note);
                 } else if (eventsInRoom.size() > 2) {
 
                     if (eventsInRoom.get(2).getTag().equals("paper")) {
                         Button papererino = eventsInRoom.get(2);
-                        papererino.setLayoutParams(paper);
+                        papererino.setLayoutParams(noteParams);
                         mainRelativeLayout.addView(papererino);
                     } else {
                         Button skeletini = eventsInRoom.get(2);
-                        skeletini.setLayoutParams(skeleton);
+                        skeletini.setLayoutParams(ductTapeParams);
                         mainRelativeLayout.addView(skeletini);
                         fadeOutButtons.add(skeletini);
                         fadeInButtons.add(skeletini);
@@ -384,17 +386,17 @@ public class RoomFragment extends Fragment {
 
 
                 if (eventsInRoom.size() > 3) {
-                    Button keyerino = eventsInRoom.get(3);
-                    RelativeLayout.LayoutParams key = getParams();
-                    key.setMargins((screenWidth / 2), (screenHeight / 3), 0, 0);
-                    keyerino.setLayoutParams(key);
-                    mainRelativeLayout.addView(keyerino);
+                    Button key = eventsInRoom.get(3);
+                    RelativeLayout.LayoutParams keyParams = getParams();
+                    keyParams.setMargins((screenWidth / 2) + (screenWidth / 24), (screenHeight / 4) + (screenHeight / 14), 0, 0);
+                    key.setLayoutParams(keyParams);
+                    mainRelativeLayout.addView(key);
 
                 }
                 if (eventsInRoom.size() > 4) {
                     Button carpet = eventsInRoom.get(4);
                     RelativeLayout.LayoutParams carpetParam = getParams();
-                    carpetParam.setMargins((screenWidth / 2), (screenHeight / 2), 0, 0);
+                    carpetParam.setMargins((screenWidth / 2) + (screenWidth / 24), (screenHeight / 4) + (screenHeight / 14), 0, 0);
                     carpet.setLayoutParams(carpetParam);
                     mainRelativeLayout.addView(carpet);
                 }
@@ -412,9 +414,6 @@ public class RoomFragment extends Fragment {
 
                 RelativeLayout.LayoutParams clockParams = getParams();
                 clockParams.setMargins((screenWidth / 7), (screenHeight - (screenHeight / 5)), 0, 0);
-
-                minuteHandParams = getParams();
-                minuteHandParams.setMargins((screenWidth / 2), (screenHeight / 7), 0, 0);
 
                 clock.setLayoutParams(clockParams);
                 left.setLayoutParams(doorLeft);
@@ -492,8 +491,6 @@ public class RoomFragment extends Fragment {
 
                     if (!SaveUtility.alreadyHasItem("8")) {
                         minuteHand = eventsInRoom.get(4);
-
-                        minuteHandParams.setMargins((screenWidth / 2), (screenHeight / 7), 0, 0);
 
                         minuteHand.setLayoutParams(minuteHandParams);
                         minuteHand.setMinimumWidth(0);
@@ -627,7 +624,7 @@ public class RoomFragment extends Fragment {
                 Button book = eventsInRoom.get(4);
 
                 RelativeLayout.LayoutParams bookParam = getParams();
-                bookParam.setMargins(screenWidth / 2, screenHeight / 2, 0, 0);
+                bookParam.setMargins((screenWidth / 2) + (screenWidth / 17), (screenHeight / 2) + (screenHeight / 19), 0, 0);
                 book.setLayoutParams(bookParam);
 
                 mainRelativeLayout.addView(book);
@@ -647,7 +644,7 @@ public class RoomFragment extends Fragment {
                 if (!Utilities.room13a) {
                     Button leverHolder = eventsInRoom.get(1);
                     RelativeLayout.LayoutParams leverHolderParams = getParams();
-                    leverHolderParams.setMargins(0, ((screenHeight / 5) * 2), 0, 0);
+                    leverHolderParams.setMargins(0, ((screenHeight / 20) * 7), 0, 0);
                     leverHolder.setLayoutParams(leverHolderParams);
                     mainRelativeLayout.addView(leverHolder);
                 }
@@ -759,16 +756,16 @@ public class RoomFragment extends Fragment {
                 if (!SaveUtility.alreadyHasItem("9")) {
                     Button leverHandle = eventsInRoom.get(3);
                     RelativeLayout.LayoutParams leverHandleParams = getParams();
-                    leverHandleParams.setMargins((screenWidth / 7) * 4, (screenHeight / 7) * 5, 0, 0);
+                    leverHandleParams.setMargins((screenWidth / 7) * 5, (screenHeight / 7) * 5, 0, 0);
                     leverHandle.setLayoutParams(leverHandleParams);
                     mainRelativeLayout.addView(leverHandle);
                 }
 
                 if (!SaveUtility.alreadyHasItem("13")) {
                     Button masterKey = eventsInRoom.get(2);
-                    RelativeLayout.LayoutParams masterkeyParams = getParams();
-                    masterkeyParams.setMargins((screenWidth / 7), (screenHeight / 5) * 4, 0, 0);
-                    masterKey.setLayoutParams(masterkeyParams);
+                    RelativeLayout.LayoutParams masterKeyParams = getParams();
+                    masterKeyParams.setMargins((screenWidth / 7), (screenHeight / 5) * 4, 0, 0);
+                    masterKey.setLayoutParams(masterKeyParams);
                     mainRelativeLayout.addView(masterKey);
 
                     fadeInButtons.add(masterKey);
@@ -933,21 +930,23 @@ public class RoomFragment extends Fragment {
     public boolean fixGasLeak() {
         boolean hasDuctTape = SaveUtility.alreadyHasItem("1");
 
-        if (hasDuctTape && !fadeInSkull.hasEnded()) {
-            Toast.makeText(context, "It seems you fixed it.", Toast.LENGTH_SHORT).show();
-            fadeInSkull.cancel();
-            fadeInGas.cancel();
+        if(fadeInSkull != null) {
+            if (hasDuctTape && !fadeInSkull.hasEnded()) {
+                Toast.makeText(context, "It seems you fixed it.", Toast.LENGTH_SHORT).show();
+                fadeInSkull.cancel();
+                fadeInGas.cancel();
 
-            gasView.setBackgroundColor(Color.argb(0, 0, 0, 0));
-            mainRelativeLayout.removeView(skullView);
+                gasView.setBackgroundColor(Color.argb(0, 0, 0, 0));
+                mainRelativeLayout.removeView(skullView);
 
-            Utilities.room11 = true;
-            SaveUtility.player.setRoom11(true);
-            gasPuzzleSolved = true;
-            eventTriggeredSwap("11");
+                Utilities.room11 = true;
+                SaveUtility.player.setRoom11(true);
+                gasPuzzleSolved = true;
+                eventTriggeredSwap("11");
 
-        } else if (!fadeInSkull.hasEnded()) {
-            Toast.makeText(context, "It seems you need something to fix this...", Toast.LENGTH_SHORT).show();
+            } else if (!fadeInSkull.hasEnded()) {
+                Toast.makeText(context, "It seems you need something to fix this...", Toast.LENGTH_SHORT).show();
+            }
         }
         return gasPuzzleSolved;
     }
