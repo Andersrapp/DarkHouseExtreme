@@ -156,7 +156,11 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        fragment.isRoom(1, 2);
+                        if (Utilities.room02) {
+                            fragment.isRoom(1, 2);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "The wall seem to crumble.", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
         );
