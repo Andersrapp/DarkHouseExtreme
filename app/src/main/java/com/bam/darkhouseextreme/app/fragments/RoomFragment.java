@@ -69,7 +69,7 @@ public class RoomFragment extends Fragment {
     private int startMargin;
     private RelativeLayout.LayoutParams tableLayout;
     private Button table;
-//    private RelativeLayout.LayoutParams minuteHandParams = getParams();
+    //    private RelativeLayout.LayoutParams minuteHandParams = getParams();
     private Button minuteHand;
     private int tablepos;
 
@@ -486,7 +486,7 @@ public class RoomFragment extends Fragment {
                     mainRelativeLayout.addView(left);
                     mainRelativeLayout.addView(table);
 
-                } else if (eventsInRoom.get(0).getTag().equals("door")){
+                } else if (eventsInRoom.get(0).getTag().equals("door")) {
 
 
                     if (!SaveUtility.alreadyHasItem("8")) {
@@ -532,28 +532,11 @@ public class RoomFragment extends Fragment {
                 break;
             case "20":
 
-                Button water = new Button(context);
+                Button water = eventsInRoom.get(eventsInRoom.size()-1);
                 RelativeLayout.LayoutParams waterParams = getParams();
                 waterParams.setMargins((screenWidth / 3), (screenHeight / 5) * 4, 0, 0);
                 water.setLayoutParams(waterParams);
-                water.setAlpha(0);
                 mainRelativeLayout.addView(water);
-
-                water.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        if (!SaveUtility.alreadyHasItem("12")) {
-                            if (!SaveUtility.alreadyHasItem("11")) {
-                                Toast.makeText(context, "Water has leaked onto the floor.", Toast.LENGTH_SHORT).show();
-                            } else {
-                                mainRelativeLayout.removeView(v);
-                                SaveUtility.saveItemToCharacter("12");
-                                Toast.makeText(context, "You filled the bucket with water", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                });
 
                 up = eventsInRoom.get(0);
 
@@ -561,7 +544,7 @@ public class RoomFragment extends Fragment {
 
                 up.setLayoutParams(doorUp);
 
-                if (eventsInRoom.size() > 2) {
+                if (eventsInRoom.size() > 3) {
 
                     Button toilet = eventsInRoom.get(1);
                     toiletParams.setMargins((screenWidth - screenWidth / 3), (screenHeight / 5), 0, 0);
@@ -575,7 +558,7 @@ public class RoomFragment extends Fragment {
                     mainRelativeLayout.addView(hourHand);
                 }
 
-                if (eventsInRoom.size() < 3 && eventsInRoom.size() != 1) {
+                if (eventsInRoom.size() < 4 && eventsInRoom.size() != 2) {
 
                     Button hourHand = eventsInRoom.get(1);
                     RelativeLayout.LayoutParams hourParam = getParams();
@@ -661,19 +644,19 @@ public class RoomFragment extends Fragment {
                 right.setLayoutParams(doorRight);
 
                 Button painting = eventsInRoom.get(3);
-                painting.setBackgroundResource(R.drawable.painting_animation);
                 if (freedPainting) {
                     painting.setBackgroundResource(R.drawable.painting_3);
+                } else {
+                    painting.setBackgroundResource(R.drawable.painting_animation);
+                    paintingAnimation = (AnimationDrawable) painting.getBackground();
+                    fadeInButtons.add(painting);
+                    fadeOutButtons.add(painting);
+                    painting.setVisibility(View.INVISIBLE);
                 }
+
                 RelativeLayout.LayoutParams paintingParams = getParams();
                 paintingParams.setMargins((screenWidth / 4), (screenHeight / 5), 0, 0);
                 painting.setLayoutParams(paintingParams);
-                paintingAnimation = (AnimationDrawable) painting.getBackground();
-
-                fadeInButtons.add(painting);
-                fadeOutButtons.add(painting);
-                painting.setVisibility(View.INVISIBLE);
-
                 painting.setOnClickListener(
                         new View.OnClickListener() {
 
@@ -696,6 +679,8 @@ public class RoomFragment extends Fragment {
                                                 Toast.makeText(context, "You set me free! Beware friend...nothing is what it seems!", Toast.LENGTH_LONG).show();
                                             }
                                         }, 400);
+                                    } else {
+                                        Toast.makeText(context, "This used to be a painting...", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
@@ -790,12 +775,14 @@ public class RoomFragment extends Fragment {
         for (Button b : eventsInRoom) {
             try {
                 mainRelativeLayout.removeView(b);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
         }
-        for (Button b: fadeInButtons) {
+        for (Button b : fadeInButtons) {
             try {
                 mainRelativeLayout.removeView(b);
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
         }
         eventsInRoom.clear();
         fadeInButtons.clear();
@@ -890,23 +877,23 @@ public class RoomFragment extends Fragment {
                             nullifyAndRemoveButtonsFromParent();
                             new Handler().postDelayed(
                                     new Runnable() {
-                                          @Override
-                                          public void run() {
-                                              SaveUtility.saveProgress(x_cord, y_cord, score);
-                                              FragmentTransaction transaction =
-                                                      StartScreenActivity.activity.getSupportFragmentManager().beginTransaction();
+                                        @Override
+                                        public void run() {
+                                            SaveUtility.saveProgress(x_cord, y_cord, score);
+                                            FragmentTransaction transaction =
+                                                    StartScreenActivity.activity.getSupportFragmentManager().beginTransaction();
 
-                                              transaction.replace(R.id.startscreenlayout,
-                                                      StartScreenActivity.activity
-                                                              .getSupportFragmentManager()
-                                                              .findFragmentByTag("startScreen")
-                                              );
+                                            transaction.replace(R.id.startscreenlayout,
+                                                    StartScreenActivity.activity
+                                                            .getSupportFragmentManager()
+                                                            .findFragmentByTag("startScreen")
+                                            );
 
-                                              transaction.commitAllowingStateLoss();
-                                              getActivity().finish();
+                                            transaction.commitAllowingStateLoss();
+                                            getActivity().finish();
 
-                                          }
-                                      },
+                                        }
+                                    },
                                     2000);
                         }
                     }
@@ -930,7 +917,7 @@ public class RoomFragment extends Fragment {
     public boolean fixGasLeak() {
         boolean hasDuctTape = SaveUtility.alreadyHasItem("1");
 
-        if(fadeInSkull != null) {
+        if (fadeInSkull != null) {
             if (hasDuctTape && !fadeInSkull.hasEnded()) {
                 Toast.makeText(context, "It seems you fixed it.", Toast.LENGTH_SHORT).show();
                 fadeInSkull.cancel();

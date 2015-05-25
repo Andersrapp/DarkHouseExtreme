@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.fragments.RoomFragment;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
@@ -52,7 +53,6 @@ public class GameActivity extends FragmentActivity {
         setButtonsForRoom23();
         setButtonsForRoom32();
         setButtonsForRoom33();
-
 
 
         super.onCreate(savedInstanceState);
@@ -236,7 +236,6 @@ public class GameActivity extends FragmentActivity {
         }
 
 
-
         blood.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -297,7 +296,6 @@ public class GameActivity extends FragmentActivity {
         Button doorLeft = new Button(getApplicationContext());
         Button clock = new Button(getApplicationContext());
         Button gasline = new Button(getApplicationContext());
-
 
 
         doorRight.setBackgroundResource(R.drawable.placeholder);
@@ -457,6 +455,7 @@ public class GameActivity extends FragmentActivity {
         table.setOnClickListener(
                 new View.OnClickListener() {
                     int clickCount = 0;
+
                     @Override
                     public void onClick(View v) {
                         if (clickCount == 0) {
@@ -611,6 +610,26 @@ public class GameActivity extends FragmentActivity {
         Button doorUp = new Button(getApplicationContext());
         final Button toilet = new Button(getApplicationContext());
         final Button hourHand = new Button(getApplicationContext());
+        final Button water = new Button(getApplicationContext());
+        water.setBackgroundResource(R.drawable.placeholder);
+
+        water.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (!SaveUtility.alreadyHasItem("12")) {
+                    if (!SaveUtility.alreadyHasItem("11")) {
+                        Toast.makeText(getApplicationContext(), "Water has leaked onto the floor.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        SaveUtility.saveItemToCharacter("12");
+                        Toast.makeText(getApplicationContext(), "You filled the bucket with water", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Somebody should fix this leak.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
         toilet.setBackgroundResource(R.drawable.placeholder);
         doorUp.setBackgroundResource(R.drawable.placeholder);
@@ -687,6 +706,7 @@ public class GameActivity extends FragmentActivity {
                     }
             );
         }
+        buttons.add(water);
 
         for (Button b : buttons) {
             b.setMinHeight(0);
@@ -790,7 +810,7 @@ public class GameActivity extends FragmentActivity {
                     @Override
                     public void onClick(View v) {
 //                        if(!SaveUtility.alreadyHasItem("13")){
-                            //TODO: Fix so that condition below works.
+                        //TODO: Fix so that condition below works.
                         if (!Utilities.room22) {
                             Toast.makeText(getApplicationContext(), "Door can only be opened from the other side!", Toast.LENGTH_SHORT).show();
                         } else {
@@ -878,7 +898,7 @@ public class GameActivity extends FragmentActivity {
         for (Button b : buttons) {
             b.setMinHeight(0);
             b.setMinimumHeight(0);
-            b.setPadding(0,0,0,0);
+            b.setPadding(0, 0, 0, 0);
             b.setMinWidth(0);
             b.setMinimumWidth(0);
             b.setAlpha(1.0f);
@@ -1131,6 +1151,7 @@ public class GameActivity extends FragmentActivity {
         doorLeft.setOnClickListener(
                 new View.OnClickListener() {
                     int numOfClicks = 0;
+
                     @Override
                     public void onClick(View v) {
                         if (Utilities.room32) {
@@ -1162,7 +1183,7 @@ public class GameActivity extends FragmentActivity {
         for (Button b : buttons) {
             b.setMinHeight(0);
             b.setMinimumHeight(0);
-            b.setPadding(0,0,0,0);
+            b.setPadding(0, 0, 0, 0);
             b.setMinWidth(0);
             b.setMinimumWidth(0);
             b.setAlpha(1.0f);
