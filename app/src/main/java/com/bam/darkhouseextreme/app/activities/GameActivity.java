@@ -123,17 +123,17 @@ public class GameActivity extends FragmentActivity {
 
 
         if (!SaveUtility.alreadyHasItem("1")) {
-            Button skeleton = new Button(getApplicationContext());
-            skeleton.setTag("skeleton");
-            skeleton.setBackgroundResource(R.drawable.duct_tape);
-            buttons.add(skeleton);
+            Button ductTape = new Button(getApplicationContext());
+            ductTape.setTag("ductTape");
+            ductTape.setBackgroundResource(R.drawable.duct_tape);
+            buttons.add(ductTape);
 
 
-            skeleton.setOnClickListener(
+            ductTape.setOnClickListener(
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getApplicationContext(), "Duct tape? This could be useful later", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Duct tape? Might be useful.", Toast.LENGTH_SHORT).show();
                             SaveUtility.saveItemToCharacter("1");
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
@@ -240,7 +240,7 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(), "looks like someone hit their head hard on this table", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Looks like someone hit their head hard on this table", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -315,6 +315,7 @@ public class GameActivity extends FragmentActivity {
                     Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
                     intent.putExtra("image", R.drawable.complete_clock);
                     startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "This clock makes no sense! Or does it?", Toast.LENGTH_SHORT).show();
                 } else if (!SaveUtility.alreadyHasItem("7") && SaveUtility.alreadyHasItem("8")) {
                     Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
                     intent.putExtra("image", R.drawable.clock_with_minute_hand);
@@ -416,6 +417,7 @@ public class GameActivity extends FragmentActivity {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            Toast.makeText(getApplicationContext(), "A minute hand. Might fit the clock.", Toast.LENGTH_SHORT).show();
                             SaveUtility.saveItemToCharacter("8");
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
@@ -509,6 +511,7 @@ public class GameActivity extends FragmentActivity {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            Toast.makeText(getApplicationContext(), "A minute hand. Might fit the clock.", Toast.LENGTH_SHORT).show();
                             SaveUtility.saveItemToCharacter("8");
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
@@ -658,15 +661,15 @@ public class GameActivity extends FragmentActivity {
                         public void onClick(View v) {
                             switch (clickCount) {
                                 case 0:
-                                    Toast.makeText(getApplicationContext(), "Don't really want to touch that", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "There might be something useful in there.", Toast.LENGTH_SHORT).show();
                                     clickCount++;
                                     break;
                                 case 1:
-                                    Toast.makeText(getApplicationContext(), "Someone made a mess in there", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "It's really disgusting though.", Toast.LENGTH_SHORT).show();
                                     clickCount++;
                                     break;
                                 case 2:
-                                    Toast.makeText(getApplicationContext(), "Alright, lets see if we can find some clues here", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Guess it's all or nothing!", Toast.LENGTH_SHORT).show();
                                     clickCount++;
                                     break;
                                 case 3:
@@ -698,6 +701,7 @@ public class GameActivity extends FragmentActivity {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            Toast.makeText(getApplicationContext(), "Oh! An hour hand. Might fit the clock.", Toast.LENGTH_SHORT).show();
                             SaveUtility.saveItemToCharacter("7");
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);

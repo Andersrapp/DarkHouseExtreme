@@ -437,7 +437,7 @@ public class RoomFragment extends Fragment {
 
                 if (eventsInRoom.size() < 2) {
 
-                    Toast.makeText(context, "Holy moly. Sure is dark in here. Better find a lightswitch somewhere", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Holy crap. Sure is dark in here. There has to be a lightswitch somewhere", Toast.LENGTH_SHORT).show();
 
                     Button light = eventsInRoom.get(0);
 
@@ -676,7 +676,7 @@ public class RoomFragment extends Fragment {
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Toast.makeText(context, "You set me free! Beware friend...nothing is what it seems!", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(context, "You set me free! Beware friend...all is not what it seems!", Toast.LENGTH_LONG).show();
                                             }
                                         }, 400);
                                     } else {
@@ -861,7 +861,7 @@ public class RoomFragment extends Fragment {
         skullLP.addRule(RelativeLayout.CENTER_VERTICAL);
         skullView.setLayoutParams(skullLP);
         mainRelativeLayout.addView(skullView);
-        Toast.makeText(context, "The door closed behind you. What's that smell?", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "The door closed behind you. Something smells foul?", Toast.LENGTH_SHORT).show();
 
         new Handler().postDelayed(
                 new Runnable() {
@@ -932,7 +932,7 @@ public class RoomFragment extends Fragment {
                 eventTriggeredSwap("11");
 
             } else if (!fadeInSkull.hasEnded()) {
-                Toast.makeText(context, "It seems you need something to fix this...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "The gas pipe is bust! You need something to fix it...", Toast.LENGTH_SHORT).show();
             }
         }
         return gasPuzzleSolved;

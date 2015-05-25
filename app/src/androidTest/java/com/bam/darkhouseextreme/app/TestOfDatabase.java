@@ -44,7 +44,24 @@ public class TestOfDatabase extends AndroidTestCase {
         Player player = helper.createCharacter(name);
         assertEquals(name, player.getName());
         // Test Update Character.
-        boolean updated = helper.updateCharacter(String.valueOf(player.getId()), "0", "1", 100);
+        boolean updated = helper.updateCharacter(String.valueOf(player.getId()),
+                "0",
+                "1",
+                100
+                , false
+                , false
+                , false
+                , false
+                , false
+                , false
+                , false
+                , false
+                , false
+                , false
+                , false
+                , false
+                , false
+                , false);
         assertTrue(updated);
         // Test Read Character.
         List<Player> players = helper.getAllCharacters();

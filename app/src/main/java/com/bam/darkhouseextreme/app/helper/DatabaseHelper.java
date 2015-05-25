@@ -22,7 +22,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "DarkHouse.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
     private static final String PLAYER_TABLE_NAME = "Player";
     private static final String PLAYER_ID = "Id";
     private static final String PLAYER_NAME = "Name";
@@ -31,27 +31,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String PLAYER_SCORE = "Score";
     private static final String PLAYER_ROOM01 = "Room01";
     private static final String PLAYER_ROOM01A = "Room01a";
-    private static final String PLAYER_ROOM01AA = "Room01aa";
     private static final String PLAYER_ROOM02 = "Room02";
-    private static final String PLAYER_ROOM02A = "Room02a";
     private static final String PLAYER_ROOM11 = "Room11";
     private static final String PLAYER_ROOM11A = "Room11a";
-    private static final String PLAYER_ROOM11AA = "Room11aa";
     private static final String PLAYER_ROOM12 = "Room12";
-    private static final String PLAYER_ROOM12A = "Room12a";
     private static final String PLAYER_ROOM13 = "Room13";
     private static final String PLAYER_ROOM13A = "Room13a";
-    private static final String PLAYER_ROOM13AA = "Room13aa";
     private static final String PLAYER_ROOM20 = "Room20";
-    private static final String PLAYER_ROOM20A = "Room20a";
     private static final String PLAYER_ROOM21 = "Room21";
-    private static final String PLAYER_ROOM21A = "Room21a";
     private static final String PLAYER_ROOM22 = "Room22";
-    private static final String PLAYER_ROOM22A = "Room22a";
-    private static final String PLAYER_ROOM23 = "Room23";
     private static final String PLAYER_ROOM32 = "Room32";
     private static final String PLAYER_ROOM33 = "Room33";
-    private static final String PLAYER_ROOM33A = "Room33a";
     private static final String PLAYER_DEAD = "Dead";
 
     private static final String ITEM_TABLE_NAME = "Item";
@@ -77,27 +67,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         + PLAYER_MAP_Y + " INTEGER, " + PLAYER_SCORE + " INTEGER, "
                         + PLAYER_ROOM01 + " INTEGER,"
                         + PLAYER_ROOM01A + " INTEGER,"
-                        + PLAYER_ROOM01AA + " INTEGER,"
                         + PLAYER_ROOM02 + " INTEGER, "
-                        + PLAYER_ROOM02A + " INTEGER, "
                         + PLAYER_ROOM11 + " INTEGER, "
                         + PLAYER_ROOM11A + " INTEGER, "
-                        + PLAYER_ROOM11AA + " INTEGER, "
                         + PLAYER_ROOM12 + " INTEGER, "
-                        + PLAYER_ROOM12A + " INTEGER, "
                         + PLAYER_ROOM13 + " INTEGER, "
                         + PLAYER_ROOM13A + " INTEGER, "
-                        + PLAYER_ROOM13AA + " INTEGER, "
                         + PLAYER_ROOM20 + " INTEGER, "
-                        + PLAYER_ROOM20A + " INTEGER, "
                         + PLAYER_ROOM21 + " INTEGER, "
-                        + PLAYER_ROOM21A + " INTEGER, "
                         + PLAYER_ROOM22 + " INTEGER, "
-                        + PLAYER_ROOM22A + " INTEGER, "
-                        + PLAYER_ROOM23 + " INTEGER, "
                         + PLAYER_ROOM32 + " INTEGER, "
                         + PLAYER_ROOM33 + " INTEGER,"
-                        + PLAYER_ROOM33A + " INTEGER,"
                         + PLAYER_DEAD + " INTEGER)"
         );
         db.execSQL("CREATE TABLE IF NOT EXISTS " + ITEM_TABLE_NAME + " (" + ITEM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -111,7 +91,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + PLAYER_TABLE_NAME);
+        db.execSQL("DROP DATABASE IF EXISTS");
         onCreate(db);
     }
 
@@ -146,13 +126,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return getListOfPlayers(cursor);
     }
 
-    public boolean updateCharacter(String id, String mapXCoordinate, String mapYCoordinate,
-                                   int score, boolean room01, boolean room01a, boolean room01aa,
-                                   boolean room02, boolean room02a, boolean room11, boolean room11a,
-                                   boolean room11aa, boolean room12, boolean room12a, boolean room13,
-                                   boolean room13a, boolean room13aa, boolean room20, boolean room20a,
-                                   boolean room21, boolean room21a, boolean room22, boolean room22a,
-                                   boolean room23, boolean room32, boolean room33, boolean room33a,
+    public boolean updateCharacter(String id,
+                                   String mapXCoordinate,
+                                   String mapYCoordinate,
+                                   int score,
+                                   boolean room01,
+                                   boolean room01a,
+                                   boolean room02,
+                                   boolean room11,
+                                   boolean room11a,
+                                   boolean room12,
+                                   boolean room13,
+                                   boolean room13a,
+                                   boolean room20,
+                                   boolean room21,
+                                   boolean room22,
+                                   boolean room32,
+                                   boolean room33,
                                    boolean dead)
     {
         db = this.getWritableDatabase();
@@ -162,27 +152,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(PLAYER_SCORE, score);
         contentValues.put(PLAYER_ROOM01, room01 ? 1 : 0);
         contentValues.put(PLAYER_ROOM01A, room01a ? 1 : 0);
-        contentValues.put(PLAYER_ROOM01AA, room01aa ? 1 : 0);
         contentValues.put(PLAYER_ROOM02, room02 ? 1 : 0);
-        contentValues.put(PLAYER_ROOM02A, room02a ? 1 : 0);
         contentValues.put(PLAYER_ROOM11, room11 ? 1 : 0);
         contentValues.put(PLAYER_ROOM11A, room11a ? 1 : 0);
-        contentValues.put(PLAYER_ROOM11AA, room11aa ? 1 : 0);
         contentValues.put(PLAYER_ROOM12, room12 ? 1 : 0);
-        contentValues.put(PLAYER_ROOM12A, room12a ? 1 : 0);
         contentValues.put(PLAYER_ROOM13, room13 ? 1 : 0);
         contentValues.put(PLAYER_ROOM13A, room13a ? 1 : 0);
-        contentValues.put(PLAYER_ROOM13AA, room13aa ? 1 : 0);
         contentValues.put(PLAYER_ROOM20, room20 ? 1 : 0);
-        contentValues.put(PLAYER_ROOM20A, room20a ? 1 : 0);
         contentValues.put(PLAYER_ROOM21, room21 ? 1 : 0);
-        contentValues.put(PLAYER_ROOM21A, room21a ? 1 : 0);
         contentValues.put(PLAYER_ROOM22, room22 ? 1 : 0);
-        contentValues.put(PLAYER_ROOM22A, room22a ? 1 : 0);
         contentValues.put(PLAYER_ROOM32, room32 ? 1 : 0);
-        contentValues.put(PLAYER_ROOM23, room23 ? 1 : 0);
         contentValues.put(PLAYER_ROOM33, room33 ? 1 : 0);
-        contentValues.put(PLAYER_ROOM33A, room33a ? 1 : 0);
         contentValues.put(PLAYER_DEAD, dead ? 1 : 0);
         String whereClause = PLAYER_ID + " = ?";
         String[] whereArgs = {id};
@@ -292,28 +272,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             player.setScore(cursor.getInt(4));
             player.setRoom01(cursor.getInt(5) == 1);
             player.setRoom01a(cursor.getInt(6) == 1);
-            player.setRoom01aa(cursor.getInt(7) == 1);
-            player.setRoom02(cursor.getInt(8) == 1);
-            player.setRoom02a(cursor.getInt(9) == 1);
-            player.setRoom11(cursor.getInt(10) == 1);
-            player.setRoom11a(cursor.getInt(11) == 1);
-            player.setRoom11aa(cursor.getInt(12) == 1);
-            player.setRoom12(cursor.getInt(13) == 1);
-            player.setRoom12a(cursor.getInt(14) == 1);
-            player.setRoom13(cursor.getInt(15) == 1);
-            player.setRoom13a(cursor.getInt(16) == 1);
-            player.setRoom13aa(cursor.getInt(17) == 1);
-            player.setRoom20(cursor.getInt(18) == 1);
-            player.setRoom20a(cursor.getInt(19) == 1);
-            player.setRoom21(cursor.getInt(20) == 1);
-            player.setRoom21a(cursor.getInt(21) == 1);
-            player.setRoom22(cursor.getInt(22) == 1);
-            player.setRoom22a(cursor.getInt(23) == 1);
-            player.setRoom23(cursor.getInt(24) == 1);
-            player.setRoom32(cursor.getInt(25) == 1);
-            player.setRoom33(cursor.getInt(26) == 1);
-            player.setRoom33a(cursor.getInt(27) == 1);
-            player.setDead(cursor.getInt(28) == 1);
+            player.setRoom02(cursor.getInt(7) == 1);
+            player.setRoom11(cursor.getInt(8) == 1);
+            player.setRoom11a(cursor.getInt(9) == 1);
+            player.setRoom12(cursor.getInt(10) == 1);
+            player.setRoom13(cursor.getInt(11) == 1);
+            player.setRoom13a(cursor.getInt(12) == 1);
+            player.setRoom20(cursor.getInt(13) == 1);
+            player.setRoom21(cursor.getInt(14) == 1);
+            player.setRoom22(cursor.getInt(15) == 1);
+            player.setRoom32(cursor.getInt(16) == 1);
+            player.setRoom33(cursor.getInt(17) == 1);
+            player.setDead(cursor.getInt(18) == 1);
             player.setPlayerItems(getListOfPlayerItems(player.getId()));
             players.add(player);
         }
