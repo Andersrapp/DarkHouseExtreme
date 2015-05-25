@@ -13,18 +13,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.transition.TransitionManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
+import android.widget.*;
 import com.bam.darkhouseextreme.app.R;
+import com.bam.darkhouseextreme.app.activities.GameActivity;
 import com.bam.darkhouseextreme.app.activities.StartScreenActivity;
 import com.bam.darkhouseextreme.app.adapter.Shaker;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
@@ -62,6 +58,9 @@ public class RoomFragment extends Fragment {
     private Animation fadein_buttons;
     private Animation fadeout_buttons;
 
+    private Toast toast;
+    private TextView toastText;
+
     private RelativeLayout mainRelativeLayout;
     private int[] tableLeftMargin = new int[6];
     private int tablePosition = 0;
@@ -97,6 +96,10 @@ public class RoomFragment extends Fragment {
 //                handleShake();
 //            }
 //        });
+
+        GameActivity activity = (GameActivity) getActivity();
+        toast = activity.getToast();
+        toastText = activity.getToastText();
 
         fadein_buttons = AnimationUtils.loadAnimation(context, R.anim.fade_in);
         fadeout_buttons = AnimationUtils.loadAnimation(context, R.anim.fade_out);
@@ -436,8 +439,8 @@ public class RoomFragment extends Fragment {
 
 
                 if (eventsInRoom.size() < 2) {
-
-                    Toast.makeText(context, "Holy crap. Sure is dark in here. There has to be a lightswitch somewhere", Toast.LENGTH_SHORT).show();
+                    toastText.setText("Holy moly. Sure is dark in here. Better find a lightswitch somewhere");
+                    toast.show();
 
                     Button light = eventsInRoom.get(0);
 
@@ -861,14 +864,16 @@ public class RoomFragment extends Fragment {
         skullLP.addRule(RelativeLayout.CENTER_VERTICAL);
         skullView.setLayoutParams(skullLP);
         mainRelativeLayout.addView(skullView);
-        Toast.makeText(context, "The door closed behind you. Something smells foul?", Toast.LENGTH_SHORT).show();
-
+        toastText.setText("The door closed behind you. What's that smell?");
+        toast.show();
         new Handler().postDelayed(
                 new Runnable() {
                     @Override
                     public void run() {
                         if (!gasPuzzleSolved) {
-                            Toast.makeText(context, "You died!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "You died!", Toast.LENGTH_SHORT).show();
+                            toastText.setText("You died!");
+                            toast.show();
                             SaveUtility.player.setDead(true);
                             MediaPlayer mediaPlayer;
                             mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.death3);
@@ -919,7 +924,10 @@ public class RoomFragment extends Fragment {
 
         if (fadeInSkull != null) {
             if (hasDuctTape && !fadeInSkull.hasEnded()) {
-                Toast.makeText(context, "It seems you fixed it.", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "It seems you fixed it.", Toast.LENGTH_SHORT).show();
+                toastText.setText("That seems to fix it for now");
+                toast.show();
+
                 fadeInSkull.cancel();
                 fadeInGas.cancel();
 
@@ -932,7 +940,8 @@ public class RoomFragment extends Fragment {
                 eventTriggeredSwap("11");
 
             } else if (!fadeInSkull.hasEnded()) {
-                Toast.makeText(context, "The gas pipe is bust! You need something to fix it...", Toast.LENGTH_SHORT).show();
+                toastText.setText("The gas pipe is bust! You need something to fix it...");
+                toast.show();
             }
         }
         return gasPuzzleSolved;
