@@ -439,7 +439,7 @@ public class RoomFragment extends Fragment {
 
 
                 if (eventsInRoom.size() < 2) {
-                    toastText.setText("Holy moly. Sure is dark in here. Better find a lightswitch somewhere");
+                    toastText.setText(R.string.dark_room_description);
                     toast.show();
 
                     Button light = eventsInRoom.get(0);
@@ -667,9 +667,9 @@ public class RoomFragment extends Fragment {
                             public void onClick(View v) {
                                 if (!SaveUtility.alreadyHasItem("12")) {
                                     if (!SaveUtility.alreadyHasItem("11")) {
-                                        Toast.makeText(context, "It's a dry old painting. A creature seems to be trapped in there.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, R.string.painting_description, Toast.LENGTH_SHORT).show();
                                     } else {
-                                        Toast.makeText(context, "You need something more to free the creature.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, R.string.painting_description2, Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
                                     if (!freedPainting) {
@@ -679,11 +679,11 @@ public class RoomFragment extends Fragment {
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Toast.makeText(context, "You set me free! Beware friend...all is not what it seems!", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(context, R.string.painting_description3, Toast.LENGTH_LONG).show();
                                             }
                                         }, 400);
                                     } else {
-                                        Toast.makeText(context, "This used to be a painting...", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, R.string.painting_description4, Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             }
@@ -727,7 +727,7 @@ public class RoomFragment extends Fragment {
                         public void onClick(View v) {
                             mainRelativeLayout.removeView(v);
                             SaveUtility.saveItemToCharacter("11");
-                            Toast.makeText(context, "You picked up a banged up bucket. Seems whole though.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, R.string.bucket_empty_description, Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -742,7 +742,7 @@ public class RoomFragment extends Fragment {
                 up.setLayoutParams(doorUp);
 
                 if (!SaveUtility.alreadyHasItem("9")) {
-                    Button leverHandle = eventsInRoom.get(3);
+                    Button leverHandle = eventsInRoom.get(eventsInRoom.size()-1);
                     RelativeLayout.LayoutParams leverHandleParams = getParams();
                     leverHandleParams.setMargins((screenWidth / 7) * 5, (screenHeight / 7) * 5, 0, 0);
                     leverHandle.setLayoutParams(leverHandleParams);
@@ -750,7 +750,7 @@ public class RoomFragment extends Fragment {
                 }
 
                 if (!SaveUtility.alreadyHasItem("13")) {
-                    Button masterKey = eventsInRoom.get(2);
+                    Button masterKey = eventsInRoom.get(eventsInRoom.size()-2);
                     RelativeLayout.LayoutParams masterKeyParams = getParams();
                     masterKeyParams.setMargins((screenWidth / 7), (screenHeight / 5) * 4, 0, 0);
                     masterKey.setLayoutParams(masterKeyParams);
@@ -760,7 +760,6 @@ public class RoomFragment extends Fragment {
                     fadeOutButtons.add(masterKey);
                     masterKey.setVisibility(View.INVISIBLE);
                 }
-
 
                 mainRelativeLayout.addView(left);
                 mainRelativeLayout.addView(up);
@@ -864,15 +863,14 @@ public class RoomFragment extends Fragment {
         skullLP.addRule(RelativeLayout.CENTER_VERTICAL);
         skullView.setLayoutParams(skullLP);
         mainRelativeLayout.addView(skullView);
-        toastText.setText("The door closed behind you. What's that smell?");
+        toastText.setText(R.string.gas_description);
         toast.show();
         new Handler().postDelayed(
                 new Runnable() {
                     @Override
                     public void run() {
                         if (!gasPuzzleSolved) {
-//                            Toast.makeText(context, "You died!", Toast.LENGTH_SHORT).show();
-                            toastText.setText("You died!");
+                            toastText.setText(R.string.death_description);
                             toast.show();
                             SaveUtility.player.setDead(true);
                             MediaPlayer mediaPlayer;
@@ -924,8 +922,7 @@ public class RoomFragment extends Fragment {
 
         if (fadeInSkull != null) {
             if (hasDuctTape && !fadeInSkull.hasEnded()) {
-//                Toast.makeText(context, "It seems you fixed it.", Toast.LENGTH_SHORT).show();
-                toastText.setText("That seems to fix it for now");
+                toastText.setText(R.string.gas_pipe_description2);
                 toast.show();
 
                 fadeInSkull.cancel();
@@ -940,7 +937,7 @@ public class RoomFragment extends Fragment {
                 eventTriggeredSwap("11");
 
             } else if (!fadeInSkull.hasEnded()) {
-                toastText.setText("The gas pipe is bust! You need something to fix it...");
+                toastText.setText(R.string.gas_pipe_description);
                 toast.show();
             }
         }

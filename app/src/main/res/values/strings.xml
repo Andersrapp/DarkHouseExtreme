@@ -14,98 +14,107 @@
     <string name="list_element">Character Name</string>
     <string name="progress">100%</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="corpse">Corpse</string>
-    <string name="corpse_description">He seems to have been dead a long time. </string>
-
     <string name="duct_tape">Duct tape</string>
-    <string name="duct_tape_description">Somebody put duct tape over his mouth</string>
-
-    <string name="note">Note</string>
-    <string name="note_description">When you have located the master key you must use it to open the right door and enter the stairs. You should find the qi device somewhere on the third floor. Unless THEY moved it! </string>
+    <string name="duct_tape_description">Duct tape? Might be useful.</string>
 
     <string name="key">Key</string>
     <string name="key_description">Can open doors.</string>
+    <string name="action_settings">Settings</string>
 
-    <string name="big_chair">Big chair</string>
-    <string name="big_chair_description">This chair looks worn&#8230;</string>
 
-    <string name="bloody_table">Bloody table</string>
-    <string name="bloody_table_description">Looks like somebody had an accident here&#8230;</string>
-
-    <string name="chair">Chair</string>
-    <string name="chair_description">It looks old and askew. Probably shouldn\'t sit on it&#8230;</string>
-
-    <string name="gas_pipe">Gas pipe</string>
-    <string name="gas_pipe_description">It\'s a gas pipe&#8230;</string>
-
-    <string name="gas">Gas</string>
-    <string name="gas_description">There seems to be gas in here&#8230;</string>
 
     <string name="clock_without_hands">Clock with no hands</string>
-    <string name="clock_without_hands_description">It\'s a broken clock without hands. I wonder wich way is up?</string>
+    <string name="clock_without_hands_description">This clock is incomplete.</string>
+
     <string name="clock_with_minute_hand">Clock without hour hand</string>
-    <string name="clock_with_minute_hand_description">It\'s a clock without an hour hand. I wonder wich way is up?</string>
+    <string name="clock_with_minute_hand_description">This clock is still incomplete, it needs an hour hand.</string>
+
     <string name="clock_with_hour_hand">Clock without minute hand</string>
-    <string name="clock_with_hour_hand_description">It\'s a clock without a minute hand. I wonder wich way is up?</string>
+    <string name="clock_with_hour_hand_description">This clock is still incomplete, it needs a minute hand.</string>
+
     <string name="clock_with_both_hands">Clock with both hands</string>
-    <string name="clock_with_both_hands_description">It\'s a clock with an hour hand and a minute hand. What time is it showing?</string>
+    <string name="clock_with_both_hands_description">This clock makes no sense! Or does it?</string>
+
 
     <string name="hour_hand">Hour hand</string>
-    <string name="hour_hand_description">It\'s an hour hand for a clock.</string>
+    <string name="hour_hand_description">Oh! An hour hand. Might fit the clock.</string>
 
     <string name="minute_hand">Minute hand</string>
-    <string name="minute_hand_description">It\'s a minute hand for a clock.</string>
+    <string name="minute_hand_description">A minute hand. Might fit the clock.</string>
 
-    <string name="dark_room_table">Dark room table</string>
-    <string name="dark_room_table_description">Maybe, it can be moved?</string>
 
-    <string name="toilet">Toilet</string>
-    <string name="toilet_description">Whatever is in there doesn\'t seem to be from a human&#8230;</string>
-
-    <string name="bath_tub">Bath tub</string>
-    <string name="bath_tub_description">This bath tub is cracked and leaking.</string>
 
     <string name="lever">Lever.</string>
-    <string name="lever_description">It seems to be a lever of some kind. Maybe it used to be attached somewhere?</string>
-
-    <string name="lever_holder">Lever holder</string>
-    <string name="lever_holder_description">Something used to be attached here.</string>
+    <string name="lever_description">It\'s a handle of some sort! Where might this go?</string>
 
     <string name="painting">Painting</string>
-    <string name="painting_description">It\'s a dry old painting. Wait! It seems to be moving.</string>
+    <string name="painting_description">It\'s a dry old painting. A creature seems to be trapped in there.</string>
 
     <string name="bucket_empty">Bucket</string>
     <string name="bucket_empty_description">It\'s a banged up bucket. Seems whole though&#8230;</string>
 
     <string name="bucket_filled">Bucket</string>
-    <string name="bucket_filled_description">You filled the bucket with water. Now where to use it?</string>
+    <string name="bucket_filled_description">Now that the bucket is filled with water...where to use it?</string>
 
-
-    <string name="combination_lock">Key lock</string>
-    <string name="combination_lock_description">You must enter the correct four digit code.</string>
-
-    <string name="master_key">Master key</string>
     <string name="master_key_description">Is this the master key?</string>
+    <string name="master_key">Master key</string>
 
-    <string name="death_trap">Death trap</string>
-    <string name="death_trap_description">That trap is deadly...</string>
 
-    <string name="stairs">Stairs</string>
+    <string name="painting_description2">Something more is needed to free the creature.</string>
+    <string name="painting_description3">You set me free! Beware friend...all is not what it seems!</string>
+    <string name="painting_description4">This used to be a painting...</string>
+
+    <string name="lever_description2">You pulled something out from under the bed</string>
+
+
+    <string name="carpet_description">You stumble on the carpet, flipping the side over.</string>
+    <string name="door_locked">The door is locked.</string>
+    <string name="door_unlocked">You unlocked the door.</string>
+    <string name="door_opened">You opened the door.</string>
+    <string name="door_no_handle">Door can only be opened from the other side!</string>
+
+    <string name="dark_room_table_description">It sure was heavy!</string>
+    <string name="dark_room_description">Holy moly. Sure is dark in here. Better find a lightswitch somewhere.</string>
+
+    <string name="leak_description">Somebody should fix this leak.</string>
+    <string name="water_description">Water has leaked onto the floor.</string>
+
+    <string name="corpse_description">He seems to have been dead a long time. </string>
+
+    <string name="big_chair">Big chair</string>
+    <string name="big_chair_description">This chair looks worn&#8230;</string>
+
+    <string name="bloody_table_description">Looks like somebody had an \"accident\" here&#8230;</string>
+
+    <string name="chair_description">It looks old and askew. Probably shouldn\'t sit on it&#8230;</string>
+
+    <string name="gas_pipe">Gas pipe</string>
+    <string name="gas_pipe_description">The gas pipe is bust! You need something to fix it...</string>
+    <string name="gas_pipe_description2">That seems to fix it for now.</string>
+
+
+
+    <string name="gas_description">The door closed behind you. What\'s that smell?</string>
+    <string name="death_description">You died!</string>
+
+
+    <string name="toilet_description1">There might be something useful in there.</string>
+    <string name="toilet_description2">It\'s really disgusting though.</string>
+    <string name="toilet_description3">Guess it\'s all or nothing!</string>
+
+    <string name="lever_holder_description1">Something used to be attached here. I wonder what?</string>
+    <string name="lever_holder_description2">There should be something in this house i can use.</string>
+    <string name="lever_holder_description3">The handle fit perfectly!</string>
+    <string name="lever_holder_description4">You hear a loud rumbling nearby.</string>
+
+    <string name="wall_description">The wall seem to crumble.</string>
+
+    <string name="death_trap_description">That death trap sure is deadly&#8230;</string>
+
     <string name="stairs_description">I wonder where these stairs go&#8230;</string>
 
-    <string name="blocked_door">Blocked door</string>
-    <string name="blocked_door_description">Is this really a door&#8230;</string>
-
-    <string name="book">Book</string>
-    <string name="book_description">nknown origin. Maybe it\'s from another dimension? Nobody knows how it really works but it seems to produce an energy that can be be very destructive. Still if it\'s used properl</string>
-
-    <string name="book_shelf">Book shelf</string>
     <string name="book_shelf_description">It\'s just a book shelf.</string>
 
-    <string name="lamp">Lamp</string>
     <string name="lamp_description">You found a lamp.</string>
 
 </resources>
