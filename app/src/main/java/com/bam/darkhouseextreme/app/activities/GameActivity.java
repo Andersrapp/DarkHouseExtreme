@@ -1,16 +1,16 @@
 package com.bam.darkhouseextreme.app.activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.fragments.RoomFragment;
@@ -28,10 +28,14 @@ public class GameActivity extends FragmentActivity {
 
     private RoomFragment fragment;
     private MediaPlayer mediaPlayer;
+    private Toast toast;
+    private TextView toastText;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -39,6 +43,8 @@ public class GameActivity extends FragmentActivity {
 
         Utilities.setBooleanValues();
         fragment = new RoomFragment();
+
+
 
 
         setButtonsForRoom02();
@@ -62,6 +68,19 @@ public class GameActivity extends FragmentActivity {
                     .add(R.id.gamelayout, fragment, "room")
                     .commit();
         }
+
+        final Typeface font = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/MISFITS_.TTF");
+
+        LayoutInflater inflater = getLayoutInflater();
+        View toastView = inflater.inflate(R.layout.custom_toast, (ViewGroup) findViewById(R.id.toast_root));
+
+        toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 200);
+        toast.setView(toastView);
+
+        toastText = (TextView) toastView.findViewById(R.id.toast_text);
+        Utilities.setFontForView(toastText, font);
 
 
     }
@@ -133,7 +152,9 @@ public class GameActivity extends FragmentActivity {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getApplicationContext(), "Duct tape? This could be useful later", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "Duct tape? This could be useful later", Toast.LENGTH_SHORT).show();
+                            toastText.setText("Duct tape?");
+                            toast.show();
                             SaveUtility.saveItemToCharacter("1");
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
@@ -221,7 +242,9 @@ public class GameActivity extends FragmentActivity {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getApplicationContext(), "You stumble on the carpet, flipping the side over.", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "You stumble on the carpet, flipping the side over.", Toast.LENGTH_SHORT).show();
+                            toastText.setText("You stumble on the carpet, flipping the side over.");
+                            toast.show();
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
                             Utilities.buttonsForRooms.get("01").remove(v);
@@ -241,7 +264,9 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getApplicationContext(), "looks like someone hit their head hard on this table", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "looks like someone hit their head hard on this table", Toast.LENGTH_SHORT).show();
+                        toastText.setText("looks like someone hit their head hard on the table");
+                        toast.show();
                     }
                 }
         );
@@ -265,13 +290,17 @@ public class GameActivity extends FragmentActivity {
                         if (numOfClicks == 1 && SaveUtility.player.isRoom01()) {
                             fragment.isRoom(1, 1);
                         } else if (SaveUtility.alreadyHasItem("5") && numOfClicks == 0) {
-                            Toast.makeText(getApplicationContext(), "You unlocked the door!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "You unlocked the door!", Toast.LENGTH_SHORT).show();
+                            toastText.setText("You unclocked the door!");
+                            toast.show();
                             SaveUtility.player.setRoom01a(true);
                             Utilities.room01a = true;
                             fragment.eventTriggeredSwap("01a");
                             numOfClicks++;
                         } else {
-                            Toast.makeText(getApplicationContext(), "Door is locked", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "Door is locked", Toast.LENGTH_SHORT).show();
+                            toastText.setText("Door is locked!");
+                            toast.show();
                         }
                     }
                 }
@@ -326,9 +355,13 @@ public class GameActivity extends FragmentActivity {
                     Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
                     intent.putExtra("image", R.drawable.clock_with_hour_hand);
                     startActivity(intent);
-                    Toast.makeText(getApplicationContext(), "This clock is still incomplete, it needs an minute hand", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "This clock is still incomplete, it needs an minute hand", Toast.LENGTH_SHORT).show();
+                    toastText.setText("This clock is still incomplete, it needs a minute hand");
+                    toast.show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "This clock is incomplete", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "This clock is incomplete", Toast.LENGTH_SHORT).show();
+                    toastText.setText("This clock is incomplete");
+                    toast.show();
                 }
             }
         });
@@ -338,9 +371,13 @@ public class GameActivity extends FragmentActivity {
                     @Override
                     public void onClick(View v) {
                         if (!SaveUtility.alreadyHasItem("13")) {
-                            Toast.makeText(getApplicationContext(), "Door is locked!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "Door is locked!", Toast.LENGTH_SHORT).show();
+                            toastText.setText("Door is locked!");
+                            toast.show();
                         } else if (!Utilities.room11a) {
-                            Toast.makeText(getApplicationContext(), "You opened the door!!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "You opened the door!!", Toast.LENGTH_SHORT).show();
+                            toastText.setText("You opened the door!");
+                            toast.show();
                             Utilities.room11a = true;
                             SaveUtility.player.setRoom11a(true);
                             fragment.eventTriggeredSwap("11a");
@@ -357,7 +394,9 @@ public class GameActivity extends FragmentActivity {
                     @Override
                     public void onClick(View v) {
                         if (!Utilities.room11) {
-                            Toast.makeText(getApplicationContext(), "Door is locked!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "Door is locked!", Toast.LENGTH_SHORT).show();
+                            toastText.setText("Door is locked!");
+                            toast.show();
                         } else {
                             fragment.isRoom(2, 1);
                         }
@@ -460,7 +499,9 @@ public class GameActivity extends FragmentActivity {
                     @Override
                     public void onClick(View v) {
                         if (clickCount == 0) {
-                            Toast.makeText(getApplicationContext(), "It sure was heavy", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "It sure was heavy", Toast.LENGTH_SHORT).show();
+                            toastText.setText("It sure was heavy");
+                            toast.show();
                         }
                         clickCount++;
                     }
@@ -639,15 +680,21 @@ public class GameActivity extends FragmentActivity {
                         public void onClick(View v) {
                             switch (clickCount) {
                                 case 0:
-                                    Toast.makeText(getApplicationContext(), "Don't really want to touch that", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getApplicationContext(), "Don't really want to touch that", Toast.LENGTH_SHORT).show();
+                                    toastText.setText("Don't really want to touch that");
+                                    toast.show();
                                     clickCount++;
                                     break;
                                 case 1:
-                                    Toast.makeText(getApplicationContext(), "Someone made a mess in there", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getApplicationContext(), "Someone made a mess in there", Toast.LENGTH_SHORT).show();
+                                    toastText.setText("Someone made a mess in there");
+                                    toast.show();
                                     clickCount++;
                                     break;
                                 case 2:
-                                    Toast.makeText(getApplicationContext(), "Alright, lets see if we can find some clues here", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getApplicationContext(), "Alright, lets see if we can find some clues here", Toast.LENGTH_SHORT).show();
+                                    toastText.setText("Alright, lets see if we can find some clues in there");
+                                    toast.show();
                                     clickCount++;
                                     break;
                                 case 3:
@@ -738,7 +785,9 @@ public class GameActivity extends FragmentActivity {
                     @Override
                     public void onClick(View v) {
                         if (!SaveUtility.alreadyHasItem("13")) {
-                            Toast.makeText(getApplicationContext(), "Door is locked!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "Door is locked!", Toast.LENGTH_SHORT).show();
+                            toastText.setText("Door is locked!");
+                            toast.show();
                         } else {
                             SaveUtility.player.setRoom12(true);
                             SaveUtility.player.setDead(true);
@@ -792,7 +841,9 @@ public class GameActivity extends FragmentActivity {
 //                        if(!SaveUtility.alreadyHasItem("13")){
                             //TODO: Fix so that condition below works.
                         if (!Utilities.room22) {
-                            Toast.makeText(getApplicationContext(), "Door can only be opened from the other side!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "Door can only be opened from the other side!", Toast.LENGTH_SHORT).show();
+                            toastText.setText("Door can only be opened from the other side!");
+                            toast.show();
                         } else {
                             fragment.isRoom(3, 2);
                         }
@@ -878,7 +929,7 @@ public class GameActivity extends FragmentActivity {
         for (Button b : buttons) {
             b.setMinHeight(0);
             b.setMinimumHeight(0);
-            b.setPadding(0,0,0,0);
+            b.setPadding(0, 0, 0, 0);
             b.setMinWidth(0);
             b.setMinimumWidth(0);
             b.setAlpha(1.0f);
@@ -909,18 +960,24 @@ public class GameActivity extends FragmentActivity {
                         if (!SaveUtility.alreadyHasItem("9")) {
                             switch (clickCount) {
                                 case 0:
-                                    Toast.makeText(getApplicationContext(), "Looks like a lever", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getApplicationContext(), "Looks like a lever", Toast.LENGTH_SHORT).show();
+                                    toastText.setText("Looks like a lever of some kind");
+                                    toast.show();
                                     clickCount++;
                                     break;
                                 case 1:
-                                    Toast.makeText(getApplicationContext(), "There should be something in this house i can use", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getApplicationContext(), "There should be something in this house i can use", Toast.LENGTH_SHORT).show();
+                                    toastText.setText("There should be something in this house i can use");
+                                    toast.show();
                                     break;
                             }
 
                         } else if (!Utilities.room13) {
                             Utilities.room13 = true;
                             SaveUtility.player.setRoom13(true);
-                            Toast.makeText(getApplicationContext(), "The handle fit perfectly", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "The handle fit perfectly", Toast.LENGTH_SHORT).show();
+                            toastText.setText("The handle fit perfectly!");
+                            toast.show();
                             fragment.eventTriggeredSwap("13");
                         } else {
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
@@ -931,7 +988,9 @@ public class GameActivity extends FragmentActivity {
                             SaveUtility.player.setRoom13a(true);
                             fragment.eventTriggeredSwap("13a");
                             Utilities.buttonsForRooms.get("13").remove(v);
-                            Toast.makeText(getApplicationContext(), "You hear a loud rumbling nearby", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "You hear a loud rumbling nearby", Toast.LENGTH_SHORT).show();
+                            toastText.setText("You hear a loud rumbling nearby");
+                            toast.show();
                         }
                     }
                 }
@@ -1136,7 +1195,9 @@ public class GameActivity extends FragmentActivity {
                         if (Utilities.room32) {
                             fragment.isRoom(2, 2);
                         } else if (SaveUtility.alreadyHasItem("13") && numOfClicks == 0 && !Utilities.room32) {
-                            Toast.makeText(getApplicationContext(), "You unlocked the door!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "You unlocked the door!", Toast.LENGTH_SHORT).show();
+                            toastText.setText("You unlocked the door!");
+                            toast.show();
                             SaveUtility.player.setRoom32(true);
                             Utilities.room32 = true;
                             Utilities.room22 = true;
@@ -1144,7 +1205,9 @@ public class GameActivity extends FragmentActivity {
                             fragment.eventTriggeredSwap("32");
                             numOfClicks++;
                         } else {
-                            Toast.makeText(getApplicationContext(), "Door is locked", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), "Door is locked", Toast.LENGTH_SHORT).show();
+                            toastText.setText("Door is locked!");
+                            toast.show();
                         }
                     }
                 }
@@ -1162,7 +1225,7 @@ public class GameActivity extends FragmentActivity {
         for (Button b : buttons) {
             b.setMinHeight(0);
             b.setMinimumHeight(0);
-            b.setPadding(0,0,0,0);
+            b.setPadding(0, 0, 0, 0);
             b.setMinWidth(0);
             b.setMinimumWidth(0);
             b.setAlpha(1.0f);
@@ -1183,10 +1246,14 @@ public class GameActivity extends FragmentActivity {
                         public void onClick(View v) {
                             if (numberOfClicks == 0) {
                                 v.setAlpha(1.0f);
-                                Toast.makeText(getApplicationContext(), "You pulled something out from under the bed!", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getApplicationContext(), "You pulled something out from under the bed!", Toast.LENGTH_SHORT).show();
+                                toastText.setText("You pulled something out from under the bed");
+                                toast.show();
                                 numberOfClicks++;
                             } else {
-                                Toast.makeText(getApplicationContext(), "It's a lever! Where might this be used?", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(getApplicationContext(), "It's a lever! Where might this be used?", Toast.LENGTH_SHORT).show();
+                                toastText.setText("It's a handle of some sort! Where might this go?");
+                                toast.show();
                                 RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                                 layout.removeView(v);
                                 Utilities.buttonsForRooms.get("32").remove(v);
@@ -1213,5 +1280,13 @@ public class GameActivity extends FragmentActivity {
         mediaPlayer.setLooping(true); // Set looping
         mediaPlayer.setVolume(100, 100);
         mediaPlayer.start();
+    }
+
+    public Toast getToast() {
+        return toast;
+    }
+
+    public TextView getToastText() {
+        return toastText;
     }
 }
