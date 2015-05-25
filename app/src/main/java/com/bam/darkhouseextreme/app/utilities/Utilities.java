@@ -20,27 +20,17 @@ public class Utilities {
     public static Context context;
     public static boolean room01;
     public static boolean room01a;
-    public static boolean room01aa;
     public static boolean room02;
-    public static boolean room02a;
     public static boolean room11;
     public static boolean room11a;
-    public static boolean room11aa;
     public static boolean room12;
-    public static boolean room12a;
     public static boolean room13;
     public static boolean room13a;
-    public static boolean room13aa;
     public static boolean room20;
-    public static boolean room20a;
     public static boolean room21;
-    public static boolean room21a;
     public static boolean room22;
-    public static boolean room22a;
-    public static boolean room23;
     public static boolean room32;
     public static boolean room33;
-    public static boolean room33a;
     public static boolean dead;
     public static int screenWidth;
     public static int screenHeight;
@@ -219,10 +209,10 @@ public class Utilities {
                 return room21 ? roomVersion : 0;
             case "22":
                 return room22 ? roomVersion : 0;
-            case "33":
-                return room33 ? roomVersion : 0;
             case "32":
                 return room32 ? roomVersion : 0;
+            case "33":
+                return room33 ? roomVersion : 0;
             default:
                 return 0;
         }
@@ -231,27 +221,16 @@ public class Utilities {
     public static void setBooleanValues() {
         room01 = SaveUtility.player.isRoom01();
         room01a = SaveUtility.player.isRoom01a();
-        room01aa = SaveUtility.player.isRoom01aa();
         room02 = SaveUtility.player.isRoom02();
-        room02a = SaveUtility.player.isRoom02a();
         room11 = SaveUtility.player.isRoom11();
         room11a = SaveUtility.player.isRoom11a();
-        room11aa = SaveUtility.player.isRoom11aa();
         room12 = SaveUtility.player.isRoom12();
-        room12a = SaveUtility.player.isRoom12a();
         room13 = SaveUtility.player.isRoom13();
         room13a = SaveUtility.player.isRoom13a();
-        room13aa = SaveUtility.player.isRoom13aa();
         room20 = SaveUtility.player.isRoom20();
-        room20a = SaveUtility.player.isRoom20a();
         room21 = SaveUtility.player.isRoom21();
-        room21a = SaveUtility.player.isRoom21a();
         room22 = SaveUtility.player.isRoom22();
-        room22a = SaveUtility.player.isRoom22a();
-        room23 = SaveUtility.player.isRoom23();
-        room32 = SaveUtility.player.isRoom32();
         room33 = SaveUtility.player.isRoom33();
-        room33a = SaveUtility.player.isRoom33a();
     }
 
     public static void setContext(Context contexts) {
