@@ -39,7 +39,7 @@ public class SelectCharacterTest extends ActivityInstrumentationTestCase2<StartS
         super.tearDown();
     }
 
-    public void testList() {
+    public void testAddedCharacterToList() {
         assertEquals(player, cla.getItem(0));
     }
 
