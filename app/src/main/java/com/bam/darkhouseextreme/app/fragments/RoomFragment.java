@@ -22,9 +22,13 @@ import android.widget.*;
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.activities.GameActivity;
 import com.bam.darkhouseextreme.app.activities.StartScreenActivity;
+import com.bam.darkhouseextreme.app.adapter.CharacterListAdapter;
+import com.bam.darkhouseextreme.app.adapter.InventoryAdapter;
 import com.bam.darkhouseextreme.app.adapter.Shaker;
+import com.bam.darkhouseextreme.app.model.Item;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
 import com.bam.darkhouseextreme.app.utilities.Utilities;
+import com.devsmart.android.ui.HorizontalListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +85,10 @@ public class RoomFragment extends Fragment {
     private AnimationDrawable paintingAnimation;
     private boolean freedPainting;
 
+    private InventoryAdapter inventoryAdapter;
+    private List<Item> playerItems;
+    private HorizontalListView itemListView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -127,6 +135,15 @@ public class RoomFragment extends Fragment {
 
         root = inflater.inflate(R.layout.room, container, false);
 
+        itemListView = (HorizontalListView) root.findViewById(R.id.inventory);
+        playerItems = SaveUtility.loadPlayersItems();
+
+        inventoryAdapter = new InventoryAdapter(context, R.layout.inventory_row, playerItems);
+
+        if (itemListView != null) {
+            itemListView.setAdapter(inventoryAdapter);
+        }
+
         roomImage = (ImageView) root.findViewById(R.id.roomImage);
         animation = AnimationUtils.loadAnimation(context, R.anim.alpha_button);
 
@@ -150,7 +167,9 @@ public class RoomFragment extends Fragment {
     }
 
     private void changeRoom(final int roomId, final String room) {
-
+        if (itemListView != null) {
+            itemListView.setAdapter(inventoryAdapter);
+        }
 
         fadeout = AnimationUtils.loadAnimation(context, R.anim.fade_out);
         roomImage.startAnimation(fadeout);
@@ -742,7 +761,7 @@ public class RoomFragment extends Fragment {
                 up.setLayoutParams(doorUp);
 
                 if (!SaveUtility.alreadyHasItem("9")) {
-                    Button leverHandle = eventsInRoom.get(3);
+                    Button leverHandle = eventsInRoom.get(eventsInRoom.size()-1);
                     RelativeLayout.LayoutParams leverHandleParams = getParams();
                     leverHandleParams.setMargins((screenWidth / 7) * 5, (screenHeight / 7) * 5, 0, 0);
                     leverHandle.setLayoutParams(leverHandleParams);

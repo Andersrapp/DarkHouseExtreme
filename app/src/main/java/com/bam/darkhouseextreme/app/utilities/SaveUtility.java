@@ -111,4 +111,8 @@ public class SaveUtility {
         List<Item> inventory = helper.getListOfPlayerItems(player.getId());
         return inventory.contains(item);
     }
+
+    public static List<Item> loadPlayersItems() {
+        return player.getPlayerItems();
+    }
 }
