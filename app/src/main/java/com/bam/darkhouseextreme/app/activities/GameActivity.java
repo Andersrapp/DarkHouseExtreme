@@ -37,15 +37,12 @@ public class GameActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Utilities.setBooleanValues();
         fragment = new RoomFragment();
-
-
 
 
         setButtonsForRoom02();
@@ -179,7 +176,8 @@ public class GameActivity extends FragmentActivity {
                         if (Utilities.room02) {
                             fragment.isRoom(1, 2);
                         } else {
-                            Toast.makeText(getApplicationContext(), R.string.wall_description, Toast.LENGTH_SHORT).show();
+                            toastText.setText(R.string.wall_description);
+                            toast.show();
                         }
                     }
                 }
@@ -339,12 +337,15 @@ public class GameActivity extends FragmentActivity {
                     Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
                     intent.putExtra("image", R.drawable.complete_clock);
                     startActivity(intent);
-                    Toast.makeText(getApplicationContext(), R.string.clock_with_both_hands_description, Toast.LENGTH_SHORT).show();
+                    toastText.setText(R.string.clock_with_both_hands_description);
+                    toast.show();
+
                 } else if (!SaveUtility.alreadyHasItem("7") && SaveUtility.alreadyHasItem("8")) {
                     Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
                     intent.putExtra("image", R.drawable.clock_with_minute_hand);
                     startActivity(intent);
-                    Toast.makeText(getApplicationContext(), R.string.clock_with_minute_hand_description, Toast.LENGTH_SHORT).show();
+                    toastText.setText(R.string.clock_with_minute_hand_description);
+                    toast.show();
                 } else if (SaveUtility.alreadyHasItem("7") && !SaveUtility.alreadyHasItem("8")) {
                     Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
                     intent.putExtra("image", R.drawable.clock_with_hour_hand);
@@ -445,7 +446,8 @@ public class GameActivity extends FragmentActivity {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getApplicationContext(), R.string.minute_hand_description, Toast.LENGTH_SHORT).show();
+                            toastText.setText(R.string.minute_hand_description);
+                            toast.show();
                             SaveUtility.saveItemToCharacter("8");
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
@@ -540,7 +542,8 @@ public class GameActivity extends FragmentActivity {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getApplicationContext(), R.string.minute_hand_description, Toast.LENGTH_SHORT).show();
+                            toastText.setText(R.string.minute_hand_description);
+                            toast.show();
                             SaveUtility.saveItemToCharacter("8");
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
@@ -651,13 +654,16 @@ public class GameActivity extends FragmentActivity {
 
                 if (!SaveUtility.alreadyHasItem("12")) {
                     if (!SaveUtility.alreadyHasItem("11")) {
-                        Toast.makeText(getApplicationContext(), R.string.water_description, Toast.LENGTH_SHORT).show();
+                        toastText.setText(R.string.water_description);
+                        toast.show();
                     } else {
                         SaveUtility.saveItemToCharacter("12");
-                        Toast.makeText(getApplicationContext(), R.string.bucket_filled_description, Toast.LENGTH_SHORT).show();
+                        toastText.setText(R.string.bucket_filled_description);
+                        toast.show();
                     }
                 } else {
-                    Toast.makeText(getApplicationContext(), R.string.leak_description, Toast.LENGTH_SHORT).show();
+                    toastText.setText(R.string.leak_description);
+                    toast.show();
                 }
             }
         });
@@ -690,7 +696,8 @@ public class GameActivity extends FragmentActivity {
                         public void onClick(View v) {
                             switch (clickCount) {
                                 case 0:
-                                    Toast.makeText(getApplicationContext(), R.string.toilet_description1, Toast.LENGTH_SHORT).show();
+                                    toastText.setText(R.string.toilet_description1);
+                                    toast.show();
                                     clickCount++;
                                     break;
                                 case 1:
@@ -732,7 +739,8 @@ public class GameActivity extends FragmentActivity {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(getApplicationContext(), R.string.hour_hand_description, Toast.LENGTH_SHORT).show();
+                            toastText.setText(R.string.hour_hand_description);
+                            toast.show();
                             SaveUtility.saveItemToCharacter("7");
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
@@ -1245,7 +1253,6 @@ public class GameActivity extends FragmentActivity {
                                 toast.show();
                                 numberOfClicks++;
                             } else {
-//                                Toast.makeText(getApplicationContext(), "It's a lever! Where might this be used?", Toast.LENGTH_SHORT).show();
                                 toastText.setText(R.string.lever_description);
                                 toast.show();
                                 RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);

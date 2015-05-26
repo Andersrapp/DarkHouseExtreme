@@ -45,10 +45,6 @@ public class RoomFragment extends Fragment {
     public List<Button> fadeOutButtons = new ArrayList<>();
     public List<Button> fadeInButtons = new ArrayList<>();
 
-    private SensorManager sManager;
-    private Sensor sensor;
-    private Shaker shaker;
-
     public int screenWidth;
     public int screenHeight;
 
@@ -68,7 +64,6 @@ public class RoomFragment extends Fragment {
     private int startMargin;
     private RelativeLayout.LayoutParams tableLayout;
     private Button table;
-    //    private RelativeLayout.LayoutParams minuteHandParams = getParams();
     private Button minuteHand;
     private int tablepos;
 
@@ -86,16 +81,6 @@ public class RoomFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         context = getActivity().getApplicationContext();
 
-//        sManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-//        sensor = sManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-//        shaker = new Shaker();
-//
-//        shaker.setShakeListener(new Shaker.OnShakeListener() {
-//            @Override
-//            public void shake(int count) {
-//                handleShake();
-//            }
-//        });
 
         GameActivity activity = (GameActivity) getActivity();
         toast = activity.getToast();
@@ -240,23 +225,6 @@ public class RoomFragment extends Fragment {
         fadeInButtons.clear();
     }
 
-//    private void handleShake() {
-//        for (final Button event : eventsInRoom) {
-//            if (!SaveUtility.alreadyHasItem(String.valueOf(event.getTag()))) {
-//                event.setBackgroundResource(R.drawable.item_button);
-//                event.startAnimation(animation);
-//                new Handler().postDelayed(
-//                        new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                animation.cancel();
-//                                event.setBackgroundResource(R.drawable.placeholder);
-//                            }
-//                        },
-//                        500);
-//            }
-//        }
-//    }
 
     public void eventTriggeredSwap(String room) {
         int roomId = Utilities.doorOpened(room);
@@ -667,9 +635,11 @@ public class RoomFragment extends Fragment {
                             public void onClick(View v) {
                                 if (!SaveUtility.alreadyHasItem("12")) {
                                     if (!SaveUtility.alreadyHasItem("11")) {
-                                        Toast.makeText(context, R.string.painting_description, Toast.LENGTH_SHORT).show();
+                                        toastText.setText(R.string.painting_description);
+                                        toast.show();
                                     } else {
-                                        Toast.makeText(context, R.string.painting_description2, Toast.LENGTH_SHORT).show();
+                                        toastText.setText(R.string.painting_description2);
+                                        toast.show();
                                     }
                                 } else {
                                     if (!freedPainting) {
@@ -679,11 +649,13 @@ public class RoomFragment extends Fragment {
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Toast.makeText(context, R.string.painting_description3, Toast.LENGTH_LONG).show();
+                                                toastText.setText(R.string.painting_description3);
+                                                toast.show();
                                             }
                                         }, 400);
                                     } else {
-                                        Toast.makeText(context, R.string.painting_description4, Toast.LENGTH_SHORT).show();
+                                        toastText.setText(R.string.painting_description4);
+                                        toast.show();
                                     }
                                 }
                             }
@@ -727,7 +699,8 @@ public class RoomFragment extends Fragment {
                         public void onClick(View v) {
                             mainRelativeLayout.removeView(v);
                             SaveUtility.saveItemToCharacter("11");
-                            Toast.makeText(context, R.string.bucket_empty_description, Toast.LENGTH_SHORT).show();
+                            toastText.setText(R.string.bucket_empty_description);
+                            toast.show();
                         }
                     });
                 }
@@ -750,7 +723,7 @@ public class RoomFragment extends Fragment {
                 }
 
                 if (!SaveUtility.alreadyHasItem("13")) {
-                    Button masterKey = eventsInRoom.get(eventsInRoom.size()-2);
+                    Button masterKey = eventsInRoom.get(2);
                     RelativeLayout.LayoutParams masterKeyParams = getParams();
                     masterKeyParams.setMargins((screenWidth / 7), (screenHeight / 5) * 4, 0, 0);
                     masterKey.setLayoutParams(masterKeyParams);
@@ -968,13 +941,11 @@ public class RoomFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-//        sManager.unregisterListener(shaker);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        sManager.registerListener(shaker, sensor, SensorManager.SENSOR_DELAY_UI);
     }
 
     private void fadeOutButtons(List<Button> buttons) {
