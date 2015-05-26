@@ -6,7 +6,6 @@ import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -26,6 +25,7 @@ import com.bam.darkhouseextreme.app.adapter.CharacterListAdapter;
 import com.bam.darkhouseextreme.app.adapter.InventoryAdapter;
 import com.bam.darkhouseextreme.app.adapter.Shaker;
 import com.bam.darkhouseextreme.app.model.Item;
+import com.bam.darkhouseextreme.app.helper.SoundHelper;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
 import com.bam.darkhouseextreme.app.utilities.Utilities;
 import com.devsmart.android.ui.HorizontalListView;
@@ -49,10 +49,6 @@ public class RoomFragment extends Fragment {
     public List<Button> fadeOutButtons = new ArrayList<>();
     public List<Button> fadeInButtons = new ArrayList<>();
 
-    private SensorManager sManager;
-    private Sensor sensor;
-    private Shaker shaker;
-
     public int screenWidth;
     public int screenHeight;
 
@@ -72,7 +68,6 @@ public class RoomFragment extends Fragment {
     private int startMargin;
     private RelativeLayout.LayoutParams tableLayout;
     private Button table;
-    //    private RelativeLayout.LayoutParams minuteHandParams = getParams();
     private Button minuteHand;
     private int tablepos;
 
@@ -94,16 +89,6 @@ public class RoomFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         context = getActivity().getApplicationContext();
 
-//        sManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-//        sensor = sManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-//        shaker = new Shaker();
-//
-//        shaker.setShakeListener(new Shaker.OnShakeListener() {
-//            @Override
-//            public void shake(int count) {
-//                handleShake();
-//            }
-//        });
 
         GameActivity activity = (GameActivity) getActivity();
         toast = activity.getToast();
@@ -259,23 +244,6 @@ public class RoomFragment extends Fragment {
         fadeInButtons.clear();
     }
 
-//    private void handleShake() {
-//        for (final Button event : eventsInRoom) {
-//            if (!SaveUtility.alreadyHasItem(String.valueOf(event.getTag()))) {
-//                event.setBackgroundResource(R.drawable.item_button);
-//                event.startAnimation(animation);
-//                new Handler().postDelayed(
-//                        new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                animation.cancel();
-//                                event.setBackgroundResource(R.drawable.placeholder);
-//                            }
-//                        },
-//                        500);
-//            }
-//        }
-//    }
 
     public void eventTriggeredSwap(String room) {
         int roomId = Utilities.doorOpened(room);
@@ -458,7 +426,7 @@ public class RoomFragment extends Fragment {
 
 
                 if (eventsInRoom.size() < 2) {
-                    toastText.setText("Holy moly. Sure is dark in here. Better find a lightswitch somewhere");
+                    toastText.setText(R.string.dark_room_description);
                     toast.show();
 
                     Button light = eventsInRoom.get(0);
@@ -686,9 +654,11 @@ public class RoomFragment extends Fragment {
                             public void onClick(View v) {
                                 if (!SaveUtility.alreadyHasItem("12")) {
                                     if (!SaveUtility.alreadyHasItem("11")) {
-                                        Toast.makeText(context, "It's a dry old painting. A creature seems to be trapped in there.", Toast.LENGTH_SHORT).show();
+                                        toastText.setText(R.string.painting_description);
+                                        toast.show();
                                     } else {
-                                        Toast.makeText(context, "You need something more to free the creature.", Toast.LENGTH_SHORT).show();
+                                        toastText.setText(R.string.painting_description2);
+                                        toast.show();
                                     }
                                 } else {
                                     if (!freedPainting) {
@@ -698,11 +668,13 @@ public class RoomFragment extends Fragment {
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
-                                                Toast.makeText(context, "You set me free! Beware friend...all is not what it seems!", Toast.LENGTH_LONG).show();
+                                                toastText.setText(R.string.painting_description3);
+                                                toast.show();
                                             }
                                         }, 400);
                                     } else {
-                                        Toast.makeText(context, "This used to be a painting...", Toast.LENGTH_SHORT).show();
+                                        toastText.setText(R.string.painting_description4);
+                                        toast.show();
                                     }
                                 }
                             }
@@ -746,7 +718,8 @@ public class RoomFragment extends Fragment {
                         public void onClick(View v) {
                             mainRelativeLayout.removeView(v);
                             SaveUtility.saveItemToCharacter("11");
-                            Toast.makeText(context, "You picked up a banged up bucket. Seems whole though.", Toast.LENGTH_SHORT).show();
+                            toastText.setText(R.string.bucket_empty_description);
+                            toast.show();
                         }
                     });
                 }
@@ -779,7 +752,6 @@ public class RoomFragment extends Fragment {
                     fadeOutButtons.add(masterKey);
                     masterKey.setVisibility(View.INVISIBLE);
                 }
-
 
                 mainRelativeLayout.addView(left);
                 mainRelativeLayout.addView(up);
@@ -883,21 +855,17 @@ public class RoomFragment extends Fragment {
         skullLP.addRule(RelativeLayout.CENTER_VERTICAL);
         skullView.setLayoutParams(skullLP);
         mainRelativeLayout.addView(skullView);
-        toastText.setText("The door closed behind you. What's that smell?");
+        toastText.setText(R.string.gas_description);
         toast.show();
         new Handler().postDelayed(
                 new Runnable() {
                     @Override
                     public void run() {
                         if (!gasPuzzleSolved) {
-//                            Toast.makeText(context, "You died!", Toast.LENGTH_SHORT).show();
-                            toastText.setText("You died!");
+                            toastText.setText(R.string.death_description);
                             toast.show();
                             SaveUtility.player.setDead(true);
-                            MediaPlayer mediaPlayer;
-                            mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.death3);
-                            mediaPlayer.setVolume(100, 100);
-                            mediaPlayer.start();
+                            SoundHelper.PlayEventSounds(R.raw.death3);
                             nullifyAndRemoveButtonsFromParent();
                             new Handler().postDelayed(
                                     new Runnable() {
@@ -944,8 +912,7 @@ public class RoomFragment extends Fragment {
         if (fadeInSkull != null) {
             if (hasDuctTape && !fadeInSkull.hasEnded()) {
                 SaveUtility.removeItemFromCharacter("1");
-//                Toast.makeText(context, "It seems you fixed it.", Toast.LENGTH_SHORT).show();
-                toastText.setText("That seems to fix it for now");
+                toastText.setText(R.string.gas_pipe_description2);
                 toast.show();
 
                 fadeInSkull.cancel();
@@ -960,7 +927,7 @@ public class RoomFragment extends Fragment {
                 eventTriggeredSwap("11");
 
             } else if (!fadeInSkull.hasEnded()) {
-                toastText.setText("The gas pipe is bust! You need something to fix it...");
+                toastText.setText(R.string.gas_pipe_description);
                 toast.show();
             }
         }
@@ -978,6 +945,7 @@ public class RoomFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 removeFragment();
+                v.setClickable(false);
             }
         });
     }
@@ -991,13 +959,11 @@ public class RoomFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-//        sManager.unregisterListener(shaker);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        sManager.registerListener(shaker, sensor, SensorManager.SENSOR_DELAY_UI);
     }
 
     private void fadeOutButtons(List<Button> buttons) {
