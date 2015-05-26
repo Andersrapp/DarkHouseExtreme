@@ -7,7 +7,6 @@
 .gradle
 local.properties
 /build
-/*/devsmart/*
 
 #Java classes
 *.class
