@@ -53,6 +53,12 @@ public class SaveUtility {
         player.getPlayerItems().add(item);
     }
 
+    public static void removeItemFromCharacter(String itemID) {
+        Item item = helper.getOneItem(itemID);
+        helper.removeObjectFromInventory(String.valueOf(player.getId()), String.valueOf(item.getId()));
+        player.getPlayerItems().remove(item);
+    }
+
     public static void deleteCharacter(Player player) {
         helper.deleteCharacter(String.valueOf(player.getId()));
     }

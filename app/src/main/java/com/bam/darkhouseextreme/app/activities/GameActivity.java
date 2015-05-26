@@ -212,7 +212,7 @@ public class GameActivity extends FragmentActivity {
         buttons.add(blood);
 
 
-        if (!SaveUtility.alreadyHasItem("5")) {
+        if (!SaveUtility.alreadyHasItem("2")) {
             key.setBackgroundResource(R.drawable.key);
             if (Utilities.doorOpened("01") == 0) {
                 key.setVisibility(View.GONE);
@@ -223,7 +223,7 @@ public class GameActivity extends FragmentActivity {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            SaveUtility.saveItemToCharacter("5");
+                            SaveUtility.saveItemToCharacter("2");
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
                             Utilities.buttonsForRooms.get("01").remove(v);
@@ -286,7 +286,8 @@ public class GameActivity extends FragmentActivity {
 
                         if (numOfClicks == 1 && SaveUtility.player.isRoom01()) {
                             fragment.isRoom(1, 1);
-                        } else if (SaveUtility.alreadyHasItem("5") && numOfClicks == 0) {
+                        } else if (SaveUtility.alreadyHasItem("2") && numOfClicks == 0) {
+                            SaveUtility.removeItemFromCharacter("2");
 //                            Toast.makeText(getApplicationContext(), "You unlocked the door!", Toast.LENGTH_SHORT).show();
                             toastText.setText("You unclocked the door!");
                             toast.show();
@@ -372,6 +373,7 @@ public class GameActivity extends FragmentActivity {
                             toastText.setText("Door is locked!");
                             toast.show();
                         } else if (!Utilities.room11a) {
+                            SaveUtility.removeItemFromCharacter("13");
 //                            Toast.makeText(getApplicationContext(), "You opened the door!!", Toast.LENGTH_SHORT).show();
                             toastText.setText("You opened the door!");
                             toast.show();
@@ -991,6 +993,7 @@ public class GameActivity extends FragmentActivity {
                             }
 
                         } else if (!Utilities.room13) {
+                            SaveUtility.removeItemFromCharacter("9");
                             Utilities.room13 = true;
                             SaveUtility.player.setRoom13(true);
 //                            Toast.makeText(getApplicationContext(), "The handle fit perfectly", Toast.LENGTH_SHORT).show();

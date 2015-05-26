@@ -943,6 +943,7 @@ public class RoomFragment extends Fragment {
 
         if (fadeInSkull != null) {
             if (hasDuctTape && !fadeInSkull.hasEnded()) {
+                SaveUtility.removeItemFromCharacter("1");
 //                Toast.makeText(context, "It seems you fixed it.", Toast.LENGTH_SHORT).show();
                 toastText.setText("That seems to fix it for now");
                 toast.show();

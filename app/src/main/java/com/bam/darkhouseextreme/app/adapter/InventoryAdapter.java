@@ -56,42 +56,33 @@ public class InventoryAdapter extends ArrayAdapter<Item> {
         }
 
         Item item = items.get(position);
-        Log.d("INVENTORYADAPTER", String.valueOf(item.getId()));
 
         int itemID = (int) item.getId();
 
         switch (itemID) {
             case 1:
                 itemHolder.itemImage.setBackgroundResource(R.drawable.duct_tape);
-                Log.d("INVENTORYADAPTER", String.valueOf(itemID));
                 break;
-            case 5:
+            case 2:
                 itemHolder.itemImage.setBackgroundResource(R.drawable.key);
-                Log.d("INVENTORYADAPTER", String.valueOf(itemID));
                 break;
             case 7:
                 itemHolder.itemImage.setBackgroundResource(R.drawable.hour_hand);
-                Log.d("INVENTORYADAPTER", String.valueOf(itemID));
                 break;
             case 8:
                 itemHolder.itemImage.setBackgroundResource(R.drawable.minute_hand);
-                Log.d("INVENTORYADAPTER", String.valueOf(itemID));
                 break;
             case 9:
                 itemHolder.itemImage.setBackgroundResource(R.drawable.lever_handle_inventory);
-                Log.d("INVENTORYADAPTER", String.valueOf(itemID));
                 break;
             case 11:
                 itemHolder.itemImage.setBackgroundResource(R.drawable.bucket);
-                Log.d("INVENTORYADAPTER", String.valueOf(itemID));
                 break;
             case 12:
                 itemHolder.itemImage.setBackgroundResource(R.drawable.bucket_filled);
-                Log.d("INVENTORYADAPTER", String.valueOf(itemID));
                 break;
             case 13:
                 itemHolder.itemImage.setBackgroundResource(R.drawable.master_key);
-                Log.d("INVENTORYADAPTER", String.valueOf(itemID));
                 break;
             default:
                 break;
