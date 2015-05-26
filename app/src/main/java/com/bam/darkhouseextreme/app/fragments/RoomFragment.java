@@ -925,6 +925,7 @@ public class RoomFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 removeFragment();
+                v.setClickable(false);
             }
         });
     }
