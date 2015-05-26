@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.bam.darkhouseextreme.app.R;
+import com.bam.darkhouseextreme.app.helper.SoundHelper;
 import com.bam.darkhouseextreme.app.utilities.Utilities;
 
 /**
@@ -91,6 +92,7 @@ public class StartScreenFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        SoundHelper.stopBackGroundMusic();
                         getActivity().finish();
                     }
                 }
