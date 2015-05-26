@@ -347,12 +347,12 @@ public class RoomFragment extends Fragment {
                         papererino.setLayoutParams(noteParams);
                         mainRelativeLayout.addView(papererino);
                     } else {
-                        Button skeletini = eventsInRoom.get(2);
-                        skeletini.setLayoutParams(ductTapeParams);
-                        mainRelativeLayout.addView(skeletini);
-                        fadeOutButtons.add(skeletini);
-                        fadeInButtons.add(skeletini);
-                        skeletini.setVisibility(View.INVISIBLE);
+                        Button ductTape = eventsInRoom.get(2);
+                        ductTape.setLayoutParams(ductTapeParams);
+                        mainRelativeLayout.addView(ductTape);
+                        fadeOutButtons.add(ductTape);
+                        fadeInButtons.add(ductTape);
+                        ductTape.setVisibility(View.INVISIBLE);
                     }
                 }
 
