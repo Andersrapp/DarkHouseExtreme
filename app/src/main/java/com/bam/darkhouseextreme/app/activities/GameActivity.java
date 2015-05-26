@@ -2,19 +2,19 @@ package com.bam.darkhouseextreme.app.activities;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.*;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.fragments.RoomFragment;
+import com.bam.darkhouseextreme.app.helper.SoundHelper;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
 import com.bam.darkhouseextreme.app.utilities.Utilities;
 
@@ -28,7 +28,6 @@ import java.util.Random;
 public class GameActivity extends FragmentActivity {
 
     private RoomFragment fragment;
-    private MediaPlayer mediaPlayer;
     private Toast toast;
     private TextView toastText;
 
@@ -820,17 +819,12 @@ public class GameActivity extends FragmentActivity {
                                         public void run() {
                                             Random rn = new Random();
                                             int randomNumber = rn.nextInt(2) + 1;
-                                            MediaPlayer mediaPlayer;
                                             switch (randomNumber) {
                                                 case 1:
-                                                    mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.death1);
-                                                    mediaPlayer.setVolume(100, 100);
-                                                    mediaPlayer.start();
+                                                    SoundHelper.PlayEventSounds(R.raw.death1);
                                                     break;
                                                 case 2:
-                                                    mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.death2);
-                                                    mediaPlayer.setVolume(100, 100);
-                                                    mediaPlayer.start();
+                                                    SoundHelper.PlayEventSounds(R.raw.death2);
                                                     break;
                                                 default:
                                                     break;
@@ -1289,16 +1283,21 @@ public class GameActivity extends FragmentActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        mediaPlayer.stop();
+        SoundHelper.pauseBackGroundMusic();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mediaPlayer = MediaPlayer.create(GameActivity.this, R.raw.game_music);
-        mediaPlayer.setLooping(true); // Set looping
-        mediaPlayer.setVolume(100, 100);
-        mediaPlayer.start();
+        Log.d("Context2", getApplicationContext().toString());
+        if (SoundHelper.currentlyPlaying != R.raw.game_music) {
+            SoundHelper.stopBackGroundMusic();
+            SoundHelper.PlayBackGroundMusic(R.raw.game_music);
+        } else {
+            if (!SoundHelper.backGroundMusic.isPlaying()) {
+                SoundHelper.resumeBackGroundMusic();
+            }
+        }
     }
 
     public Toast getToast() {
@@ -1307,5 +1306,10 @@ public class GameActivity extends FragmentActivity {
 
     public TextView getToastText() {
         return toastText;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

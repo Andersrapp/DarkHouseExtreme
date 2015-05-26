@@ -1,13 +1,14 @@
 package com.bam.darkhouseextreme.app.activities;
 
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.fragments.StartScreenFragment;
+import com.bam.darkhouseextreme.app.helper.SoundHelper;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
 import com.bam.darkhouseextreme.app.utilities.Utilities;
 
@@ -15,10 +16,11 @@ import com.bam.darkhouseextreme.app.utilities.Utilities;
 public class StartScreenActivity extends FragmentActivity {
 
     public static FragmentActivity activity;
-    private MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Log.d("Start", "Created");
 
         activity = this;
         Utilities.setContext(getApplicationContext());
@@ -30,6 +32,8 @@ public class StartScreenActivity extends FragmentActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        SoundHelper.initContext(getApplicationContext());
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.startactivity);
@@ -45,16 +49,22 @@ public class StartScreenActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        player = MediaPlayer.create(StartScreenActivity.this, R.raw.menu_music);
-        player.setLooping(true); // Set looping
-        player.setVolume(100,100);
-        player.start();
+        Log.d("Woop", "Woop");
+        if (SoundHelper.currentlyPlaying != R.raw.menu_music) {
+            Log.d("Woop2", String.valueOf(R.raw.menu_music));
+            SoundHelper.stopBackGroundMusic();
+            SoundHelper.PlayBackGroundMusic(R.raw.menu_music);
+        } else {
+            if (!SoundHelper.backGroundMusic.isPlaying()) {
+                SoundHelper.resumeBackGroundMusic();
+            }
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        player.stop();
+        SoundHelper.pauseBackGroundMusic();
     }
 
     @Override
@@ -68,6 +78,7 @@ public class StartScreenActivity extends FragmentActivity {
                 (StartScreenFragment) getSupportFragmentManager().findFragmentByTag("startScreen");
 
         if (fragment.isVisible()) {
+            SoundHelper.stopBackGroundMusic();
             finish();
         } else {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -75,5 +86,10 @@ public class StartScreenActivity extends FragmentActivity {
             transaction.replace(R.id.startscreenlayout, fragment);
             transaction.commit();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

@@ -6,7 +6,6 @@ import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -23,6 +22,7 @@ import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.activities.GameActivity;
 import com.bam.darkhouseextreme.app.activities.StartScreenActivity;
 import com.bam.darkhouseextreme.app.adapter.Shaker;
+import com.bam.darkhouseextreme.app.helper.SoundHelper;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
 import com.bam.darkhouseextreme.app.utilities.Utilities;
 
@@ -875,10 +875,7 @@ public class RoomFragment extends Fragment {
                             toastText.setText("You died!");
                             toast.show();
                             SaveUtility.player.setDead(true);
-                            MediaPlayer mediaPlayer;
-                            mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.death3);
-                            mediaPlayer.setVolume(100, 100);
-                            mediaPlayer.start();
+                            SoundHelper.PlayEventSounds(R.raw.death3);
                             nullifyAndRemoveButtonsFromParent();
                             new Handler().postDelayed(
                                     new Runnable() {
