@@ -2,12 +2,13 @@
 *.iml
 .idea
 *.iws
+/devsmart
 
 #Android
 .gradle
 local.properties
 /build
-devsmart
+/devsmart
 
 #Java classes
 *.class
