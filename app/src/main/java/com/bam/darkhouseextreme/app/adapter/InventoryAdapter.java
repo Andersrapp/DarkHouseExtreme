@@ -78,7 +78,7 @@ public class InventoryAdapter extends ArrayAdapter<Item> {
                 Log.d("INVENTORYADAPTER", String.valueOf(itemID));
                 break;
             case 9:
-                itemHolder.itemImage.setBackgroundResource(R.drawable.lever_handle);
+                itemHolder.itemImage.setBackgroundResource(R.drawable.lever_handle_inventory);
                 Log.d("INVENTORYADAPTER", String.valueOf(itemID));
                 break;
             case 11:

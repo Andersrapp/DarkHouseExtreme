@@ -5,27 +5,7 @@
     android:background="#ff000000"
     android:id="@+id/mainRel" >
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:weightSum="20"
-        android:layout_alignParentBottom="true"
-        android:gravity="end"
-        android:elevation="100dp"
-        >
 
-        <com.devsmart.android.ui.HorizontalListView
-            android:id="@+id/inventory"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="7"
-            >
-
-        </com.devsmart.android.ui.HorizontalListView>
-
-
-    </LinearLayout>
     <ImageView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -38,6 +18,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="20"
+        android:layout_alignParentBottom="true"
+        android:gravity="end"
+        >
+
+        <com.devsmart.android.ui.HorizontalListView
+            android:id="@+id/inventory"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_weight="7"
+            >
+
+        </com.devsmart.android.ui.HorizontalListView>
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>
