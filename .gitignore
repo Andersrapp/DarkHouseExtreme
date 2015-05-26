@@ -9,7 +9,7 @@ local.properties
 /build
 
 # User-specific configurations
-/*/devsmart
+/*/devsmart/*
 
 #Java classes
 *.class
