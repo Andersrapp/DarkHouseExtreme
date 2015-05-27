@@ -21,9 +21,7 @@ import android.widget.*;
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.activities.GameActivity;
 import com.bam.darkhouseextreme.app.activities.StartScreenActivity;
-import com.bam.darkhouseextreme.app.adapter.CharacterListAdapter;
 import com.bam.darkhouseextreme.app.adapter.InventoryAdapter;
-import com.bam.darkhouseextreme.app.adapter.Shaker;
 import com.bam.darkhouseextreme.app.model.Item;
 import com.bam.darkhouseextreme.app.helper.SoundHelper;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
@@ -80,9 +78,6 @@ public class RoomFragment extends Fragment {
     private AnimationDrawable paintingAnimation;
     private boolean freedPainting;
 
-    private InventoryAdapter inventoryAdapter;
-    private List<Item> playerItems;
-    private HorizontalListView itemListView;
 
     @Nullable
     @Override
@@ -120,15 +115,6 @@ public class RoomFragment extends Fragment {
 
         root = inflater.inflate(R.layout.room, container, false);
 
-        itemListView = (HorizontalListView) root.findViewById(R.id.inventory);
-        playerItems = SaveUtility.loadPlayersItems();
-
-        inventoryAdapter = new InventoryAdapter(context, R.layout.inventory_row, playerItems);
-
-        if (itemListView != null) {
-            itemListView.setAdapter(inventoryAdapter);
-        }
-
         roomImage = (ImageView) root.findViewById(R.id.roomImage);
         animation = AnimationUtils.loadAnimation(context, R.anim.alpha_button);
 
@@ -152,9 +138,6 @@ public class RoomFragment extends Fragment {
     }
 
     private void changeRoom(final int roomId, final String room) {
-        if (itemListView != null) {
-            itemListView.setAdapter(inventoryAdapter);
-        }
 
         fadeout = AnimationUtils.loadAnimation(context, R.anim.fade_out);
         roomImage.startAnimation(fadeout);

@@ -13,10 +13,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.bam.darkhouseextreme.app.R;
+import com.bam.darkhouseextreme.app.adapter.InventoryAdapter;
 import com.bam.darkhouseextreme.app.fragments.RoomFragment;
 import com.bam.darkhouseextreme.app.helper.SoundHelper;
+import com.bam.darkhouseextreme.app.model.Item;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
 import com.bam.darkhouseextreme.app.utilities.Utilities;
+import com.devsmart.android.ui.HorizontalListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,10 @@ public class GameActivity extends FragmentActivity {
     private RoomFragment fragment;
     private Toast toast;
     private TextView toastText;
+
+    private InventoryAdapter inventoryAdapter;
+    private List<Item> playerItems;
+    private HorizontalListView itemListView;
 
 
     @Override
@@ -63,6 +70,16 @@ public class GameActivity extends FragmentActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.gamelayout, fragment, "room")
                     .commit();
+        }
+
+
+        itemListView = (HorizontalListView) findViewById(R.id.inventory);
+        playerItems = SaveUtility.loadPlayersItems();
+
+        inventoryAdapter = new InventoryAdapter(getApplicationContext(), R.layout.inventory_row, playerItems);
+
+        if (itemListView != null) {
+            itemListView.setAdapter(inventoryAdapter);
         }
 
         final Typeface font = Typeface.createFromAsset(getApplicationContext().getAssets(), "fonts/MISFITS_.TTF");
@@ -154,6 +171,7 @@ public class GameActivity extends FragmentActivity {
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
                             Utilities.buttonsForRooms.get("02").remove(v);
+                            updateInventory();
                         }
                     }
             );
@@ -224,6 +242,7 @@ public class GameActivity extends FragmentActivity {
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
                             Utilities.buttonsForRooms.get("01").remove(v);
+                            updateInventory();
                         }
                     }
             );
@@ -290,6 +309,7 @@ public class GameActivity extends FragmentActivity {
                             Utilities.room01a = true;
                             fragment.eventTriggeredSwap("01a");
                             numOfClicks++;
+                            updateInventory();
                         } else {
                             toastText.setText(R.string.door_locked);
                             toast.show();
@@ -363,11 +383,10 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (!SaveUtility.alreadyHasItem("13")) {
+                        if (!SaveUtility.alreadyHasItem("13") && !Utilities.room11a) {
                             toastText.setText(R.string.door_locked);
                             toast.show();
                         } else if (!Utilities.room11a) {
-                            SaveUtility.removeItemFromCharacter("13");
 //                            Toast.makeText(getApplicationContext(), "You opened the door!!", Toast.LENGTH_SHORT).show();
                             toastText.setText("You opened the door!");
                             toastText.setText(R.string.door_unlocked);
@@ -375,6 +394,8 @@ public class GameActivity extends FragmentActivity {
                             Utilities.room11a = true;
                             SaveUtility.player.setRoom11a(true);
                             fragment.eventTriggeredSwap("11a");
+                            SaveUtility.removeItemFromCharacter("13");
+                            updateInventory();
                         } else {
                             fragment.isRoom(0, 1);
                         }
@@ -400,7 +421,11 @@ public class GameActivity extends FragmentActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        fragment.fixGasLeak();
+                        boolean gasPuzzleSolved = fragment.fixGasLeak();
+
+                        if (gasPuzzleSolved) {
+                            updateInventory();
+                        }
                     }
                 }
         );
@@ -981,13 +1006,13 @@ public class GameActivity extends FragmentActivity {
                             }
 
                         } else if (!Utilities.room13) {
-                            SaveUtility.removeItemFromCharacter("9");
                             Utilities.room13 = true;
                             SaveUtility.player.setRoom13(true);
                             toastText.setText(R.string.lever_holder_description3);
                             toast.show();
                             fragment.eventTriggeredSwap("13");
                         } else {
+                            SaveUtility.removeItemFromCharacter("9");
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
                             Utilities.room02 = true;
@@ -998,6 +1023,7 @@ public class GameActivity extends FragmentActivity {
                             Utilities.buttonsForRooms.get("13").remove(v);
                             toastText.setText(R.string.lever_holder_description4);
                             toast.show();
+                            updateInventory();
                         }
                     }
                 }
@@ -1293,6 +1319,13 @@ public class GameActivity extends FragmentActivity {
 
     public TextView getToastText() {
         return toastText;
+    }
+
+    private void updateInventory() {
+        if (itemListView != null) {
+            itemListView.setAdapter(inventoryAdapter);
+        }
+
     }
 
     @Override
