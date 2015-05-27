@@ -173,7 +173,7 @@ public class GameActivity extends FragmentActivity {
         );
 
 
-        if (!SaveUtility.alreadyHasItem("1")) {
+        if (!SaveUtility.alreadyHasItem("1") && !Utilities.room11) {
             Button ductTape = new Button(getApplicationContext());
             ductTape.setTag("ductTape");
             ductTape.setBackgroundResource(R.drawable.duct_tape);
