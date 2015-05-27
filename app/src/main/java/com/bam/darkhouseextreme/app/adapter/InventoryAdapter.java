@@ -72,10 +72,12 @@ public class InventoryAdapter extends ArrayAdapter<Item> {
                 itemHolder.itemImage.setBackgroundResource(R.drawable.lever_handle_inventory);
                 break;
             case 11:
-                itemHolder.itemImage.setBackgroundResource(R.drawable.bucket);
-                break;
-            case 12:
-                itemHolder.itemImage.setBackgroundResource(R.drawable.bucket_filled);
+                if (!SaveUtility.alreadyHasItem("12") && SaveUtility.alreadyHasItem("11")) {
+                    itemHolder.itemImage.setBackgroundResource(R.drawable.bucket);
+                } else {
+                    items.remove(position + 1);
+                    itemHolder.itemImage.setBackgroundResource(R.drawable.bucket_filled);
+                }
                 break;
             case 13:
                 itemHolder.itemImage.setBackgroundResource(R.drawable.master_key);
@@ -83,7 +85,6 @@ public class InventoryAdapter extends ArrayAdapter<Item> {
             default:
                 break;
         }
-
         return row;
     }
 
