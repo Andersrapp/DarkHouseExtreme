@@ -6,12 +6,14 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.activities.GameActivity;
@@ -39,6 +41,8 @@ public class SelectCharacterFragment extends Fragment {
     private ListView characterListView;
     private Player player;
     public static View lastSelectedView = null;
+    private TextView toastText;
+    private Toast toast;
 
     @Nullable
     @Override
@@ -64,6 +68,17 @@ public class SelectCharacterFragment extends Fragment {
         selectCharacter();
         chooseSelectedCharacter();
         deleteCharacter();
+        final Typeface font = Typeface.createFromAsset(context.getAssets(), "fonts/MISFITS_.TTF");
+
+        View toastView = inflater.inflate(R.layout.custom_toast, (ViewGroup) root.findViewById(R.id.toast_root));
+
+        toast = new Toast(context);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 200);
+        toast.setView(toastView);
+
+        toastText = (TextView) toastView.findViewById(R.id.toast_text);
+        Utilities.setFontForView(toastText, font);
 
         return root;
     }
@@ -109,7 +124,8 @@ public class SelectCharacterFragment extends Fragment {
                     lastSelectedView = null;
                     characterListAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(context, "No character selected", Toast.LENGTH_SHORT).show();
+                    toastText.setText("No character selected");
+                    toast.show();
                 }
             }
         });
@@ -124,9 +140,11 @@ public class SelectCharacterFragment extends Fragment {
                     Intent intent = new Intent(context, GameActivity.class);
                     startActivity(intent);
                 } else if (player != null && player.isDead()) {
-                    Toast.makeText(context, "Character is dead", Toast.LENGTH_SHORT).show();
+                    toastText.setText("Character is dead");
+                    toast.show();
                 } else {
-                    Toast.makeText(context, "No character selected", Toast.LENGTH_SHORT).show();
+                    toastText.setText("No character selected");
+                    toast.show();
                 }
             }
         });
