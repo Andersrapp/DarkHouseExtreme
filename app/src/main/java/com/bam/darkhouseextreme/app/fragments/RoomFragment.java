@@ -67,7 +67,6 @@ public class RoomFragment extends Fragment {
     private RelativeLayout.LayoutParams tableLayout;
     private Button table;
     private Button minuteHand;
-    private Button bucket;
     private Button up;
     private Button down;
     private Button right;
@@ -749,7 +748,7 @@ public class RoomFragment extends Fragment {
                 mainRelativeLayout.addView(left);
 
                 if (!SaveUtility.alreadyHasItem("11")) {
-                    bucket = eventsInRoom.get(2);
+                    Button bucket = eventsInRoom.get(2);
                     bucket.setBackgroundResource(R.drawable.bucket);
                     bucket.setMinWidth(1);
                     bucket.setMinimumWidth(1);
@@ -1019,14 +1018,11 @@ public class RoomFragment extends Fragment {
     public void openLockFragment() {
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         lockFragment = new CombinationLockFragment();
-        ft.add(R.id.mainRel, lockFragment, "combinationLock")
+        ft.add(R.id.combinationRel, lockFragment, "combinationLock")
                 .addToBackStack("combinationLock")
                 .commit();
         left.setClickable(false);
         down.setClickable(false);
-        if (bucket != null) {
-            bucket.setVisibility(View.GONE);
-        }
 
         mainRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1035,9 +1031,6 @@ public class RoomFragment extends Fragment {
                 v.setClickable(false);
                 left.setClickable(true);
                 down.setClickable(true);
-                if (bucket != null) {
-                    bucket.setVisibility(View.VISIBLE);
-                }
             }
         });
     }

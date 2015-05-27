@@ -3,21 +3,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ff000000"
-    android:id="@+id/mainRel" >
-
-
-    <ImageView
+     >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mainRel"
+        >
+        <ImageView
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:id="@+id/roomImage"
             android:layout_marginRight="-1dp"
             android:layout_marginLeft="-1dp"/>
 
-    <ImageView
-        android:id="@+id/miscView"
+        <ImageView
+            android:id="@+id/miscView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:id="@+id/combinationRel"
+        >
+
+    </RelativeLayout>
 
 
 
