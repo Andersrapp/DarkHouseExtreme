@@ -6,6 +6,7 @@ import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -19,12 +20,9 @@ import android.widget.*;
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.activities.GameActivity;
 import com.bam.darkhouseextreme.app.activities.StartScreenActivity;
-import com.bam.darkhouseextreme.app.adapter.InventoryAdapter;
-import com.bam.darkhouseextreme.app.model.Item;
 import com.bam.darkhouseextreme.app.helper.SoundHelper;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
 import com.bam.darkhouseextreme.app.utilities.Utilities;
-import com.devsmart.android.ui.HorizontalListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -139,20 +137,30 @@ public class RoomFragment extends Fragment {
 
     }
 
+    /**
+     * finish the activity if the game is interrupted by screen going to sleep.
+     *
+     * @param outState - N/A.
+     */
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        SaveUtility.saveProgress(x_cord, y_cord, score);
-        FragmentTransaction transaction =
-                StartScreenActivity.activity.getSupportFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.startscreenlayout,
-                StartScreenActivity.activity
-                        .getSupportFragmentManager()
-                        .findFragmentByTag("startScreen")
-        );
+        PowerManager m = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
+        if (!m.isScreenOn()) {
+            SaveUtility.saveProgress(x_cord, y_cord, score);
+            FragmentTransaction transaction =
+                    StartScreenActivity.activity.getSupportFragmentManager().beginTransaction();
 
-        transaction.commitAllowingStateLoss();
-        getActivity().finish();
+            transaction.replace(R.id.startscreenlayout,
+                    StartScreenActivity.activity
+                            .getSupportFragmentManager()
+                            .findFragmentByTag("startScreen")
+            );
+
+            transaction.commitAllowingStateLoss();
+            getActivity().finish();
+        }
     }
 
     /**
