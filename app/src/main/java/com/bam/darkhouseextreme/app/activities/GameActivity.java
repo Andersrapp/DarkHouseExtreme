@@ -313,21 +313,19 @@ public class GameActivity extends FragmentActivity {
 
         doorRight2.setOnClickListener(
                 new View.OnClickListener() {
-                    int numOfClicks = 0;
 
                     @Override
                     public void onClick(View v) {
 
-                        if (numOfClicks == 1 && SaveUtility.player.isRoom01()) {
+                        if (Utilities.room01a) {
                             fragment.isRoom(1, 1);
-                        } else if (SaveUtility.alreadyHasItem("2") && numOfClicks == 0) {
+                        } else if (SaveUtility.alreadyHasItem("2")) {
                             SaveUtility.removeItemFromCharacter("2");
                             toastText.setText(R.string.door_unlocked);
                             toast.show();
                             SaveUtility.player.setRoom01a(true);
                             Utilities.room01a = true;
                             fragment.eventTriggeredSwap("01a");
-                            numOfClicks++;
                             updateInventory();
                         } else {
                             toastText.setText(R.string.door_locked);
