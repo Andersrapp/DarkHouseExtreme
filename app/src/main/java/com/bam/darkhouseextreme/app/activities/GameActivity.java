@@ -688,6 +688,7 @@ public class GameActivity extends FragmentActivity {
                         SaveUtility.saveItemToCharacter("12");
                         toastText.setText(R.string.bucket_filled_description);
                         toast.show();
+                        updateInventory();
                     }
                 } else {
                     toastText.setText(R.string.leak_description);
@@ -992,7 +993,7 @@ public class GameActivity extends FragmentActivity {
 
                     @Override
                     public void onClick(View v) {
-                        if (!SaveUtility.alreadyHasItem("9")) {
+                        if (!SaveUtility.alreadyHasItem("9") && !Utilities.room13) {
                             switch (clickCount) {
                                 case 0:
                                     toastText.setText(R.string.lever_holder_description1);
@@ -1005,14 +1006,15 @@ public class GameActivity extends FragmentActivity {
                                     break;
                             }
 
-                        } else if (!Utilities.room13) {
+                        } else if (SaveUtility.alreadyHasItem("9")) {
+                            SaveUtility.removeItemFromCharacter("9");
                             Utilities.room13 = true;
                             SaveUtility.player.setRoom13(true);
                             toastText.setText(R.string.lever_holder_description3);
                             toast.show();
                             fragment.eventTriggeredSwap("13");
+                            updateInventory();
                         } else {
-                            SaveUtility.removeItemFromCharacter("9");
                             RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainRel);
                             layout.removeView(v);
                             Utilities.room02 = true;
@@ -1023,7 +1025,6 @@ public class GameActivity extends FragmentActivity {
                             Utilities.buttonsForRooms.get("13").remove(v);
                             toastText.setText(R.string.lever_holder_description4);
                             toast.show();
-                            updateInventory();
                         }
                     }
                 }
