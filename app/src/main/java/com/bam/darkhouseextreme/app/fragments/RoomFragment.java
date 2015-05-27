@@ -31,7 +31,11 @@ import java.util.List;
 
 /**
  * Created by Chobii on 29/04/15.
+ *
+ * The fragment contains the main logic for the game while it is running.
+ *
  */
+
 public class RoomFragment extends Fragment {
 
     public final String LOG_DATA = RoomFragment.class.getSimpleName();
@@ -163,6 +167,14 @@ public class RoomFragment extends Fragment {
         getActivity().finish();
     }
 
+    /**
+     * Change the room Image of the ImageView. Runs a animation
+     * to make the swap feel more lively.
+     *
+     * @param roomId - the Integer of the room in R.drawable.
+     * @param room - the room as a string.
+     */
+
     private void changeRoom(final int roomId, final String room) {
         if (itemListView != null) {
             itemListView.setAdapter(inventoryAdapter);
@@ -209,6 +221,16 @@ public class RoomFragment extends Fragment {
         });
     }
 
+    /**
+     * Checks if the direction the player is going to, contains a room.
+     * If it does, checks if a event has happened in that room and load alternative room Image.
+     *
+     * @param x - X-axis of room.
+     * @param y - Y-axis of room.
+     *
+     * @return true/false.
+     */
+
     public boolean isRoom(int x, int y) {
         String room = String.valueOf(x) + String.valueOf(y);
         final int roomId;
@@ -239,6 +261,14 @@ public class RoomFragment extends Fragment {
         return false;
     }
 
+    /**
+     * Method to place the player in correct room after loading a saved game,
+     * or in room02 if the character is newly created.
+     *
+     * @param x - the X-axis of the room.
+     * @param y - the Y-axis of the room.
+     */
+
     private void continueIfApplicable(int x, int y) {
         String room = String.valueOf(x) + String.valueOf(y);
         final int roomId;
@@ -256,6 +286,12 @@ public class RoomFragment extends Fragment {
         fadeInButtons.clear();
     }
 
+    /**
+     * Switch the background image of the room when a event trigger the method.
+     *
+     * @param room - Current room player is in when he trigger event.
+     */
+
 
     public void eventTriggeredSwap(String room) {
         int roomId = Utilities.doorOpened(room);
@@ -271,6 +307,14 @@ public class RoomFragment extends Fragment {
         }
 
     }
+
+    /**
+     * take the button for the room and place them to a pre-determined position of the screen.
+     *
+     * @param root - the View for the fragment.
+     *
+     * @return the new layout with buttons placed.
+     */
 
     public RelativeLayout placeItems(View root) {
 
@@ -776,6 +820,11 @@ public class RoomFragment extends Fragment {
         return mainRelativeLayout;
     }
 
+    /**
+     * Remove the current buttons from the current View, and clear the list.
+     *
+     */
+
     public void nullifyAndRemoveButtonsFromParent() {
 
         for (Button b : eventsInRoom) {
@@ -794,12 +843,25 @@ public class RoomFragment extends Fragment {
         fadeInButtons.clear();
     }
 
+    /**
+     * Create a new LayoutParam.
+     *
+     * @return new LayoutParam.
+     */
+
     private RelativeLayout.LayoutParams getParams() {
         return new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         );
     }
+
+    /**
+     * Method to move the button table in room21.
+     *
+     * Every time the button is clicked, this method fires and move the table
+     * according to what position it currently has.
+     */
 
     public void moveTable() {
 
@@ -848,6 +910,14 @@ public class RoomFragment extends Fragment {
         TransitionManager.beginDelayedTransition(mainRelativeLayout);
 
     }
+
+    /**
+     * Initialize the Gas Puzzle for room11.
+     *
+     * The Gas Puzzle consists of animations that run with a Handler.postDelay.
+     * If the puzzle isn't solved by the time the handler finish, the player dies.
+     *
+     */
 
 
     public void setGasPuzzle() {
@@ -918,6 +988,12 @@ public class RoomFragment extends Fragment {
         skullView.startAnimation(fadeInSkull);
     }
 
+    /**
+     * Checks if the player has duct tape to solve the puzzle.
+     *
+     * @return true if player has duct tape, else false.
+     */
+
     public boolean fixGasLeak() {
         boolean hasDuctTape = SaveUtility.alreadyHasItem("1");
 
@@ -978,18 +1054,25 @@ public class RoomFragment extends Fragment {
         super.onResume();
     }
 
+    /**
+     * Run animation to match the animation in change room.
+     * @param buttons - Current buttons for that room.
+     */
+
     private void fadeOutButtons(List<Button> buttons) {
         for (Button b : buttons) {
             b.startAnimation(fadeout_buttons);
         }
-
-
     }
+
+    /**
+     * Run animation to match the animation in change room.
+     * @param buttons -  Buttons for next room.
+     */
 
     private void fadeInButtons(List<Button> buttons) {
         for (Button b : buttons) {
             b.startAnimation(fadein_buttons);
         }
-
     }
 }
