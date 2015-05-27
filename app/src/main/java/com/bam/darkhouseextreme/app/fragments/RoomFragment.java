@@ -67,6 +67,7 @@ public class RoomFragment extends Fragment {
     private RelativeLayout.LayoutParams tableLayout;
     private Button table;
     private Button minuteHand;
+    private Button bucket;
     private int tablepos;
 
     private ImageView gasView;
@@ -748,7 +749,7 @@ public class RoomFragment extends Fragment {
                 mainRelativeLayout.addView(left);
 
                 if (!SaveUtility.alreadyHasItem("11")) {
-                    Button bucket = eventsInRoom.get(2);
+                    bucket = eventsInRoom.get(2);
                     bucket.setBackgroundResource(R.drawable.bucket);
                     bucket.setMinWidth(1);
                     bucket.setMinimumWidth(1);
@@ -1021,12 +1022,18 @@ public class RoomFragment extends Fragment {
         ft.add(R.id.mainRel, lockFragment, "combinationLock")
                 .addToBackStack("combinationLock")
                 .commit();
+        if (bucket != null) {
+            bucket.setVisibility(View.GONE);
+        }
 
         mainRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 removeFragment();
                 v.setClickable(false);
+                if (bucket != null) {
+                    bucket.setVisibility(View.VISIBLE);
+                }
             }
         });
     }
