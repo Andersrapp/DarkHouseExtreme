@@ -940,8 +940,8 @@ public class GameActivity extends FragmentActivity {
         List<Button> buttons = new ArrayList<>();
 
         Button doorRight = new Button(getApplicationContext());
-        Button doorLeft = new Button(getApplicationContext());
-        Button stairs = new Button(getApplicationContext());
+        final Button doorLeft = new Button(getApplicationContext());
+        final Button stairs = new Button(getApplicationContext());
 
         doorLeft.setBackgroundResource(R.drawable.placeholder);
         doorRight.setBackgroundResource(R.drawable.placeholder);
@@ -958,6 +958,8 @@ public class GameActivity extends FragmentActivity {
                         Intent intent = new Intent(getApplicationContext(), DialogActivity.class);
                         intent.putExtra("image", R.drawable.dialog_1);
                         startActivity(intent);
+                        doorLeft.setClickable(false);
+                        stairs.setClickable(false);
 
                         new Handler().postDelayed(new Runnable() {
                             @Override
