@@ -940,7 +940,7 @@ public class RoomFragment extends Fragment {
                             toastText.setText(R.string.death_description);
                             toast.show();
                             SaveUtility.player.setDead(true);
-                            SoundHelper.PlayEventSounds(R.raw.death3);
+                            SoundHelper.playEventSounds(R.raw.death3);
                             nullifyAndRemoveButtonsFromParent();
                             new Handler().postDelayed(
                                     new Runnable() {

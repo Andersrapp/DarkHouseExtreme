@@ -58,7 +58,7 @@ public class StartScreenActivity extends FragmentActivity {
         if (SoundHelper.currentlyPlaying != R.raw.menu_music) {
             Log.d("Woop2", String.valueOf(R.raw.menu_music));
             SoundHelper.stopBackGroundMusic();
-            SoundHelper.PlayBackGroundMusic(R.raw.menu_music);
+            SoundHelper.playBackGroundMusic(R.raw.menu_music);
         } else {
             if (!SoundHelper.backGroundMusic.isPlaying()) {
                 SoundHelper.resumeBackGroundMusic();

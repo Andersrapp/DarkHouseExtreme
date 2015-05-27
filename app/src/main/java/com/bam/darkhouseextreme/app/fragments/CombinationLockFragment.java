@@ -115,7 +115,7 @@ public class CombinationLockFragment extends Fragment {
 //                mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.reset_dials);
 //                mediaPlayer.setVolume(100, 100);
 //                mediaPlayer.start();
-                SoundHelper.PlayEventSounds(R.raw.reset_dials);
+                SoundHelper.playEventSounds(R.raw.reset_dials);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -147,7 +147,7 @@ public class CombinationLockFragment extends Fragment {
 //            mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.combination_door_unlock);
 //            mediaPlayer.setVolume(100, 100);
 //            mediaPlayer.start();
-            SoundHelper.PlayEventSounds(R.raw.combination_door_unlock);
+            SoundHelper.playEventSounds(R.raw.combination_door_unlock);
 
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -163,7 +163,7 @@ public class CombinationLockFragment extends Fragment {
 //            mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.red_light_on);
 //            mediaPlayer.setVolume(100, 100);
 //            mediaPlayer.start();
-            SoundHelper.PlayEventSounds(R.raw.red_light_on);
+            SoundHelper.playEventSounds(R.raw.red_light_on);
 
             redLight.setBackgroundResource(R.drawable.lit_red_led);
             new Handler().postDelayed(new Runnable() {
@@ -172,7 +172,7 @@ public class CombinationLockFragment extends Fragment {
 //                    mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.red_light_off);
 //                    mediaPlayer.setVolume(100, 100);
 //                    mediaPlayer.start();
-                    SoundHelper.PlayEventSounds(R.raw.red_light_off);
+                    SoundHelper.playEventSounds(R.raw.red_light_off);
                     redLight.setBackgroundResource(R.drawable.unlit_red_led);
                     resetButton.setClickable(true);
                     enterButton.setClickable(true);

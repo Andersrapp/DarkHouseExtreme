@@ -867,10 +867,10 @@ public class GameActivity extends FragmentActivity {
                                             int randomNumber = rn.nextInt(2) + 1;
                                             switch (randomNumber) {
                                                 case 1:
-                                                    SoundHelper.PlayEventSounds(R.raw.death1);
+                                                    SoundHelper.playEventSounds(R.raw.death1);
                                                     break;
                                                 case 2:
-                                                    SoundHelper.PlayEventSounds(R.raw.death2);
+                                                    SoundHelper.playEventSounds(R.raw.death2);
                                                     break;
                                                 default:
                                                     break;
@@ -1328,7 +1328,7 @@ public class GameActivity extends FragmentActivity {
         Log.d("Context2", getApplicationContext().toString());
         if (SoundHelper.currentlyPlaying != R.raw.game_music) {
             SoundHelper.stopBackGroundMusic();
-            SoundHelper.PlayBackGroundMusic(R.raw.game_music);
+            SoundHelper.playBackGroundMusic(R.raw.game_music);
         } else {
             if (!SoundHelper.backGroundMusic.isPlaying()) {
                 SoundHelper.resumeBackGroundMusic();

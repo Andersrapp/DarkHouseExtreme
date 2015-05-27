@@ -2,7 +2,6 @@ package com.bam.darkhouseextreme.app.helper;
 
 import android.content.Context;
 import android.media.MediaPlayer;
-import android.util.Log;
 
 /**
  * Created by Chobii on 26/05/15.
@@ -23,10 +22,8 @@ public class SoundHelper {
 
     }
 
-    public static void PlayBackGroundMusic(int soundID) {
+    public static void playBackGroundMusic(int soundID) {
         currentlyPlaying = soundID;
-        Log.d("Context", context.toString());
-        Log.d("CurrentlyPlaying", String.valueOf(currentlyPlaying));
         backGroundMusic = MediaPlayer.create(context, soundID);
         backGroundMusic.start();
 
@@ -52,7 +49,7 @@ public class SoundHelper {
         }
     }
 
-    public static void PlayEventSounds(int soundID) {
+    public static void playEventSounds(int soundID) {
         eventSounds = MediaPlayer.create(context, soundID);
         eventSounds.start();
         backGroundMusic.setLooping(true);
