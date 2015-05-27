@@ -7,8 +7,6 @@ import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.model.Item;
 import com.bam.darkhouseextreme.app.model.Player;
@@ -18,7 +16,11 @@ import java.util.List;
 
 /**
  * Created by Anders on 2015-04-28.
+ *
+ * Our Database for the application. This class handles all CRUD operations.
+ *
  */
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "DarkHouse.db";
@@ -95,6 +97,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * Create column in database.
+     * @param name - the name of the character.
+     *
+     */
     public Player createCharacter(String name) {
         db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -125,6 +132,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM " + PLAYER_TABLE_NAME, null);
         return getListOfPlayers(cursor);
     }
+
+    /**
+     * Update a character in the database.
+     * @param id - id of the character in the database.
+     * @param mapXCoordinate - current X-axis location.
+     * @param mapYCoordinate - current Y-axis location.
+     * @param score - current score.
+     * @param dead - is the character dead true/false.
+     *
+     */
 
     public boolean updateCharacter(String id,
                                    String mapXCoordinate,
@@ -207,6 +224,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Create all the items to exist in the inventory from R.values.arrays, if no items already exist.
+     * @param res - to point to the array.
+     *
+     */
     public long createAllItems(Resources res) {
         db = this.getWritableDatabase();
         TypedArray items = res.obtainTypedArray(R.array.items);
@@ -303,6 +325,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return playerItems;
     }
 
+    /**
+     * remove a specific item from the junction table.
+     * @param playerId - ID of player.
+     * @param itemId - ID of item.
+     *
+     */
     public boolean removeObjectFromInventory(String playerId, String itemId) {
         db = this.getWritableDatabase();
 

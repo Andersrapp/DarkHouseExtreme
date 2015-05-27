@@ -29,7 +29,13 @@ import java.util.Random;
 
 /**
  * Created by Chobii on 28/04/15.
+ *
+ * The activity for the playable game.
+ * This class contain the logic to initialize the buttons for each room.
+ *
  */
+
+
 public class GameActivity extends FragmentActivity {
 
     private RoomFragment fragment;
@@ -125,6 +131,17 @@ public class GameActivity extends FragmentActivity {
         transaction.commitAllowingStateLoss();
         finish();
     }
+
+
+    //////////////////////////////////////////////////////////////////////////
+    //                                                                      //
+    //    The following setButtonsForRoom methods all set the buttons       //
+    //    for each of the rooms available in the game. Each method          //
+    //    correspond with that specific room, or an alternative version     //
+    //    of it. Each Button get a image as background and a size to        //
+    //    work in game.                                                     //
+    //                                                                      //
+    //////////////////////////////////////////////////////////////////////////
 
     private void setButtonsForRoom02() {
 
@@ -1331,10 +1348,5 @@ public class GameActivity extends FragmentActivity {
             itemListView.setAdapter(inventoryAdapter);
         }
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }

@@ -18,6 +18,8 @@ import com.bam.darkhouseextreme.app.utilities.Utilities;
 
 /**
  * Created by Chobii on 28/04/15.
+ * Simple fragment handling button pressed in start screen.
+ *
  */
 public class StartScreenFragment extends Fragment {
 

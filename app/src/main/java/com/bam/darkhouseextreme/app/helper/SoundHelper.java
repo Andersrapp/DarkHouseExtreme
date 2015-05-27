@@ -6,6 +6,9 @@ import android.util.Log;
 
 /**
  * Created by Chobii on 26/05/15.
+ *
+ * Helper class to handle the music and sounds in the game.
+ *
  */
 public class SoundHelper {
 

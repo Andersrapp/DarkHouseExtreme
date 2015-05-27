@@ -1,26 +1,22 @@
 package com.bam.darkhouseextreme.app.adapter;
 
 import android.content.Context;
-import android.media.Image;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.model.Item;
-import com.bam.darkhouseextreme.app.model.Player;
-import com.bam.darkhouseextreme.app.utilities.SaveUtility;
-import com.bam.darkhouseextreme.app.utilities.Utilities;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Benjamin on 5/25/2015.
+ *
+ * Adapter to be able to show a list of items in game.
+ *
  */
 public class InventoryAdapter extends ArrayAdapter<Item> {
 

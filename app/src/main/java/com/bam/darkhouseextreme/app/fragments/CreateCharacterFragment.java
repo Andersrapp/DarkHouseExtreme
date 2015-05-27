@@ -18,7 +18,10 @@ import com.bam.darkhouseextreme.app.utilities.Utilities;
 
 /**
  * Created by Chobii on 28/04/15.
+ * Simple fragment to handle new character creation.
+ *
  */
+
 public class CreateCharacterFragment extends Fragment {
 
     public Button ok;

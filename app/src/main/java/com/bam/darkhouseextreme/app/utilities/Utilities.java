@@ -218,6 +218,11 @@ public class Utilities {
         }
     }
 
+    /**
+     * Boolean values to keep track on which rooms where a event have occurred.
+     *
+     */
+
     public static void setBooleanValues() {
         room01 = SaveUtility.player.isRoom01();
         room01a = SaveUtility.player.isRoom01a();

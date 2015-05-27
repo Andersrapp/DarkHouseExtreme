@@ -16,7 +16,11 @@ import java.util.List;
 
 /**
  * Created by Benjamin on 4/29/2015.
+ *
+ * Adapter to show characters found in the database in a list in select character in menus.
+ *
  */
+
 public class CharacterListAdapter extends ArrayAdapter<Player> {
 
 

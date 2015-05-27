@@ -2,7 +2,6 @@ package com.bam.darkhouseextreme.app.fragments;
 
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -12,11 +11,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bam.darkhouseextreme.app.R;
+import com.bam.darkhouseextreme.app.helper.SoundHelper;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
 import com.bam.darkhouseextreme.app.utilities.Utilities;
+
+/**
+ * Fragment for the CombinationLock in room33.
+ *
+ */
 
 public class CombinationLockFragment extends Fragment {
 
@@ -34,7 +37,7 @@ public class CombinationLockFragment extends Fragment {
 
     Button resetButton, enterButton;
 
-    MediaPlayer mediaPlayer;
+//    MediaPlayer mediaPlayer;
 
     int number1Value = 0;
     int number2Value = 0;
@@ -109,9 +112,10 @@ public class CombinationLockFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 number1Value = number2Value = number3Value = number4Value = 0;
-                mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.reset_dials);
-                mediaPlayer.setVolume(100, 100);
-                mediaPlayer.start();
+//                mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.reset_dials);
+//                mediaPlayer.setVolume(100, 100);
+//                mediaPlayer.start();
+                SoundHelper.PlayEventSounds(R.raw.reset_dials);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -126,6 +130,11 @@ public class CombinationLockFragment extends Fragment {
         return root;
     }
 
+    /**
+     * Check if the code input by player is correct. if yes, unlock the door.
+     * @param code - code input by player.
+     */
+
     public void checkCode(String code) {
         int correctCode = 1240;
 
@@ -135,9 +144,10 @@ public class CombinationLockFragment extends Fragment {
             Utilities.room33 = true;
 
             greenLight.setBackgroundResource(R.drawable.lit_green_led);
-            mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.combination_door_unlock);
-            mediaPlayer.setVolume(100, 100);
-            mediaPlayer.start();
+//            mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.combination_door_unlock);
+//            mediaPlayer.setVolume(100, 100);
+//            mediaPlayer.start();
+            SoundHelper.PlayEventSounds(R.raw.combination_door_unlock);
 
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -150,24 +160,24 @@ public class CombinationLockFragment extends Fragment {
             resetButton.setClickable(false);
             enterButton.setClickable(false);
 
-            mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.red_light_on);
-            mediaPlayer.setVolume(100, 100);
-            mediaPlayer.start();
+//            mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.red_light_on);
+//            mediaPlayer.setVolume(100, 100);
+//            mediaPlayer.start();
+            SoundHelper.PlayEventSounds(R.raw.red_light_on);
 
             redLight.setBackgroundResource(R.drawable.lit_red_led);
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.red_light_off);
-                    mediaPlayer.setVolume(100, 100);
-                    mediaPlayer.start();
+//                    mediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), R.raw.red_light_off);
+//                    mediaPlayer.setVolume(100, 100);
+//                    mediaPlayer.start();
+                    SoundHelper.PlayEventSounds(R.raw.red_light_off);
                     redLight.setBackgroundResource(R.drawable.unlit_red_led);
                     resetButton.setClickable(true);
                     enterButton.setClickable(true);
                 }
             }, 2000);
-
         }
     }
-
 }

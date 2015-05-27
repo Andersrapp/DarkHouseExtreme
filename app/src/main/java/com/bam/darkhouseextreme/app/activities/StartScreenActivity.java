@@ -12,6 +12,11 @@ import com.bam.darkhouseextreme.app.helper.SoundHelper;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
 import com.bam.darkhouseextreme.app.utilities.Utilities;
 
+/**
+ * The first thing to run when our application is run.
+ * Uses several fragments for different pages in the menu.
+ *
+ */
 
 public class StartScreenActivity extends FragmentActivity {
 

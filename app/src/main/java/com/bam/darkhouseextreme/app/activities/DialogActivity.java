@@ -9,6 +9,8 @@ import com.bam.darkhouseextreme.app.utilities.Utilities;
 
 /**
  * Created by Chobii on 20/05/15.
+ *
+ * A small activity to show popup for certain events.
  */
 public class DialogActivity extends Activity {
 

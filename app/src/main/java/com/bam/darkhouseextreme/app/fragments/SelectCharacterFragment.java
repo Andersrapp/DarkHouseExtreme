@@ -25,6 +25,9 @@ import java.util.List;
 
 /**
  * Created by Chobii on 28/04/15.
+ *
+ * Handles the select character option in menu.
+ *
  */
 public class SelectCharacterFragment extends Fragment {
 
