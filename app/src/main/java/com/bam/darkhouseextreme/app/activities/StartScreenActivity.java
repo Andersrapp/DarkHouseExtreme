@@ -25,7 +25,6 @@ public class StartScreenActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        Log.d("Start", "Created");
 
         activity = this;
         Utilities.setContext(getApplicationContext());
@@ -54,9 +53,7 @@ public class StartScreenActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("Woop", "Woop");
         if (SoundHelper.currentlyPlaying != R.raw.menu_music) {
-            Log.d("Woop2", String.valueOf(R.raw.menu_music));
             SoundHelper.stopBackGroundMusic();
             SoundHelper.playBackGroundMusic(R.raw.menu_music);
         } else {

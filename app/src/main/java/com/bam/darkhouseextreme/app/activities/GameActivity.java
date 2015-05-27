@@ -1325,7 +1325,6 @@ public class GameActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("Context2", getApplicationContext().toString());
         if (SoundHelper.currentlyPlaying != R.raw.game_music) {
             SoundHelper.stopBackGroundMusic();
             SoundHelper.playBackGroundMusic(R.raw.game_music);
