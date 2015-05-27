@@ -209,7 +209,7 @@ public class GameActivity extends FragmentActivity {
         buttons.add(blood);
 
 
-        if (!SaveUtility.alreadyHasItem("2")) {
+        if (!SaveUtility.alreadyHasItem("2") && !Utilities.room01a) {
             key.setBackgroundResource(R.drawable.key);
             if (Utilities.doorOpened("01") == 0) {
                 key.setVisibility(View.GONE);

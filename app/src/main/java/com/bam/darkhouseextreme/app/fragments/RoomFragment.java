@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -21,11 +19,9 @@ import android.widget.*;
 import com.bam.darkhouseextreme.app.R;
 import com.bam.darkhouseextreme.app.activities.GameActivity;
 import com.bam.darkhouseextreme.app.activities.StartScreenActivity;
-import com.bam.darkhouseextreme.app.adapter.CharacterListAdapter;
 import com.bam.darkhouseextreme.app.adapter.InventoryAdapter;
-import com.bam.darkhouseextreme.app.adapter.Shaker;
-import com.bam.darkhouseextreme.app.model.Item;
 import com.bam.darkhouseextreme.app.helper.SoundHelper;
+import com.bam.darkhouseextreme.app.model.Item;
 import com.bam.darkhouseextreme.app.utilities.SaveUtility;
 import com.bam.darkhouseextreme.app.utilities.Utilities;
 import com.devsmart.android.ui.HorizontalListView;
@@ -149,6 +145,22 @@ public class RoomFragment extends Fragment {
 
 //        nullifyAndRemoveButtonsFromParent();
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        SaveUtility.saveProgress(x_cord, y_cord, score);
+        FragmentTransaction transaction =
+                StartScreenActivity.activity.getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.startscreenlayout,
+                StartScreenActivity.activity
+                        .getSupportFragmentManager()
+                        .findFragmentByTag("startScreen")
+        );
+
+        transaction.commitAllowingStateLoss();
+        getActivity().finish();
     }
 
     private void changeRoom(final int roomId, final String room) {
