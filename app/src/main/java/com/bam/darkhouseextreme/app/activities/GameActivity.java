@@ -1,9 +1,11 @@
 package com.bam.darkhouseextreme.app.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -1296,7 +1298,10 @@ public class GameActivity extends FragmentActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        SoundHelper.pauseBackGroundMusic();
+        PowerManager m = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        if (!m.isScreenOn()) {
+            SoundHelper.pauseBackGroundMusic();
+        }
     }
 
     @Override
