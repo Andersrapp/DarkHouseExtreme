@@ -342,7 +342,7 @@ public class GameActivity extends FragmentActivity {
 
         doorRight.setBackgroundResource(R.drawable.placeholder);
         doorLeft.setBackgroundResource(R.drawable.placeholder);
-        clock.setBackgroundResource(R.drawable.clock_no_hands);
+        clock.setBackgroundResource(R.drawable.placeholder);
         gasline.setBackgroundResource(R.drawable.placeholder);
 
         buttons.add(doorLeft);
