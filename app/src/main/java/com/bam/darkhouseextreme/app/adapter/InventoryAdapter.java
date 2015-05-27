@@ -76,7 +76,11 @@ public class InventoryAdapter extends ArrayAdapter<Item> {
                 if (!SaveUtility.alreadyHasItem("12") && SaveUtility.alreadyHasItem("11")) {
                     itemHolder.itemImage.setBackgroundResource(R.drawable.bucket);
                 } else {
-                    items.remove(position + 1);
+                    for (Item i : items) {
+                        if (i.getId() == 12) {
+                            items.remove(i);
+                        }
+                    }
                     itemHolder.itemImage.setBackgroundResource(R.drawable.bucket_filled);
                 }
                 break;
