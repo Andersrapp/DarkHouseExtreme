@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.AnimationDrawable;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -135,6 +133,22 @@ public class RoomFragment extends Fragment {
 
 //        nullifyAndRemoveButtonsFromParent();
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        SaveUtility.saveProgress(x_cord, y_cord, score);
+        FragmentTransaction transaction =
+                StartScreenActivity.activity.getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.startscreenlayout,
+                StartScreenActivity.activity
+                        .getSupportFragmentManager()
+                        .findFragmentByTag("startScreen")
+        );
+
+        transaction.commitAllowingStateLoss();
+        getActivity().finish();
     }
 
     private void changeRoom(final int roomId, final String room) {
