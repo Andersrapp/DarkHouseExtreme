@@ -68,6 +68,10 @@ public class RoomFragment extends Fragment {
     private Button table;
     private Button minuteHand;
     private Button bucket;
+    private Button up;
+    private Button down;
+    private Button right;
+    private Button left;
     private int tablepos;
 
     private ImageView gasView;
@@ -351,10 +355,6 @@ public class RoomFragment extends Fragment {
         doorUp.setMargins(((screenWidth / 2) - (screenWidth / 20)), (screenHeight / 20), 0, 0);
         doorLeft.setMargins(0, ((screenHeight / 2) - (screenHeight / 27)), 0, 0);
 
-        Button up;
-        Button down;
-        Button right;
-        Button left;
 
 
         switch (room) {
@@ -1022,6 +1022,8 @@ public class RoomFragment extends Fragment {
         ft.add(R.id.mainRel, lockFragment, "combinationLock")
                 .addToBackStack("combinationLock")
                 .commit();
+        left.setClickable(false);
+        down.setClickable(false);
         if (bucket != null) {
             bucket.setVisibility(View.GONE);
         }
@@ -1031,6 +1033,8 @@ public class RoomFragment extends Fragment {
             public void onClick(View v) {
                 removeFragment();
                 v.setClickable(false);
+                left.setClickable(true);
+                down.setClickable(true);
                 if (bucket != null) {
                     bucket.setVisibility(View.VISIBLE);
                 }
