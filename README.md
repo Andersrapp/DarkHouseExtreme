@@ -2,13 +2,13 @@
 
 This repository contains the sourcecode for the Android game "House of Mystery"
 
-![Download from Google Play](http://i.imgur.com/GpdN8hn.jpg?1)
+![Download from Google Play](http://i.imgur.com/6MtK1oN.jpg)
 
 To report or view any issues or bugs, please see visit the [Issues](https://github.com/ChobiJava/DarkHouseExtreme/issues) tab.
 
 ## Building
 ### Gradle
-The easiest way to build anr un the project is with [Android Studio](https://developer.android.com/sdk/index.html) v1.+.
+The easiest way to build and run the project is with [Android Studio](https://developer.android.com/sdk/index.html) v1.+.
 #### Eclipse
 1. Open "File".
 2. Import Project.
@@ -26,7 +26,7 @@ Gradle will then handle everything and build the project.
 
 ### Download the .apk
 
-just click this [link](https://github.com/ChobiJava/DarkHouseExtreme/raw/master/app/app-release.apk) to download the apk directly to you phone and install it. You can also drag the apk to a running android emulator to install it
+Just click this [link](https://github.com/ChobiJava/DarkHouseExtreme/raw/master/app/app-release.apk) to download the apk directly to you phone and install it. You can also drag the apk to a running android emulator to install it
 
 ### Note
 This code won't run on a device which already has the signed version from Google Play already installed. 
