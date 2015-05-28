@@ -52,7 +52,9 @@ public class StartScreenFragment extends Fragment {
 
     }
 
-
+    /**
+     * Navigates the player to the character creation screen.
+     */
     private void newGame() {
         newGame.setOnClickListener(
                 new View.OnClickListener() {
@@ -71,6 +73,9 @@ public class StartScreenFragment extends Fragment {
         );
     }
 
+    /**
+     * Navigates the player to the load game screen
+     */
     private void loadGame() {
         loadGame.setOnClickListener(
                 new View.OnClickListener() {
@@ -89,6 +94,9 @@ public class StartScreenFragment extends Fragment {
         );
     }
 
+    /**
+     * Exits the application
+     */
     private void quitGame() {
         quit.setOnClickListener(
                 new View.OnClickListener() {

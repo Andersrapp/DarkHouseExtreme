@@ -1335,14 +1335,27 @@ public class GameActivity extends FragmentActivity {
         }
     }
 
+    /**
+     * Method for getting the customized toast class.
+     *
+     * @return a Toast
+     */
     public Toast getToast() {
         return toast;
     }
 
+    /**
+     * Method for getting the view containing the text of the customized toast.
+     *
+     * @return the TextView of the Toast
+     */
     public TextView getToastText() {
         return toastText;
     }
 
+    /**
+     * Resets the InventoryAdapter to simulate an update of the inventory items.
+     */
     private void updateInventory() {
         if (itemListView != null) {
             itemListView.setAdapter(inventoryAdapter);

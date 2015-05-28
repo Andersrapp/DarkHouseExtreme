@@ -142,7 +142,7 @@ public class RoomFragment extends Fragment {
     }
 
     /**
-     * finish the activity if the game is interrupted by screen going to sleep.
+     * Finish the activity if the game is interrupted by screen going to sleep.
      *
      * @param outState - N/A.
      */
@@ -168,7 +168,7 @@ public class RoomFragment extends Fragment {
     }
 
     /**
-     * Change the room Image of the ImageView. Runs a animation
+     * Change the room Image of the ImageView. Runs an animation
      * to make the swap feel more lively.
      *
      * @param roomId - the Integer of the room in R.drawable.

@@ -44,6 +44,10 @@ public class CreateCharacterFragment extends Fragment {
         return root;
     }
 
+    /**
+     * Starts the game with the created character
+     *
+     */
     public void setGo() {
         ok.setOnClickListener(
                 new View.OnClickListener() {

@@ -83,6 +83,10 @@ public class SelectCharacterFragment extends Fragment {
         return root;
     }
 
+    /**
+     * Makes a selection of the character in the list that is clicked on
+     *
+     */
     public void selectCharacter() {
         characterListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -103,6 +107,10 @@ public class SelectCharacterFragment extends Fragment {
 
         });
     }
+
+    /**
+     * Makes sure previously selected character gets unselected when a new character gets selected
+     */
     public void clearSelection()
     {
         if(lastSelectedView != null && !player.isDead()) {
@@ -112,6 +120,9 @@ public class SelectCharacterFragment extends Fragment {
         }
     }
 
+    /**
+     * Removes a character completely from the game.
+     */
     public void deleteCharacter() {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +142,10 @@ public class SelectCharacterFragment extends Fragment {
         });
     }
 
+    /**
+     * Continues the game with the selected character as long as the character has not died in
+     * the game.
+     */
     public void chooseSelectedCharacter() {
         selectCharacterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
