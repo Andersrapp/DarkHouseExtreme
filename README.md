@@ -26,7 +26,7 @@ Gradle will then handle everything and build the project.
 
 ### Download the .apk
 
-Just click this [link](https://github.com/ChobiJava/DarkHouseExtreme/raw/master/app/app-release.apk) to download the apk directly to you phone and install it. You can also drag the apk to a running android emulator to install it
+Just click this [link](https://github.com/ChobiJava/DarkHouseExtreme/raw/master/app/DarkHpuseofMystery.apk) to download the apk directly to you phone and install it. You can also drag the apk to a running android emulator to install it
 
 ### Note
 This code won't run on a device which already has the signed version from Google Play already installed. 
@@ -34,6 +34,8 @@ This is the standard security feature made by google to prohibit replacement of 
 an unsigned copy.
 
 To build and run from this code, you have to first uninstall the signed copy on your phone.
+
+Also, if you have a previous version installed, the new version might not work if the database has been altered. Just uninstall the old version if you have this problem.
 
 ## Contributors
 
