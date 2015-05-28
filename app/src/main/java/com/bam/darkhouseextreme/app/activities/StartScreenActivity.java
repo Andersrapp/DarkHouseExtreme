@@ -3,7 +3,6 @@ package com.bam.darkhouseextreme.app.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import com.bam.darkhouseextreme.app.R;
@@ -53,7 +52,7 @@ public class StartScreenActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (SoundHelper.currentlyPlaying != R.raw.menu_music) {
+        if (SoundHelper.currentlyPlaying != R.raw.menu_music || SoundHelper.backGroundMusic == null) {
             SoundHelper.stopBackGroundMusic();
             SoundHelper.playBackGroundMusic(R.raw.menu_music);
         } else {

@@ -102,7 +102,9 @@ public class StartScreenFragment extends Fragment {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SoundHelper.stopBackGroundMusic();
+                        if (SoundHelper.backGroundMusic.isPlaying()) {
+                            SoundHelper.stopBackGroundMusic();
+                        }
                         getActivity().finish();
                     }
                 }

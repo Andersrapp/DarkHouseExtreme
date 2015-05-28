@@ -38,8 +38,10 @@ public class SoundHelper {
     }
 
     public static void pauseBackGroundMusic() {
-        currentPos = backGroundMusic.getCurrentPosition();
-        backGroundMusic.pause();
+        if (backGroundMusic != null) {
+            currentPos = backGroundMusic.getCurrentPosition();
+            backGroundMusic.pause();
+        }
     }
 
     public static void resumeBackGroundMusic() {
