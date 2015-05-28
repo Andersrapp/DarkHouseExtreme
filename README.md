@@ -26,7 +26,7 @@ Gradle will then handle everything and build the project.
 
 ### Download the .apk
 
-Just click this [link](https://github.com/ChobiJava/DarkHouseExtreme/raw/master/app/DarkHpuseofMystery.apk) to download the apk directly to you phone and install it. You can also drag the apk to a running android emulator to install it
+Just click this [link](https://github.com/ChobiJava/DarkHouseExtreme/raw/master/app/DarkHouseofMystery.apk) to download the apk directly to you phone and install it. You can also drag the apk to a running android emulator to install it
 
 ### Note
 This code won't run on a device which already has the signed version from Google Play already installed. 
